@@ -1,0 +1,348 @@
+
+<meta charset="UTF-8">
+
+<style>
+	#treemap * {
+		vertical-align: middle;
+	}
+	#treemap input[type="checkbox"] {
+		margin-right: 5px;
+	}
+	#treemap font {
+		margin-right: 15px;
+	}
+	#treemap img {
+		cursor: pointer;
+	}
+</style>
+
+<form class="form-horizontal" action="modules/UserManage_ctl.jsp?action=saveinfo&target=pinfo">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>用户权限设定
+        </legend>
+        <div class="control-group">
+            <div id="treemap"></div>
+        </div>
+        <div class="control-group">
+            <button type="submit" class="btn btn-primary">
+                保存信息
+            </button>
+            <button class="btn" href="html/UserManageList.html">
+                返回列表
+            </button>
+        </div>
+    </div>
+</form>
+
+<script>
+    init();
+
+    function init()
+    {
+                var nodes=new Array();
+                nodes[nodes.length]=newNode("0","ROOT","-1","");
+                var auths=new Array();
+
+            nodes[nodes.length]=newNode("37","财政局相关","0","#","");
+
+            nodes[nodes.length]=newNode("35","养老保险","0","#","");
+
+            nodes[nodes.length]=newNode("18","医疗保险","0","#","");
+
+            nodes[nodes.length]=newNode("46","工伤保险","0","#","");
+
+            nodes[nodes.length]=newNode("47","生育保险","0","#","");
+
+            nodes[nodes.length]=newNode("48","失业保险","0","#","");
+
+            nodes[nodes.length]=newNode("84","基金科","0","#","");
+
+            nodes[nodes.length]=newNode("11","系统设置","0","#","");
+
+            nodes[nodes.length]=newNode("17","退出登录","0","logout.jsp","out.gif");
+
+            nodes[nodes.length]=newNode("5","月度收支状况监测","2","modules/PI_ctl.jsp?target=MonthlyIAE&action=chart","");
+
+            nodes[nodes.length]=newNode("6","企业欠费状况","2","modules/PI_ctl.jsp","");
+
+            nodes[nodes.length]=newNode("8","养老金发放变化检索","3","modules/PI_ctl.jsp?action=list&target=AUPL","");
+
+            nodes[nodes.length]=newNode("9","待遇发放异常检索","3","modules/PI_ctl.jsp?action=list&target=MonthlyAPL","");
+
+            nodes[nodes.length]=newNode("10","人员信息异常检索","3","modules/PI_ctl.jsp?action=list&target=API","");
+
+            nodes[nodes.length]=newNode("12","用户管理","11","modules/UserManage_ctl.jsp","");
+
+            nodes[nodes.length]=newNode("90","修改个人信息","11","modules/UserManage_ctl.jsp?action=show&target=pinfo","");
+
+            nodes[nodes.length]=newNode("14","预测预警图","13","modules/PI_ctl.jsp?action=chart&target=Predication","");
+
+            nodes[nodes.length]=newNode("15","政策模拟","13","modules/PI_ctl.jsp?action=setup&target=ParameterSimulation","");
+
+            nodes[nodes.length]=newNode("19","效能监控","18","modules/MI_ctl.jsp?action=setup&target=EffMoniter","");
+
+            nodes[nodes.length]=newNode("20","月度费用支出监控","18","#","");
+
+            nodes[nodes.length]=newNode("21","月度结算指标监测","18","#","");
+
+            nodes[nodes.length]=newNode("22","年度费用支出监测","18","#","");
+
+            nodes[nodes.length]=newNode("54","年度结算指标监测","18","#","");
+
+            nodes[nodes.length]=newNode("31","大额费用支出监控","20","modules/MediInsuMonthlyPayChk_ctl.jsp?action=list&target=MonthlyAbnormalPay","");
+
+            nodes[nodes.length]=newNode("32","市直公务员医疗保险医疗费用情况统计表","20","modules/MediInsuMonthlyPayChk_ctl.jsp?action=list&target=PubServMIFEE","");
+
+            nodes[nodes.length]=newNode("33","城乡居民基本医疗保险收支情况表","20","modules/MediInsuMonthlyPayChk_ctl.jsp?action=list&target=InhabitantMIFEE","");
+
+            nodes[nodes.length]=newNode("34","离休干部医疗费用统计表","20","modules/MediInsuMonthlyPayChk_ctl.jsp?action=list&target=RetiredCadreMedFee","");
+
+            nodes[nodes.length]=newNode("51","补充医疗保险赔付情况月度统计表","20","modules/MediInsuMonthlyPayChk_ctl.jsp?action=list&target=ExpMIFEE","");
+
+            nodes[nodes.length]=newNode("82","月度收支状况监测","20","modules/MI_ctl.jsp?action=chart&target=MonthlyIAE","");
+
+            nodes[nodes.length]=newNode("40","月度住院率分析","21","modules/MIMonthlyIndicatorCheck_ctl.jsp?action=list&target=MonthlyFOBH","");
+
+            nodes[nodes.length]=newNode("41","月度报销率分析","21","modules/MIMonthlyIndicatorCheck_ctl.jsp?action=list&target=MonthlyROWO","");
+
+            nodes[nodes.length]=newNode("52","月度人均费用分析","21","modules/MIMonthlyIndicatorCheck_ctl.jsp?action=list&target=MonthlyPCF","");
+
+            nodes[nodes.length]=newNode("43","市区基本医疗保险基金收支年度统计表","22","modules/MIAnnualPayCheck_ctl.jsp?action=list&target=AnnualBFEE","");
+
+            nodes[nodes.length]=newNode("44","市直公务员医疗保险医疗费用情况年度统计表","22","modules/MIAnnualPayCheck_ctl.jsp?action=list&target=AnnualPSFEE","");
+
+            nodes[nodes.length]=newNode("45","城乡居民基本医疗保险年度收支情况表","22","modules/MIAnnualPayCheck_ctl.jsp?action=list&target=AnnualIFEE","");
+
+            nodes[nodes.length]=newNode("53","补充医疗保险赔付情况年度统计表","22","modules/MIAnnualPayCheck_ctl.jsp?action=list&target=AnnualEFEE","");
+
+            nodes[nodes.length]=newNode("42","年度收支预测预警","22","modules/MI_ctl.jsp?action=chart&target=AnnualFP","");
+
+            nodes[nodes.length]=newNode("2","养老保险基金监测","35","#","");
+
+            nodes[nodes.length]=newNode("3","养老保险业务检测","35","#","");
+
+            nodes[nodes.length]=newNode("13","养老保险基金收支预测","35","#","");
+
+            nodes[nodes.length]=newNode("36","上报财政局月报表","37","modules/FinanceBureau_ctl.jsp","");
+
+            nodes[nodes.length]=newNode("49","效能监控","46","modules/EI_ctl.jsp?action=setup&target=EffMoniter","");
+
+            nodes[nodes.length]=newNode("50","月度费用支出监控","46","#","");
+
+            nodes[nodes.length]=newNode("61","年度费用支出监测","46","#","");
+
+            nodes[nodes.length]=newNode("65","月度费用支出监控","47","#","");
+
+            nodes[nodes.length]=newNode("66","年度费用支出监测","47","#","");
+
+            nodes[nodes.length]=newNode("74","失业保险业务检测","48","#","");
+
+            nodes[nodes.length]=newNode("76","年度费用支出监测","48","#","");
+
+            nodes[nodes.length]=newNode("58","大额费用支出检索","50","modules/EI_ctl.jsp?action=list&target=MonthlyAPL","");
+
+            nodes[nodes.length]=newNode("59","统筹区工伤保险待遇情况月度统计表","50","modules/EI_ctl.jsp?action=list&target=MonthlyITF","");
+
+            nodes[nodes.length]=newNode("60","工伤保险基金收支情况月度统计表","50","modules/EI_ctl.jsp?action=list&target=MonthlyFS","");
+
+            nodes[nodes.length]=newNode("83","月度收支状况监测","50","modules/EI_ctl.jsp?action=chart&target=MonthlyIAE","");
+
+            nodes[nodes.length]=newNode("55","年度住院率分析","54","modules/MIAnnualIndicatorCheck _ctl.jsp?action=list&target=AnnualROBH","");
+
+            nodes[nodes.length]=newNode("56","年度报销率分析","54","modules/MIAnnualIndicatorCheck _ctl.jsp?action=list&target=AnnualROWO","");
+
+            nodes[nodes.length]=newNode("57","人均费用分析","54","modules/MIAnnualIndicatorCheck _ctl.jsp?action=list&target=AnnualPCF","");
+
+            nodes[nodes.length]=newNode("63","统筹区工伤保险待遇情况年度统计表","61","modules/EI_ctl.jsp?action=list&target=AnnualITF","");
+
+            nodes[nodes.length]=newNode("88","工伤保险基金收支情况年度统计表","61","modules/EI_ctl.jsp?action=list&target=AnnualFS","");
+
+            nodes[nodes.length]=newNode("62","年度收支预测预警","61","modules/EI_ctl.jsp?action=chart&target=AnnualFP","");
+
+            nodes[nodes.length]=newNode("67","大额费用支出检索","65","modules/BI_ctl.jsp?action=list&target=MonthlyAPL","");
+
+            nodes[nodes.length]=newNode("68","统筹区生育保险待遇情况月度统计表","65","modules/BI_ctl.jsp?action=list&target=MonthlyITF","");
+
+            nodes[nodes.length]=newNode("70","生育保险基金收支情况月度统计表","65","modules/BI_ctl.jsp?action=list&target=MonthlyFS","");
+
+            nodes[nodes.length]=newNode("64","月度收支状况监测","65","modules/BI_ctl.jsp?action=chart&target=MonthlyIAE","");
+
+            nodes[nodes.length]=newNode("72","统筹区生育保险待遇情况年度统计表","66","modules/BI_ctl.jsp?action=list&target=AnnualITF","");
+
+            nodes[nodes.length]=newNode("89","生育保险基金收支情况年度统计表","66","modules/BI_ctl.jsp?action=list&target=AnnualFS","");
+
+            nodes[nodes.length]=newNode("71","年度收支预测预警","66","modules/BI_ctl.jsp?action=chart&target=AnnualFP","");
+
+            nodes[nodes.length]=newNode("80","人员信息异常检索","74","modules/UI_ctl.jsp?action=list&target=API","");
+
+            nodes[nodes.length]=newNode("78","失业金发放变化检索","74","modules/UI_ctl.jsp?action=list&target=AUPL","");
+
+            nodes[nodes.length]=newNode("79","待遇发放异常检索","74","modules/UI_ctl.jsp?action=list&target=APL","");
+
+            nodes[nodes.length]=newNode("77","月度收支状况监测","74","modules/UI_ctl.jsp?action=chart&target=MonthlyIAE","");
+
+            nodes[nodes.length]=newNode("81","年度收支预测预警","76","modules/UI_ctl.jsp?action=chart&target=AnnualFP","");
+
+            nodes[nodes.length]=newNode("85","年度分析","84","modules/FD_ctl.jsp?action=setup&target=AnnualAnalyze","");
+
+            nodes[nodes.length]=newNode("86","季度分析","84","modules/FD_ctl.jsp?action=setup&target=QuarterAnalyze","");
+
+            nodes[nodes.length]=newNode("87","数据管理","84","modules/FD_ctl.jsp?action=list&target=FT_Data","");
+
+            auths[auths.length]=newAuth("3","12","查看","拥有查看所有用户信息的权限","0","1");
+
+            auths[auths.length]=newAuth("10","36","列表","拥有查看列表的权限","0","0");
+
+            auths[auths.length]=newAuth("14","31","列表","拥有查看列表页面的权限","0","1");
+
+            auths[auths.length]=newAuth("17","32","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("34","33","查看","拥有查看情况表的权限","0","1");
+
+            auths[auths.length]=newAuth("38","34","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("41","51","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("42","82","查看","拥有查看月度收支状况监控表的权限","0","1");
+
+            auths[auths.length]=newAuth("43","40","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("44","41","查看","拥有查看报销率分析表的权限","0","1");
+
+            auths[auths.length]=newAuth("45","52","查看","拥有查看人均费用分析表的权限","0","1");
+
+            auths[auths.length]=newAuth("47","43","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("48","44","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("49","45","查看","拥有查看情况表的权限","0","1");
+
+            auths[auths.length]=newAuth("50","53","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("51","42","查看","拥有查看年度收支预测预警图表的权限","0","1");
+
+            auths[auths.length]=newAuth("52","55","查看","拥有查看住院率分析表的权限","0","1");
+
+            auths[auths.length]=newAuth("53","56","查看","拥有查看报销率分析表的权限","0","1");
+
+            auths[auths.length]=newAuth("54","57","查看","拥有查看人均费用分析表的权限","0","1");
+
+            auths[auths.length]=newAuth("55","49","查看","拥有查看效能监控数据的权限","0","1");
+
+            auths[auths.length]=newAuth("56","58","列表","拥有查看列表的权限","0","1");
+
+            auths[auths.length]=newAuth("59","59","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("60","60","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("61","83","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("62","63","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("63","88","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("64","62","查看","拥有查看年度收支预测预警图的权限","0","1");
+
+            auths[auths.length]=newAuth("65","67","列表","拥有查看列表的权限","0","1");
+
+            auths[auths.length]=newAuth("68","68","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("69","70","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("70","64","查看","拥有查看收支状况监测图的权限","0","1");
+
+            auths[auths.length]=newAuth("71","72","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("73","89","查看","拥有查看统计表的权限","0","1");
+
+            auths[auths.length]=newAuth("74","71","查看","拥有查看收支预测预警图的权限","0","1");
+
+            auths[auths.length]=newAuth("75","80","列表","拥有查看列表的权限","0","1");
+
+            auths[auths.length]=newAuth("78","78","查看","拥有查看数据表的权限","0","1");
+
+            auths[auths.length]=newAuth("79","79","列表","拥有查看列表的权限","0","1");
+
+            auths[auths.length]=newAuth("82","77","查看","拥有查看收支状况监测图的权限","0","1");
+
+            auths[auths.length]=newAuth("83","81","查看","拥有查看年度收支预测预警图的权限","0","1");
+
+            auths[auths.length]=newAuth("84","85","查看","拥有查看年度分析图表的权限","0","1");
+
+            auths[auths.length]=newAuth("85","86","查看","拥有查看季度分析图表的权限","0","1");
+
+            auths[auths.length]=newAuth("86","87","列表","拥有查看基金数据列表的权限","0","1");
+
+            auths[auths.length]=newAuth("89","null","管理","拥有管理系统数据的权限【数据管理员专用】","0","0");
+
+            auths[auths.length]=newAuth("4","12","管理","拥有管理所有用户信息的权限","1","1");
+
+            auths[auths.length]=newAuth("9","5","查看","拥有查看养老保险基金自动监测图的权限","1","1");
+
+            auths[auths.length]=newAuth("12","6","列表","拥有查看列表的权限","1","1");
+
+            auths[auths.length]=newAuth("15","31","扫描","拥有新建监控扫描的权限","1","1");
+
+            auths[auths.length]=newAuth("18","8","列表","拥有查看列表的权限","1","1");
+
+            auths[auths.length]=newAuth("20","9","列表","拥有查看列表的权限","1","1");
+
+            auths[auths.length]=newAuth("23","10","列表","拥有查看列表的权限","1","1");
+
+            auths[auths.length]=newAuth("28","14","查看","拥有查看图表的权限","1","1");
+
+            auths[auths.length]=newAuth("29","19","查看","拥有查看效能监控数据的权限","1","1");
+
+            auths[auths.length]=newAuth("30","36","查看","拥有查看上报财政局月报表的权限","1","0");
+
+            auths[auths.length]=newAuth("57","58","扫描","拥有新建扫描的权限","1","1");
+
+            auths[auths.length]=newAuth("66","67","扫描","拥有新建扫描的权限","1","1");
+
+            auths[auths.length]=newAuth("76","80","扫描","拥有新建扫描的权限","1","1");
+
+            auths[auths.length]=newAuth("80","79","扫描","拥有新建扫描的权限","1","1");
+
+            auths[auths.length]=newAuth("87","87","编辑","拥有新建和删除基金数据的权限","1","1");
+
+            auths[auths.length]=newAuth("13","6","查看","拥有查看详细信息的权限","2","1");
+
+            auths[auths.length]=newAuth("16","31","查看","拥有查看详细扫描结果的权限","2","1");
+
+            auths[auths.length]=newAuth("19","8","查看","拥有查看详细信息的权限","2","1");
+
+            auths[auths.length]=newAuth("21","9","扫描","拥有新建扫描的权限","2","1");
+
+            auths[auths.length]=newAuth("26","10","扫描","拥有新建扫描的权限","2","1");
+
+            auths[auths.length]=newAuth("31","36","编辑","拥有上传，修改和删除财政局月报表的权限","2","0");
+
+            auths[auths.length]=newAuth("58","58","查看","拥有查看扫描详情的权限","2","1");
+
+            auths[auths.length]=newAuth("67","67","查看","拥有查看扫描详情的权限","2","1");
+
+            auths[auths.length]=newAuth("77","80","查看","拥有查看扫描详细结果的权限","2","1");
+
+            auths[auths.length]=newAuth("81","79","查看","拥有查看扫描详细信息的权限","2","1");
+
+            auths[auths.length]=newAuth("88","87","查看","拥有查看基金数据详情的权限","2","1");
+
+            auths[auths.length]=newAuth("8","12","权限分配","拥有分配权限的能力","3","1");
+
+            auths[auths.length]=newAuth("22","9","查看","拥有查看详细信息的权限","3","1");
+
+            auths[auths.length]=newAuth("27","10","查看","拥有查看详细信息的权限","3","1");
+
+            auths[auths.length]=newAuth("32","36","提交","拥有提交月报表到财政局审核的权限","3","0");
+
+            auths[auths.length]=newAuth("33","36","审核","拥有审核社保基金科上报月报表的权限","4","0");
+
+            nodelist=nodes;
+            nodelen=nodes.length;
+            authlist=auths;
+            authlen=auths.length;
+            drawTree("treemap");
+            fillCheckBox(findnode("0"));
+    }
+</script>

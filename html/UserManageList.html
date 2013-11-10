@@ -1,0 +1,122 @@
+
+<meta charset="UTF-8">
+
+<style scoped>
+    #table-list th {
+        min-width: 80px;
+    }
+    #table-list th:nth-child(1) {
+        min-width: 0;
+    }
+    #table-list th:nth-child(6) {
+        min-width: 80px;
+    }
+</style>
+
+
+<form id="form-list" method="post" action="modules/UserManage_ctl.jsp">
+	<!-- 表格 -->
+	<table id="table-list" class="hidden">
+		<caption>
+		    <i class="icon-th-list"></i>用户管理列表
+		</caption>
+		<thead>
+			<tr>
+				<th>
+				    <input type="checkbox" data-name="DelNodes[]" class="check-all">
+				</th>
+				<th>用户名</th>
+				<th>中文名</th>
+				<th>权限说明</th>
+				<th>备注</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+
+		<!-- 表底 -->
+		<tfoot>
+			<tr>
+				<td colspan="6">
+					<div class="bulk-actions align-left">
+						<input type="hidden" name="action" value="deluser">
+						<input type="submit" class="btn btn-danger" value="删除记录" >
+                        <a class="btn btn-success" href="html/UserManageAdd.html">添加用户</a>
+					</div>
+					<div class="pagination"></div>
+				</td>
+			</tr>
+		</tfoot>
+		<!-- /表底 -->
+	</table>
+	<!-- /表格 -->
+</form>
+
+<script>
+	var $frame = $('#main-frame'),
+        $form_list = $frame.find('#form-list'),
+        $table_list = $('#table-list'),
+		$tbody = $table_list.find('tbody'),
+		$pagination = $table_list.find('.pagination');
+
+	// 加载用户列表
+	getPage(1);
+	function getPage(nPage) {
+		$.ajax({
+			url: 'modules/UserManage_ctl.jsp',
+			type: 'get',
+			data: {
+				'action': 'listuser',
+				'page': nPage
+			},
+			success: function(data) {
+				var resObj = JSON.parse(data);
+				// 表格数据
+				$table_list.addClass('hidden');
+                $tbody.empty();
+                var pageList = resObj['_PageList'];
+                if (pageList.length < 1) {
+                    $('<tr>').append([
+                        '<td class="td-sole" colspan="6">没有记录</td>',
+                    ].join('')).appendTo($tbody);
+                } else {
+                    _.each(pageList, function(user, i) {
+                        $('<tr>').append([
+                            '<td>',
+                                '<input type="checkbox" name="DelNodes[]" value="'+ user['ID'] +'">',
+                            '</td>',
+                            '<td>'+ user['YHM'] +'</td>',
+                            '<td>'+ user['ZWM'] +'</td>',
+                            '<td>'+ user['DW'] +'</td>',
+                            '<td>'+ user['BZ'] +'</td>',
+                            '<td>',
+                                '<a href="html/UserManageEdit.html?ID='+ user['ID'] +'">编辑</a>',
+                                '&nbsp;&nbsp;|&nbsp;&nbsp;',
+                                '<a href="html/AuthEdit.html?ID='+ user['ID'] +'">权限</a>',
+                            '</td>'
+                        ].join('')).appendTo($tbody);
+                    });
+                }
+				// 分页
+				$pagination.html([
+					'<span><a onclick="getPage(1)">首页</a></span>',
+					'<span><a onclick="getPage('+ Math.max((resObj['_curPage'] - 1), 1) +')">上一页</a></span>',
+					'<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+					'<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
+					'<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
+				].join(''));
+                $table_list.removeClass('hidden');
+			}
+		});
+	}
+	
+	// 删除用户
+	$form_list.ajaxForm({
+		success: function(resTxt) {
+			var resObj = JSON.parse(resTxt),
+				msg = resObj['__MESSAGE__'];
+			msg && alert(msg);
+            reloadPage();
+		}
+	});
+</script>

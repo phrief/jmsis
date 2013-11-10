@@ -1,0 +1,249 @@
+<meta charset="UTF-8">
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=DependencyRatio">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_k" name="KSYF" id="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_j" name="JSYF" id="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择:</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440700">市区</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="block">
+    <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+
+
+<script>
+    $.ajax({
+        url : 'modules/PI_ctl.jsp?action=DependencyRatio',
+        success : function(htmlStr) {
+            makeChart(htmlStr);
+        }
+    });
+</script>
+
+<script>
+    $(function() {
+        var myDate = new Date();
+        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
+        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+
+        $(".datepicker_k").datepicker({
+            dateFormat : 'yy-mm',
+            changeYear : true,
+            changeMonth: true ,
+            onChangeMonthYear : function() {
+                var year = $('[data-handler="selectYear"]').val();
+                var month = parseInt($('[data-handler="selectMonth"]').val()) + 1;
+                if(month < 10) month = "0" + month;
+                $('[name="KSYF"]').val(year + '-' + month);
+            }
+        });
+
+
+        $(".datepicker_j").datepicker({
+            changeYear : true,
+            changeMonth: true,
+            dateFormat : 'yy-mm',
+            onChangeMonthYear : function() {
+                var year = $('[data-handler="selectYear"]').val();
+                var month = parseInt($('[data-handler="selectMonth"]').val()) + 1;
+                if(month < 10) month = "0" + month;
+                $('[name="JSYF"]').val(year + '-' + month);
+            }
+        });
+
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.ajaxForm({
+        beforeSend: function(){
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if(ksyf == "" || jsyf == "") {
+                alert("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function(resTxt) {
+            makeChart(resTxt);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+
+<script>
+    function makeChart(htmlStr) {
+        console.log(htmlStr);
+        var resObj = JSON.parse(htmlStr);
+        if(resObj) {
+            var division = resObj['DIVISION'];
+            var months = resObj['MONTHS'];
+            var dataset = resObj['DATASET'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var DataSet = new Array();
+            var charttype = '养老保险基金监测';
+
+            for(var i=0; i < months.length; i++) {
+                DataSet.push(parseInt(dataset[i]));
+            }
+
+            months = makeAdapt(months);
+
+            $('#FirmArrearageList').highcharts({
+                exporting : false,
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: area + '养老保险抚养比走势图',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: [{
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                }],
+                yAxis: [{ // Primary yAxis
+                    title: {
+                        text: '单位(' + division + ')',
+                        style: {
+                            color: '#4572A7'
+                        }
+                    },
+                    labels: {
+                        format: '{value}%',
+                        style: {
+                            color: '#4572A7'
+                        }
+                    },
+                    max : 100
+                },{ // Secondary yAxis
+                    labels: {
+                        enabled : false,
+                        format: '{value}' + division,
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                series: [{
+                    name: '养老保险抚养比',
+                    color: '#4572A7',
+                    type: 'column',
+                    yAxis: 1,
+                    data: DataSet,
+                    tooltip: {
+                        valueSuffix: '%'
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        //rotation: -90,
+                        color: '#000000',
+                        align: 'center',
+                        x: 0,
+                        y: 0,
+                        style: {
+                            fontSize: '5px',
+                            fontFamily: 'Verdana, sans-serif'
+                            //textShadow: '0 0 3px black'
+                        }
+                    }
+                }/*, {
+                 name: '抚养比走势',
+                 color: '#89A54E',
+                 type: 'spline',
+                 data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+                 tooltip: {
+                 valueSuffix: '°C'
+                 }
+                 }*/]
+            });
+        }
+    }
+</script>
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>

@@ -1,0 +1,102 @@
+
+<meta charset="UTF-8">
+
+<style>
+	form .control-group {
+		height: 40px;
+		line-height: 40px;
+	}
+	form .control-group>.controls {
+		height: 40px;
+		line-height: 40px;
+	}
+</style>
+
+<!-- 表顶 -->
+<form class="form-horizontal">
+	<div class="block">
+		<legend>
+			<i class="icon-check"></i>新建扫描
+		</legend>
+		<div class="control-group">
+			<label class="control-label" for="SearchNY">扫描年月</label>
+			<div class="controls">
+				<input name="SearchNY" type="text" class="datepicker_c" id="SearchNY" size="10">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="SearchCondition">扫描方式</label>
+			<div class="controls">
+				<select name="SearchCondition" id="SearchCondition" style="width:200" onchange="checkva(this.value)">
+					<option value="-1" selected="selected">--------请选择相应的选项--------</option>
+					<option value="0">同时领取失业保险和养老保险的人员</option>
+					<option value="1">未年审停发状态下办理死亡的人员</option>
+					<option value="2">个人缴费工资不在指定范围的人员</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<input type="submit" value="开始扫描" class="btn btn-primary">
+			<input type="reset" value="重置" class="btn">
+		</div>
+	</div>
+</form>
+<!-- /表顶 -->
+
+<!-- 表格 -->
+<form method="post" action="PI_ctl.jsp?action=new&target=API">
+	<table class="table table-striped table-bordered">
+		<caption>
+            <i class="icon-check"></i>人员信息异常检索
+        </caption>
+		<thead>
+			<tr>
+				<th>
+					<input type="checkbox" class="check-all" data-name="DelNodes">
+				</th>
+				<th>扫描时间</th>
+				<th>扫描状态</th>
+				<th>记录数</th>
+				<th>扫描项</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+	
+		<tbody>
+			<tr>
+				<td colspan="6" class="td-sole">
+					没有记录！
+				</td>
+			</tr>
+		</tbody>
+	
+		<!-- 表底 -->
+		<tfoot>
+			<tr>
+				<td colspan="8">
+				<div class="bulk-actions align-left">
+					<input type="hidden" name="viewcode" value="">
+					<input type="hidden" name="Act" value="DelNewsInfo">
+					<input type="submit" class="btn btn-danger" name="Submit" value="删除记录" onclick="return delalert();">
+				</div>
+				<div class="pagination">
+					<span class="pager1"> <a>当前页1/1</a> </span>
+					<span class="pager"> <a href="http://dev:8888/zcncms/admin/?page=1&amp;c=downloads&amp;a=list">首页</a> </span>
+					<span class="pager1"><a>上一页</a></span>
+					<span class="pager1"><span class="cur"><a>1</a></span></span>
+					<span class="pager1"><a>下一页</a></span>
+					<span class="pager"> <a href="http://dev:8888/zcncms/admin/?page=1&amp;c=downloads&amp;a=list">最后页</a> </span>
+				</div></td>
+			</tr>
+		</tfoot>
+		<!-- /表底 -->
+	</table>
+</form>
+<!-- /表格 -->
+
+
+<script>
+	$(".datepicker_c").datepicker();
+
+	$('table tr:even').addClass('alt-row');
+</script>

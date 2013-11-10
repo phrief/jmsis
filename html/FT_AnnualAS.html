@@ -1,0 +1,102 @@
+<meta charset="UTF-8">
+
+<form class="form-horizontal" method="post" action="modules/FD_ctl.jsp?action=chart&target=AnnualAnalyze">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>基金科年度分析设置
+        </legend>
+        <div class="control-group">
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c" name="KSNF" max-length="4">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">结束年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c" name="JSNF" max-length="4">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分析险种</label>
+            <div class="controls">
+                <select name="InsuType">
+                    <option value="0">企业养老保险</option>
+                    <option value="3">失业保险</option>
+                    <option value="4">职工基本医疗保险</option>
+                    <option value="7">工伤保险</option>
+                    <option value="8">生育保险</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分析内容</label>
+            <div class="controls">
+                <select name="StatType">
+                    <option value="0">总收入/总支出年度环比</option>
+                    <option value="1">征缴收入/待遇支出年度环比</option>
+                    <option value="2">总收入/总支出年度环比增幅百分比</option>
+                    <option value="3">征缴收入/待遇支出年度环比增幅百分比</option>
+                    <option value="4">历年累计结余年度环比</option>
+                    <option value="5">历年累计结余年度环比增幅百分比</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分析区域</label>
+            <div class="controls">
+                <select name="AREA">
+                    <option value="440700">市区</option>
+                    <option value="440703">蓬江</option>
+                    <option value="440704">江海</option>
+                    <option value="440781">台山</option>
+                    <option value="440705">新会</option>
+                    <option value="440783">开平</option>
+                    <option value="440784">鹤山</option>
+                    <option value="440785">恩平</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <input type="submit" class="btn btn-primary" value="开始分析">
+            <input type="reset" class="btn" value="重置">
+        </div>
+
+    </div>
+
+</form>
+
+<script>
+    var $datepicker = $frame.find('.datepicker_c');
+    $datepicker.datepicker({
+        //"changeMonth" : false,
+        "changeYear" : true,
+        "dateFormat" : 'yy'
+    });
+</script>
+
+<script>
+
+	var $form = $frame.find('form');
+	
+	$form.on('submit', function(ev) {
+        ev.preventDefault();
+        var ksyf = $form.find('[name="KSNF"]').val();
+        var jsyf = $form.find('[name="JSNF"]').val();
+        if(ksyf == "" || jsyf == "") {
+            alert("开始年份和结束年份均不能为空");
+            return false;
+        }
+        var query = $form.serialize();
+		console.log(query);
+        loadPage('html/FT_AnnualAR.html?' + query);
+	});
+
+
+
+</script>

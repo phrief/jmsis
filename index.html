@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title> 江门社保基金收支监测预警系统</title>
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+		<META HTTP-EQUIV="expires" CONTENT="0">
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+	<body id="login">
+		<style scoped>
+			form label {
+				padding: 5px!important;
+				font-size: 16px!important;
+			}
+		</style>
+		<div id="login-wrapper" class="png_bg">
+			<div id="login-top">
+				<h1>江门社保基金收支监测预警系统</h1>
+				<img id="logo" src="images/logo_.png"/>
+			</div>
+			<!-- End #logn-top -->
+
+			<div id="login-content" class="hidden">
+				<form id="login-form" action="system/login.jsp" method="post">
+					<input type="hidden" name="action" value="Login">
+
+					<div class="notification information png_bg">
+						<div>
+							请输入用户名密码登陆.
+						</div>
+					</div>
+
+					<p>
+						<label>用户</label>
+						<input class="text-input" type="text" name="login-name" />
+					</p>
+					<div class="clear"></div>
+					<p>
+						<label>密码</label>
+						<input class="text-input" type="password" name="login-password" />
+					</p>
+					<div class="clear"></div>
+					<p>
+						<input class="button" type="submit" name="submit" value="登录" />
+					</p>
+				</form>
+			</div>
+			<!-- End #login-content -->
+
+		</div>
+		<!-- End #login-wrapper -->
+		
+		<script src="js/lib/json2.js"></script>
+		<script src="js/lib/underscore-min.js"></script>
+		<script src="js/lib/jquery.min.js"></script>
+		<script src="js/lib/jquery.serializeJSON.min.js"></script>
+		<script src="js/ajax-form.js"></script>
+		<script src="js/script.js"></script>
+		<script>
+			// 登录状态判断
+			$('#login-content').hide().removeClass('hidden');
+			$.ajax({
+				url : 'system/login.jsp',
+				success : function(htmlStr) {
+					var resObj = {};
+					try {
+						resObj = JSON.parse(htmlStr);
+					} catch (err) {}
+					if (resObj['__LOGINED__'])
+					{
+						location.href="system/main.jsp";
+					}
+					else
+					{
+						$('#login-content').slideDown('slow');
+					}
+				}
+			});
+			
+			// 登录表单提交
+			$('#login-form').ajaxForm({
+				success: function(resTxt) {
+					var resObj = {};
+					try {
+						resObj = JSON.parse(resTxt);
+					} catch (err) {}
+					if (resObj['__LOGINED__'])
+					{
+						location.href = 'system/main.jsp';
+					}
+					else
+					{
+						alert(resObj['__MESSAGE__']);
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

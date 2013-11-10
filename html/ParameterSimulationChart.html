@@ -1,0 +1,151 @@
+<meta charset="UTF-8">
+
+
+<div class="block">
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+<script>
+    function makeChart(htmlStr) {
+        var resObj = JSON.parse(htmlStr);
+        if(resObj) {
+            var years = resObj['YEARS'];
+            var division = resObj['DIVISION'];
+            var income = resObj['INCOME'];
+            var payout = resObj['PAYOUT'];
+            var balance = resObj['BALANCE'];
+            var yellow = parseInt(resObj['YELLOW']);
+            var red = parseInt(resObj['RED']);
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var isYellow = false;
+            var isRed = false;
+
+            var incomeArr = new Array();
+            var payoutArr = new Array();
+            var balanceArr = new Array();
+            var yellowLine = new Array();
+            var redLine = new Array();
+            for(var i=0; i < years.length; i++) {
+                incomeArr.push(parseInt(income[i]));
+                payoutArr.push(parseInt(payout[i]));
+                balanceArr.push(parseInt(balance[i]));
+                yellowLine.push(yellow);
+                redLine.push(red);
+                if(balanceArr[i] < red) {
+                    isRed = true;
+                    continue;
+                }
+                if(balanceArr[i] < yellow) {
+                    isYellow = true;
+                }
+            }
+            $('#container').highcharts({
+                exporting: false,
+                chart: {
+
+                },
+                title: {
+                    text: '江门社保养老基金趋势预测图',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                }
+                ,
+                xAxis: {
+                    categories: years
+                },
+                yAxis: {
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: division
+                },
+                series: [{
+                    name: '黄色警戒区域',
+                    data: yellowLine,
+                    type: 'areaspline',
+                    color: '#FFF68F'
+                }, {
+                    name: '红色警戒区域',
+                    data: redLine,
+                    type: 'areaspline',
+                    color: '#FF4500'
+                }, {
+                    name: '年收入',
+                    data: incomeArr,
+                    type: 'line'
+                }, {
+                    name: '年支出',
+                    data: payoutArr,
+                    type: 'line'
+                }, {
+                    name: '余额累计',
+                    data: balanceArr,
+                    type: 'line'
+                }]
+            });
+        } else {
+            alert('no data');
+        }
+        //if(isYellow) alert('余额不足半年!');
+        //if(isRed) alert('余额不足3个月!');
+    }
+</script>
+
+<script>
+
+    var params = getURLParams();
+    var ksnf = params['KSNF'];
+    var jsnf = params['JSNF'];
+    var zrk = params['ZRK'];
+    var yljzjl = params['YLJZJL'];
+    var grjfl = params['GRJFL'];
+    var dwjfl = params['DWJFL'];
+    var yljzdfgl = params['YLJZDFGL'];
+    var fgyzjjcbl = params['FGYZJJCBL'];
+    var gyzjjcbl = params['GYZJJCBL'];
+    var gtjjcbl = params['GTJJCBL'];
+
+    console.log(ksnf);
+    console.log(jsnf);
+    console.log(zrk);
+    console.log(yljzjl);
+    console.log(grjfl);
+    console.log(dwjfl);
+    console.log(yljzdfgl);
+    console.log(fgyzjjcbl);
+    console.log(gyzjjcbl);
+    console.log(gtjjcbl);
+
+    /*$.ajax({
+        url : 'modules/PI_ctl.jsp?action=PolicySimulation',
+        data : {
+            'KSNF' : ksnf,
+            'JSNF' : jsnf,
+            'ZRK' : zrk,
+            'yljzjl' : yljzjl,
+            'grjfl' : grjfl,
+            'dwjfl' : dwjfl,
+            'yljzdfgl' : yljzdfgl,
+            'fgyzjjcbl' : fgyzjjcbl,
+            'gyzjjcbl' : gyzjjcbl,
+            'gtjjcbl' : gtjjcbl
+        },
+        success : function(htmlStr) {
+            //makeChart(htmlStr);
+            //alert('success');
+            makeChart(htmlStr);
+        }
+    });*/
+</script>
+
+<script>
+    var htmlStr = '{"YEARS":["2010","2011","2012","2013","2014","2015"],"DIVISION":"万元","INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950"],"YELLOW":"550","RED":"300","PERIOD":"2012年10月-2013年10月","AREA":"市区直属"}';
+    makeChart(htmlStr);
+</script>

@@ -1,0 +1,230 @@
+
+<meta charset="UTF-8">
+
+<style>
+    #table-list th {
+        min-width: 70px;
+    }
+    #table-list th:nth-child(1) {
+        min-width: 0;
+    }
+    #table-list th:nth-child(6) {
+        min-width: 40px;
+    }
+</style>
+
+<!-- 表顶 -->
+<div class="accordion" id="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    新建扫描
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form id="form-query" class="form-horizontal" method="post" action="modules/PI_ctl.jsp?action=TASearch">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">扫描年月</label>
+                            <div class="controls">
+                                <input name="SearchNY" type="text" class="datepicker_c" size="7">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">扫描方式</label>
+                            <div class="controls">
+                                <select name="SearchCondition">
+                                    <option value="0">个人月发放养老金大于</option>
+                                    <option value="1">个人月发放养老金与上月差额大于</option>
+                                    <option value="2">一次性待遇发放大于</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">金额（元）</label>
+                            <div class="controls">
+                                <input name="SearchContent" type="text" maxlength="7">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440700">市区</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="开始扫描" class="btn btn-primary">
+                            <input type="reset" value="重置" class="btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /表顶 -->
+
+<!-- 表格 -->
+<form id="form-list" method="post" action="modules/PI_ctl.jsp?action=TADelete">
+	<table id="table-list">
+		<caption>
+            <i class="icon-th-list"></i>待遇发放异常检索
+        </caption>
+		<thead>
+			<tr>
+				<th>
+					<input type="checkbox" class="check-all" data-name="DelNodes[]">
+				</th>
+				<th>扫描时间</th>
+				<th>扫描状态</th>
+				<th>记录数</th>
+				<th>扫描项</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+	
+		<tbody></tbody>
+	
+		<!-- 表底 -->
+		<tfoot>
+			<tr>
+				<td colspan="6">
+                    <div class="bulk-actions align-left">
+                        <input type="submit" class="btn btn-danger" value="删除记录" >
+                    </div>
+                    <div class="pagination"></div>
+                </td>
+			</tr>
+		</tfoot>
+		<!-- /表底 -->
+	</table>
+</form>
+<!-- /表格 -->
+
+
+<script>
+    var $frame = $('#main-frame'),
+        $form_query = $('#form-query'),
+        $form_list = $('#form-list'),
+        $table_list = $('#table-list'),
+        $tbody = $table_list.find('tbody'),
+        $pagin = $table_list.find('.pagination');
+
+    $frame.find(".datepicker_c").datepicker({
+		"changeYear" : true,
+		 "changeMonth": true,
+		 "dateFormat" : 'yy-mm'
+	});
+
+    // 检索
+    $form_query.ajaxForm({
+        success: function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            var msg = resObj['__MESSAGE__'];
+            msg && alert(msg);
+            // 表格数据
+            showTable(resObj);
+        }
+    });
+    // 删除结点
+    $form_list.ajaxForm({
+        success: function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            var msg = resObj['__MESSAGE__'];
+            msg && alert(msg);
+            // 表格数据
+            getPage(1);
+        }
+    });
+
+    getPage(1);
+
+    function getPage(n) {
+        $.get('modules/PI_ctl.jsp?action=TreatmentAbnormal', {
+            'Page': n
+        }, function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            showTable(resObj);
+        });
+    }
+    function showTable(resObj) {
+
+        // 测试数据
+        /*var fakePageList = [];
+        _.times(_.random(5, 10), function(i) {
+            fakePageList.push({
+                'ID': i + 1,
+                'TIME': _.sample([
+                    '2013-10-30 10:19:31',
+                    '2013-10-30 09:21:14',
+                    '2013-10-28 15:48:45',
+                    '2013-10-17 23:15:15'
+                ]),
+                'STATUS': '已完成',
+                'AMOUNT': _.random(0, 500),
+                'CONDITION': _.sample([
+                    '扫描2013年07月个人月发放养老金大于3000元的参保户。',
+                    '扫描2013年06月个人月发放养老金与上月差额大于2000元的参保户。',
+                    '扫描2013年07月个人月发放养老金与上月差额大于10元的参保户。',
+                    '扫描2011年04月个人一次性待遇发放大于20000元的参保户。'
+                ])
+            });
+        });
+        resObj = {
+            '_curPage': 1,
+            '_pageCount': 1,
+            '_PageList': fakePageList
+        }*/
+
+        $table_list.addClass('hidden');
+        var pageList = resObj['_PageList'];
+        if (! pageList || pageList.length < 1) {
+            $tbody.html([
+                '<tr>',
+                    '<td class="td-sole" colspan="6">没有记录</td>',
+                '</tr>'
+            ].join(''));
+        } else {
+            var tbodyHtml = _.reduce(pageList, function(memo, item) {
+                return memo + [
+                    '<tr>',
+                        '<td>',
+                            '<input type="checkbox" name="DelNodes[]" value="'+ item['ID'] +'">',
+                        '</td>',
+                        '<td>'+ item['SMSJ'] +'</td>',
+                        '<td>'+ item['SMZT'] +'</td>',
+                        '<td>'+ item['JLS'] +'</td>',
+                        '<td>'+ item['SMX'] +'</td>',
+                        '<td>',
+                            '<a href="html/PI_AUPLDetail.html?ID='+ item['ID'] +'">详细</a>',
+                        '</td>',
+                    '</tr>'
+                ].join('');
+            }, '');
+            $tbody.html(tbodyHtml);
+            // 分页
+            $pagin.html([
+                '<span><a onclick="getPage(1)">首页</a></span>',
+                '<span><a onclick="getPage('+ Math.max((resObj['_curPage'] - 1), 1) +')">上一页</a></span>',
+                '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+                '<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
+                '<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
+            ].join(''));
+        }
+        $table_list.removeClass('hidden');
+    }
+</script>

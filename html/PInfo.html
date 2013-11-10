@@ -1,0 +1,124 @@
+
+<meta charset="UTF-8">
+
+<form id="base-form" class="form-horizontal" method="post" action="modules/UserManage_ctl.jsp">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>修改基本信息
+        </legend>
+        <div class="control-group">
+            <label class="control-label">用户名</label>
+            <div class="controls">
+                <input type="text" id="YHM" readonly>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">中文名</label>
+            <div class="controls">
+                <input type="text" id="ZWM" name="ZWM">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">权限说明</label>
+            <div class="controls">
+                <input type="text" id="DW" name="DW">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">备注</label>
+            <div class="controls">
+                <textarea rows="5" id="BZ" name="BZ" class="span6"> </textarea>
+            </div>
+        </div>
+        <input type="hidden" name="ID" value="" id="ID"/>
+
+        <div class="control-group">
+            <input type="hidden" name="action" value="saveuserinfo">
+            <button type="submit" class="btn btn-primary">
+                保存信息
+            </button>
+            <button  class="btn" href="html/UserManageList.html">
+                返回列表
+            </button>
+        </div>
+    </div>
+</form>
+
+<form id="password-form" class="form-horizontal" method="post" action="modules/UserManage_ctl.jsp">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>修改个人密码
+        </legend>
+        <div class="control-group">
+            <label class="control-label">原始密码</label>
+            <div class="controls">
+                <input type="password" name="PASS0">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">新建密码</label>
+            <div class="controls">
+                <input type="password" name="PASS1">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">重复密码</label>
+            <div class="controls">
+                <input type="password" name="PASS2">
+            </div>
+        </div>
+        <div class="control-group">
+            <input type="hidden" name="action" value="saveuserpass">
+            <button type="submit" class="btn btn-primary">
+                保存密码
+            </button>
+            <button  class="btn" href="html/UserManageList.html">
+                返回列表
+            </button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $.ajax({
+        url : 'modules/UserManage_ctl.jsp',
+        type : 'get',
+        data : {
+            "action":"showuserinfo"
+        },
+        success : function(htmlStr) {
+            var resObj = JSON.parse(htmlStr);
+            var pageValue = resObj['_PageValue'];
+            if (pageValue)
+            {
+                $('#YHM').attr('value',pageValue['YHM']);
+                $('#ZWM').attr('value',pageValue['ZWM']);
+                $('#DW').attr('value',pageValue['DW']);
+                $('#BZ').text(pageValue['BZ']);
+                $('#ID').attr('value',pageValue['ID']);
+            }
+            else
+            {
+                reloadPage('main.jsp');
+            }
+        }
+    });
+
+    $('#base-form').ajaxForm({
+        success: function(data) {
+            var resObj = JSON.parse(data);
+            loadPage('html/PInfo.html');
+        }
+    });
+
+    $('#password-form').ajaxForm({
+        success: function(data) {
+            var resObj = JSON.parse(data);
+            //loadPage('html/PInfo.html');
+            if(resObj['__MESSAGE__'])
+                alert(resObj['__MESSAGE__']);
+        }
+    });
+</script>

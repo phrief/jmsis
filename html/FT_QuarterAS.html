@@ -1,0 +1,124 @@
+
+<meta charset="UTF-8">
+
+<style>
+    input[name="FXNF"] {
+        margin-bottom: 10px;
+    }
+</style>
+
+<form class="form-horizontal" method="get" action="modules/FD_ctl.jsp?action=QuarterAnalyze">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>基金科季度度分析设置
+        </legend>
+
+        <div class="control-group">
+            <label class="control-label">分析时间</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c" name="FXNF" max-length="4">
+                <div>
+                    <label class="radio">
+                        <input type="radio" name="FXJD" value="0" checked>一季度
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="FXJD" value="1">二季度
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="FXJD" value="2">二季度
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="FXJD" value="3">四季度
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分析险种</label>
+            <div class="controls">
+                <select name="InsuType">
+                    <option value="0">企业养老保险</option>
+                    <option value="3">失业保险</option>
+                    <option value="4">职工基本医疗保险</option>
+                    <option value="7">工伤保险</option>
+                    <option value="8">生育保险</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">分析内容</label>
+            <div class="controls">
+                <select name="StatType">
+                    <option value="0">总收入/总支出年度环比</option>
+                    <option value="1">征缴收入/待遇支出年度环比</option>
+                    <option value="2">总收入/总支出年度环比增幅百分比</option>
+                    <option value="3">征缴收入/待遇支出年度环比增幅百分比</option>
+                    <option value="4">历年累计结余年度环比</option>
+                    <option value="5">历年累计结余年度环比增幅百分比</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">对比区域</label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440700">市区
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440704">江海
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440781">台山
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440705">新会
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440783">开平
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="AREABOX[]" value="440785">恩平
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <input type="submit" class="btn btn-primary" value="开始分析">
+            <input type="reset" class="btn" value="重置">
+        </div>
+
+    </div>
+
+</form>
+
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.on('submit', function(ev) {
+        ev.preventDefault();
+        var fxnf = $form.find('[name="FXNF"]').val();
+        if(fxnf == "" ) {
+            alert("分析时间不能为空");
+            return false;
+        }
+        var query = $form.serialize();
+        console.log(query);
+        loadPage('html/FT_QuarterAR.html?' + query);
+    });
+    var  $datepicker = $frame.find('.datepicker_c');
+    $datepicker.datepicker({
+        //"changeMonth" : false,
+        "changeYear" : true,
+        "dateFormat" : 'yy'
+    });
+</script>

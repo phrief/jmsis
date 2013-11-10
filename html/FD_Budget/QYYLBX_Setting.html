@@ -1,0 +1,179 @@
+
+<meta charset="UTF-8" />
+
+<style>
+    label, input[type="text"] {
+        display: inline-block;
+    }
+    label {
+        width: 50%;
+        text-align: right;
+        margin-right: 5px;
+    }
+    input[type="text"] {
+        width: 35%;
+        margin-bottom: 5px;
+    }
+</style>
+
+<form id="form-qyylbx" method="post" action="">
+    <div class="block">
+        <legend>
+            <i class="icon-check"></i>编制设置 - 企业养老保险
+        </legend>
+
+        <fieldset>
+            <legend>征缴相关参数</legend>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="control-group">
+                        <label>参数增长率</label>
+                        <input type="text" name="Growrate" />
+                    </div>
+                    <div class="control-group">
+                        <label>个人缴费率</label>
+                        <input type="text" name="Indirate" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>单位缴费率</label>
+                        <input type="text" name="Unitrate" />
+                    </div>
+                    <div class="control-group">
+                        <label>其他人员缴费率</label>
+                        <input type="text" name="Othertrate" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>用人单位征缴率</label>
+                        <input type="text" name="Unitcorate" />
+                    </div>
+                    <div class="control-group">
+                        <label>其他人员征缴率</label>
+                        <input type="text" name="Othercorate" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>利息相关参数</legend>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="control-group">
+                        <label>定期存款金额</label>
+                        <input type="text" name="Deamount" />
+                    </div>
+                    <div class="control-group">
+                        <label>定期存款年数</label>
+                        <input type="text" name="Deyears" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>定期存款年利率</label>
+                        <input type="text" name="Deyearpa" />
+                    </div>
+                    <div class="control-group">
+                        <label>当年到期定存额</label>
+                        <input type="text" name="Madeamount" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>活期存款金额</label>
+                        <input type="text" name="Dedeamount" />
+                    </div>
+                    <div class="control-group">
+                        <label>活期存款利息</label>
+                        <input type="text" name="Dedeaminter" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>其他相关参数</legend>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="control-group">
+                        <label>财政补贴收入</label>
+                        <input type="text" name="Fsbincome" />
+                    </div>
+                    <div class="control-group">
+                        <label>其他收入</label>
+                        <input type="text" name="Otherincome" />
+                    </div>
+                    <div class="control-group">
+                        <label>转移收入人数</label>
+                        <input type="text" name="Traninpl" />
+                    </div>
+                    <div class="control-group">
+                        <label>转移收入金额</label>
+                        <input type="text" name="Traninmy" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>上级补助收入</label>
+                        <input type="text" name="Hisub" />
+                    </div>
+                    <div class="control-group">
+                        <label>下级上解收入</label>
+                        <input type="text" name="Losub" />
+                    </div>
+                    <div class="control-group">
+                        <label>医疗补助金支出</label>
+                        <input type="text" name="Mepay" />
+                    </div>
+                    <div class="control-group">
+                        <label>丧葬抚恤支出</label>
+                        <input type="text" name="Aidpay" />
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label>转移支出人数</label>
+                        <input type="text" name="Tranoutpl" />
+                    </div>
+                    <div class="control-group">
+                        <label>转移支出金额</label>
+                        <input type="text" name="Tranoutmy" />
+                    </div>
+                    <div class="control-group">
+                        <label>补助下级指出</label>
+                        <input type="text" name="Hipay" />
+                    </div>
+                    <div class="control-group">
+                        <label>上级上解支出</label>
+                        <input type="text" name="Lopay" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="control-group">
+            <input type="hidden" name="BZLX" value="QYYLBX">
+            <input type="submit" value="提交" class="btn btn-primary">
+            <input type="reset" value="重置" class="btn">
+        </div>
+    </div>
+</form>
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.ajaxForm({
+        success: function(data) {
+            var resObj = {};
+            try {
+                resObj = _.isObject(data) ? data : $.parseJSON(data);
+            } catch (err) {}
+            var msg = resObj['__MESSAGE__'];
+            msg && alert(msg);
+            // todo
+            // loadPage('html/FD_BudgetDetail?ID=' + id);
+        }
+    });
+</script>
+

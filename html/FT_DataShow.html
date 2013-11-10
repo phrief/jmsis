@@ -1,0 +1,92 @@
+
+<meta charset="UTF-8">
+
+<style>
+    #table-list th:nth-child(1) {
+        min-width: 140px;
+    }
+</style>
+
+<!-- 表格 -->
+<table id="table-list" class="hidden">
+    <caption>
+        <i class="icon-th-list"></i>社会保险基金收支月报表
+    </caption>
+    <thead>
+    <tr>
+        <th>
+            区域: <span name="SSQY"></span>
+        </th>
+        <th colspan="5">
+            <span name="CNNY"></span>
+        </th>
+        <th>单位: 万元</th>
+    </tr>
+    <tr>
+        <th></th>
+        <th>总收入</th>
+        <th>其中: 征缴收入</th>
+        <th>总支出</th>
+        <th>其中: 待遇支出</th>
+        <th>当年收支对比</th>
+        <th>历年累计结存数</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="td-sole" colspan="7">没有记录</td>
+        </tr>
+    </tbody>
+</table>
+<!-- /表格 -->
+
+<script type="tempalte" id="tr-tmpl">
+<tr>
+    <td>{{ row.title }}</td>
+    <td>{{ row[0] }}</td>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[3] }}</td>
+    <td>{{ row[4] }}</td>
+    <td>{{ row[5] }}</td>
+</tr>
+</script>
+<script>
+    var $table_list = $frame.find('#table-list'),
+            $tbody = $table_list.find('tbody'),
+            trTmpl = $('#tr-tmpl').html(),
+            titles = [
+                '一、企业养老保险', '其中:统筹账户', '个人账户',
+                    '二、失业保险', '三、职工基本医疗保险',
+                    '其中:统筹账户', '个人账户',
+                    '四、工伤保险', '五、生育保险', '合计'
+            ],
+            params = getURLParams(),
+            itemID = parseInt(params['ID']);
+
+    $.get('modules/FD_ctl.jsp?action=detail&target=FT_Data', {
+        'ID': itemID
+    }, function(resTxt) {
+        var resObj = $.parseJSON(resTxt);
+        _.each(['SSQY', 'CNNY'], function(name) {
+            $frame.find('[name="'+ name +'"]').text(resObj[name]);
+        });
+        var matrix = _.reduce(resObj['TVALUES'], function(memo, val, key) {
+            var mat = key.match(/(\d+)_(\d+)/),
+                    r = parseInt(mat[1]),
+                    c = parseInt(mat[2]);
+            memo[r] = memo[r] || [];
+            memo[r][c] = val;
+            return memo;
+        }, []);
+        var tbodyHtml = _.reduce(matrix, function(memo, row, i) {
+            row.title = titles[i];
+            var rowHtml = _.template(trTmpl, row, {
+                variable: 'row'
+            });
+            return memo + rowHtml;
+        }, '');
+        $tbody.html(tbodyHtml);
+        $table_list.removeClass('hidden');
+    });
+</script>

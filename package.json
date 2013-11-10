@@ -1,0 +1,10 @@
+{
+	"name": "jmsis-public",
+	"version": "0.0.4",
+	"description": "Public frontend files of Jiangmen Social Insurance System",
+	"authors": ["Fritz-Lium", "huangruichang"],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Fritz-Lium/jmsis-public.git"
+    }
+}

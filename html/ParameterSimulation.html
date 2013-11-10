@@ -1,0 +1,326 @@
+<meta charset="UTF-8">
+
+<style>
+    textarea {
+        resize: none;
+        width: 400px;
+        height: 180px;
+    }
+</style>
+
+<script>
+    var $oldDialogs = $body.children('[role="dialog"]');
+    [].forEach.call($oldDialogs, function(el){
+        el.parentNode.removeChild(el);
+    })
+</script>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    模拟参数设置
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form">
+                    <div class="block">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="control-group">
+                                    <label class="control-label">开始年份</label>
+                                    <div class="controls">
+                                        <input type="text" class="datepicker_c" name="KSNF">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">结束年份</label>
+                                    <div class="controls">
+                                        <input type="text" class="datepicker_c" name="JSNF">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">总人口(万人)</label>
+                                    <div class="controls">
+                                        <input type="text" name="ZRK" value="130">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">养老金征缴率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="YLJZJL" value="98.4">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">个人缴费率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="GRJFL" value="8">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="control-group">
+                                    <label class="control-label">单位缴费率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="DWJFL" value="18">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">养老金制度覆盖率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="YLJZDFGL" value="100">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">非公有制经济参保率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="FGYZJJCBL" value="38">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">公有制经济参保率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="GYZJJCBL" value="95">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">个体经济参保率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="GTJJCBL" value="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="开始分析" class="btn btn-primary">
+                            <input type="reset" value="重置" class="btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block">
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+<div id="par_redAlert" class="dialog_c" title="警告！">
+    <p>余额不足3个月！</p>
+</div>
+<div id="par_yellowAlert" class="dialog_c" title="警告！">
+    <p>余额不足半年！</p>
+</div>
+<script>
+    var myDate = new Date();
+    $('[name="KSNF"]').val(myDate.getFullYear() - 3);
+    $('[name="JSNF"]').val(myDate.getFullYear() + 2);
+    $(".datepicker_c").datepicker({
+        //"changeMonth" : false,
+        "changeYear" : true,
+        "dateFormat" : 'yy'
+    });
+    $( ".dialog_c" ).dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 500
+        },
+        hide: {
+            effect: "blind",
+            duration: 500
+        }
+    });
+</script>
+
+<script>
+
+    var $form = $frame.find('form');
+
+    $form.on('submit', function(ev) {
+        ev.preventDefault();
+        var ksyf = $form.find('[name="KSNF"]').val();
+        var jsyf = $form.find('[name="JSNF"]').val();
+        if(ksyf == "" || jsyf == "") {
+            alert("开始年份和结束年份均不能为空");
+            return false;
+        }
+
+        var ksnf = $('[name="KSNF"]').val();
+        var jsnf = $('[name="JSNF"]').val();
+        var zrk = $('[name="ZRK"]').val();
+        var yljzjl = $('[name="YLJZJL"]').val();
+        var grjfl = $('[name="GRJFL"]').val();
+        var dwjfl = $('[name="DWJFL"]').val();
+        var yljzdfgl = $('[name="YLJZDFGL"]').val();
+        var fgyzjjcbl = $('[name="FGVZJJCBL"]').val();
+        var gyzjjcbl = $('[name="GVZJJCBL"]').val();
+        var gtjjcbl = $('[name="GTJJCBL"]').val();
+
+        /*$.ajax({
+         url : 'modules/PI_ctl.jsp?action=PolicySimulation',
+         data : {
+         'KSNF' : ksnf,
+         'JSNF' : jsnf,
+         'ZRK' : zrk,
+         'yljzjl' : yljzjl,
+         'grjfl' : grjfl,
+         'dwjfl' : dwjfl,
+         'yljzdfgl' : yljzdfgl,
+         'fgyzjjcbl' : fgyzjjcbl,
+         'gyzjjcbl' : gyzjjcbl,
+         'gtjjcbl' : gtjjcbl
+         },
+         success : function(htmlStr) {
+         //makeChart(htmlStr);
+         //alert('success');
+         makeChart(htmlStr);
+         }
+         });*/
+        makeChart(htmlStr);
+    });
+
+</script>
+
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+<script>
+    function makeChart(htmlStr) {
+        var resObj = JSON.parse(htmlStr);
+        if(resObj) {
+            var years = resObj['YEARS'];
+            var division = resObj['DIVISION'];
+            var income = resObj['INCOME'];
+            var payout = resObj['PAYOUT'];
+            var balance = resObj['BALANCE'];
+            var yellow = parseInt(resObj['YELLOW']);
+            var red = parseInt(resObj['RED']);
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var isYellow = false;
+            var isRed = false;
+
+            var incomeArr = new Array();
+            var payoutArr = new Array();
+            var balanceArr = new Array();
+            var yellowLine = new Array();
+            var redLine = new Array();
+            for(var i=0; i < years.length; i++) {
+                incomeArr.push(parseInt(income[i]));
+                payoutArr.push(parseInt(payout[i]));
+                balanceArr.push(parseInt(balance[i]));
+                yellowLine.push(yellow);
+                redLine.push(red);
+                if(balanceArr[i] < red) {
+                    isRed = true;
+                    continue;
+                }
+                if(balanceArr[i] < yellow) {
+                    isYellow = true;
+                }
+            }
+
+            years = makeAdapt(years);
+
+            $('#container').highcharts({
+                exporting: false,
+                chart: {
+
+                },
+                title: {
+                    text: '江门社保养老基金趋势预测图',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                }
+                ,
+                xAxis: {
+                    categories: years
+                },
+                yAxis: {
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [{
+                    name: '黄色警戒区域',
+                    data: yellowLine,
+                    type: 'areaspline',
+                    color: '#FFF68F',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '红色警戒区域',
+                    data: redLine,
+                    type: 'areaspline',
+                    color: '#FF4500',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '年收入',
+                    data: incomeArr,
+                    type: 'line',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '年支出',
+                    data: payoutArr,
+                    type: 'line',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '余额累计',
+                    data: balanceArr,
+                    type: 'line',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }]
+            });
+        } else {
+            alert('no data');
+        }
+        if(isYellow) $('#par_yellowAlert').dialog('open');
+        if(isRed) $('#par_redAlert').dialog('open');
+    }
+</script>
+
+<script>
+
+
+</script>
+
+<script>
+    var htmlStr = '{"YEARS":["2010","2011","2012","2013","2014","2015"],"DIVISION":"万元","INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950"],"YELLOW":"550","RED":"300","PERIOD":"2012年10月-2013年10月","AREA":"市区直属"}';
+    makeChart(htmlStr);
+</script>

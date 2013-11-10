@@ -1,0 +1,168 @@
+
+<meta charset="UTF-8" />
+
+<style>
+
+</style>
+
+<!-- 表顶 -->
+<div class="accordion" id="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    新建编制
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form id="form-query" class="form-horizontal" method="post" action="">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">编制类型</label>
+                            <div class="controls">
+                                <select name="BZLX">
+                                    <option value="QYYLBX">企业养老保险</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="hidden" name="page" value="1">
+                            <input type="submit" value="提交" class="btn btn-primary">
+                            <input type="reset" value="重置" class="btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /表顶 -->
+
+<!-- 表格 -->
+<table id="table-list">
+    <caption>
+        <i class="icon-th-list"></i>编制列表
+    </caption>
+    <thead>
+    <tr>
+        <th>
+            <input type="checkbox" class="check-all" data-name="DelNodes[]">
+        </th>
+        <th>编制类型</th>
+        <th>年度</th>
+        <th>编制人</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td class="td-sole" colspan="5">没有记录</td>
+    </tr>
+    </tbody>
+
+    <!-- 表底 -->
+    <tfoot>
+    <tr>
+        <td colspan="5">
+            <div class="pagination"></div>
+        </td>
+    </tr>
+    </tfoot>
+    <!-- /表底 -->
+</table>
+<!-- /表格 -->
+
+<script>
+    var $form_query = $frame.find('#form-query'),
+            $table_list = $('#table-list'),
+            $tbody = $table_list.find('tbody'),
+            $pagination = $table_list.find('.pagination');
+
+    // 检索
+    $form_query.ajaxForm({
+        success: function(data) {
+            var resObj = {};
+            try {
+                resObj = _.isObject(data) ? data : $.parseJSON(data);
+            } catch (err) {}
+            var msg = resObj['__MESSAGE__'];
+            msg && alert(msg);
+            var BZLX = $form_query.find('[name="BZLX"]').val();
+            loadPage('html/FD_Budget/' + BZLX + '_Setting.html');
+        }
+    });
+
+    //getPage(1);
+    showTable();
+
+    function getPage(n) {
+        $.get('', {
+            'Page': n
+        }, function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            showTable(resObj);
+        });
+    }
+    function showTable(resObj) {
+
+        // 测试数据
+        var fakePageList = [];
+        _.times(5, function(i) {
+            fakePageList.push({
+                'ID': i,
+                '编制类型': '企业养老保险',
+                '年度': '2013',
+                '编制人': '王柱'
+            });
+            resObj = {
+                '_curPage': 1,
+                '_pageCount': 1,
+                '_PageList': fakePageList
+            }
+        });
+
+        $table_list.addClass('hidden');
+        var pageList = resObj['_PageList'];
+        if (pageList.length < 1) {
+            $tbody.html([
+                '<tr>',
+                '<td class="td-sole" colspan="5">没有记录</td>',
+                '</tr>'
+            ].join(''));
+        } else {
+            var tbodyHtml = _.reduce(pageList, function(memo, item, i) {
+                return memo + [
+                    '<tr>',
+                    '<td>',
+                        '<input type="checkbox" class="check-all" data-name="DelNodes[]">',
+                    '</td>',
+                    '<td>'+ item['编制类型'] +'</td>',
+                    '<td>'+ item['年度'] +'</td>',
+                    '<td>'+ item['编制人'] +'</td>',
+                    '<td>',
+                        '<a href="?ID='+ item['ID'] +'">查看</a>',
+                        '&nbsp;&nbsp;|&nbsp;&nbsp;',
+                        '<a href="?ID='+ item['ID'] +'">修改</a>',
+                    '</td>',
+                    '</tr>'
+                ].join('');
+            }, '');
+            $tbody.html(tbodyHtml);
+        }
+        // 分页
+        $pagination.html([
+            '<span><a onclick="getPage(1)">首页</a></span>',
+            '<span><a onclick="getPage('+ Math.max((resObj['_curPage'] - 1), 1) +')">上一页</a></span>',
+            '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+            '<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
+            '<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
+        ].join(''));
+        $table_list.removeClass('hidden');
+    }
+</script>
+

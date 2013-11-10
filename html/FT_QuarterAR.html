@@ -1,0 +1,274 @@
+
+<meta charset="UTF-8">
+
+<div class="block">
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	<div id="container_" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+<script>
+function makeChart(htmlStr) {
+
+	var resObj = JSON.parse(htmlStr);
+	if(resObj) {
+		var charttype = parseInt(resObj['CHARTTYPE']);
+		var fxjd = resObj['FXJD'];
+		var period = parseInt(resObj['PERIOD']);
+		
+		//柱状图
+		if(charttype == 0) {
+			var areas = resObj['AREAS'];
+			var last = resObj['LAST'];
+			var current = resObj['CURRENT'];
+			var period = resObj['PERIOD'];
+			
+			var division = resObj['DIVISION'];
+			var type = resObj['TYPE'];
+			var kind = resObj['KIND'];
+
+			var lastArr = new Array();
+			var currentArr = new Array();
+			for(var i=0; i < areas.length; i++) {
+				lastArr.push(parseInt(last[i]));
+				currentArr.push(parseInt(current[i]));
+			}
+			var name1,name2;
+			if(type == '总收入同季度同比') {
+				name1 = period + fxjd + '总收入';
+				name2 = (period-1) + fxjd + '总收入';
+			}
+			if(type == '征缴收入同季度同比') {
+				name1 = period + fxjd + '征缴收入';
+				name2 = (period-1) + fxjd + '征缴收入';
+			}
+			if(type == '总支出同季度同比') {
+				name1 = period + fxjd + '总支出';
+				name2 = (period-1) + fxjd + '总支出';
+			}
+			if(type == '待遇支出同季度同比') {
+				name1 = period + fxjd + '征缴支出';
+				name2 = (period-1) + fxjd + '征缴支出';
+			}
+			
+			$('#container').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: kind + ':' +type,
+					style: {
+						fontFamily: '微软雅黑'
+					}
+				},
+				xAxis: {
+					categories: areas
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: '单位(' + division + ')'
+					}
+				},
+				series: [{
+					name: name1,
+					data: currentArr
+		
+				}, {
+					name: name2,
+					data: lastArr
+		
+				}]
+			});
+		}
+		
+		//单折线图
+		if(charttype == 1) {
+			var areas = resObj['AREAS'];
+			var income = resObj['INCOME'];
+			var division = resObj['DIVISION'];
+			
+			var type = resObj['TYPE'];
+			var kind = resObj['KIND'];
+
+			var incomeArr = new Array();
+			for(var i=0; i < areas.length; i++) {
+				incomeArr.push(parseInt(income[i]));
+			}
+			var name;
+			if(type == '总收入同季度同比增幅百分比') {
+				name = period + fxjd + '总收入同比增幅百分比';
+			}
+			if(type == '征缴收入同季度同比增幅百分比') {
+				name = period + fxjd + '征缴收入同比增幅百分比';
+			}
+			if(type == '总支出同季度同比增幅百分比') {
+				name = period + fxjd + '总支出同比增幅百分比';
+			}
+			if(type == '待遇支出同季度同比增幅百分比') {
+				name = period + fxjd + '征缴支出同比增幅百分比';
+			}
+			if(type == '历季度累计结余同比增幅百分比') {
+				name = period + fxjd + '累计结存同比增幅百分比';
+			}
+			$('#container').highcharts({
+				chart: {
+					type: 'line'
+				},
+				title: {
+					text: kind + ':' +type,
+					style: {
+						fontFamily: '微软雅黑'
+					}
+				},
+				xAxis: {
+					categories: areas
+				},
+				yAxis: {
+					title: {
+						text: '单位(' + division + ')'
+					}
+				},
+				series: [{
+					name: name,
+					data: incomeArr
+		
+				}]
+			});
+		}
+				//双柱状图
+		if(charttype == 2) {
+            $('#container').css('height','200px');
+            $('#container_').css('height','200px');
+			var areas = resObj['AREAS'];
+			var balance = resObj['BALANCE'];
+			var okmonths = resObj['OKMONTHS'];
+			var balance_p = resObj['BALANCE_P'];
+			var okmonths_p = resObj['OKMONTHS_P'];
+			var division = resObj['DIVISION'];
+			
+			var type = resObj['TYPE'];
+			var kind = resObj['KIND'];
+			
+			var name1,name2,name3,name4;
+			name1 = period + fxjd + '累计结余';
+			name2 = (period-1) + fxjd + '累计结余';
+			name3 = period + fxjd + '累计结余可支付月数';
+			name4 = (period-1) + fxjd + '累计结余可支付月数';
+
+			var balanceArr = new Array();
+			var okmonthsArr = new Array();
+			var balance_pArr = new Array();
+			var okmonths_pArr = new Array();
+			for(var i=0; i < areas.length; i++) {
+				balanceArr.push(parseInt(balance[i]));
+				okmonthsArr.push(parseInt(okmonths[i]));
+				balance_pArr.push(parseInt(balance_p[i]));
+				okmonths_pArr.push(parseInt(okmonths_p[i]));
+			}
+			//出两张图
+			$('#container').highcharts({
+				chart: {
+					height: 200
+				},
+				title: {
+					text: kind + ':' +type,
+					style: {
+						fontFamily: '微软雅黑'
+					}
+				},
+				
+				xAxis: [{
+					categories: areas
+				}],
+				yAxis: [{
+					title: {
+						text: '累计余额(' + division + ')'
+					}
+				}],
+				series: [{
+					name: name1,
+					color: '#4572A7',
+					type: 'column',
+					//yAxis: 1,
+					data: balanceArr
+				}, {
+					name: name2,
+					color: '#89A54E',
+					type: 'column',
+					data: balance_pArr
+				}]
+			});
+
+			$('#container_').highcharts({
+				chart: {
+					height: 200
+				},
+				title: {
+					text: "",
+					style: {
+						fontFamily: '微软雅黑'
+					}
+				},
+				
+				xAxis: [{
+					categories: areas
+				}],
+				yAxis: [{
+					title: {
+						text: '可支付月数'
+					}
+				}],
+				series: [{
+					name: name3,
+					color: '#4572A7',
+					type: 'column',
+					//yAxis: 1,
+					data: okmonthsArr
+				}, {
+					name: name4,
+					color: '#89A54E',
+					type: 'column',
+					data: okmonths_pArr
+				}]
+			});
+		}
+	} else {
+		alert('no data');
+	}
+}
+</script>
+
+
+<script>
+    var params = getURLParams();
+    var fxnf = params['FXNF'];
+    var fxjd = params['FXJD'];
+    var insutype = params['InsuType'];
+    var stattype = params['InsuType'];
+    var areabox = params['AREABOX[]'];
+
+    console.log(params);
+    console.log(fxnf);
+    console.log(fxjd);
+    console.log(insutype);
+    console.log(stattype);
+    console.log(areabox);
+    $.ajax({
+        url : 'modules/FD_ctl.jsp?action=chart&target=QuarterAnalyze',
+        data : {
+            'AREA' : areabox,
+            'InsuType' : insutype,
+            'StatType' : stattype,
+            'FXNF' : fxnf,
+            'FXJD' : fxjd
+        },
+        success : function(htmlStr) {
+            //makeChart(htmlStr);
+            alert('success');
+        }
+    });
+	var htmlStr = '{"CHARTTYPE":"2","AREAS":["市区","蓬江","江海","台山"],"LAST":["1000","1500","1300","1250"],"CURRENT":["600","550","450","700"],"PERIOD":"2012","DIVISION":"万元","TYPE":"总收入同季度同比增幅百分比","KIND":"企业养老保险","BALANCE":["39460","51980","536292","341209","0","57639"],"OKMONTHS":["14","14","129","126","0","127"],"FXJD":"3季度","BALANCE_P":["39460","51980","536292","341209","0","57639"],"OKMONTHS_P":["14","14","129","126","0","127"],"INCOME":["2147483647","2147483647","2147483647","0"]}';
+	makeChart(htmlStr);
+</script>
+
+
+
