@@ -1,41 +1,61 @@
 
 <meta charset="UTF-8">
 
+<style>
+	#table-list th:nth-child(7),
+	#table-list td:nth-child(7) {
+		width: 40px;
+		padding-left: 40px;
+	}
+</style>
+
 <!-- 表格 -->
 <form id="form-list" method="post" action="modules/FD_ctl.jsp?action=del&target=FT_Data">
-	<table id="table-list" class="hidden">
+	<table id="table-list" class="hidden" data-colspans="7">
 		<caption>
 			<i class="icon-th-list"></i>社保基金月报数据列表
 		</caption>
 		<thead>
 			<tr>
 				<th>
-				    <input type="checkbox" data-name="DelNodes" class="check-all">
+					<input type="checkbox" data-name="DelNodes" class="check-all" />
 				</th>
 				<th>所属月份</th>
 				<th>所属区域</th>
-				<th>总收入(万)</th>
-				<th>总支出(万)</th>
-				<th>累计结余(万)</th>
+				<th class="text-right">总收入(万)</th>
+				<th class="text-right">总支出(万)</th>
+				<th class="text-right">累计结余(万)</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 
 		<tbody>
-            <tr>
-                <td class="td-sole" colspan="7">没有记录</td>
-            </tr>
+			<script type="text/html" id="tr-tmpl">
+				<tr>
+					<td>
+						<input type="checkbox" name="DelNodes[]" value="{{item['ID']}}" />
+					</td>
+					<td>{{item['SSYF']}}</td>
+					<td>{{item['SSQY']}}</td>
+					<td class="text-right">{{item['ZSR']}}</td>
+					<td class="text-right">{{item['ZZC']}}</td>
+					<td class="text-right">{{item['LJJY']}}</td>
+					<td>
+						<a href="html/FT_DataShow.html?ID={{item['ID']}}">详细</a>
+					</td>
+				</tr>
+			</script>
 		</tbody>
 
 		<!-- 表底 -->
 		<tfoot>
 			<tr>
 				<td colspan="7">
-                    <div class="bulk-actions align-left">
-                        <input type="submit" value="删除记录" class="btn btn-danger">
-                    </div>
-                    <div class="pagination"></div>
-                </td>
+					<div class="bulk-actions align-left">
+						<input type="submit" value="删除记录" class="btn btn-danger" onclick="return confirm('删除的信息将无法恢复 是否确认继续?')" />
+					</div>
+					<div class="pagination"></div>
+				</td>
 			</tr>
 		</tfoot>
 		<!-- /表底 -->
@@ -60,10 +80,10 @@
 			<div class="controls">
 				<label class="radio">
 					<input name="_OVERWRITE" type="radio" value="0" checked="">忽略
-                </label>
+				</label>
 				<label class="radio">
 					<input name="_OVERWRITE" type="radio" value="1">改写
-                </label>
+				</label>
 
 			</div>
 		</div>
@@ -72,10 +92,10 @@
 			<div class="controls">
 				<label class="radio">
 					<input name="_DTYPE" type="radio" value="0">月数据
-                </label>
+				</label>
 				<label class="radio">
 					<input name="_DTYPE" type="radio" value="1">年数据
-                </label>
+				</label>
 			</div>
 		</div>
 		<div class="control-group">
@@ -86,86 +106,77 @@
 <!-- /表单-->
 
 <script>
-    var $form_list = $frame.find('#form-list'),
-            $table_list = $form_list.find('#table-list'),
-            $pagination = $table_list.find('.pagination'),
-            $form_import = $frame.find('#form-import'),
-            validExts = ['xls'],
-            params = getURLParams(),
-            page = parseInt(params['page']) || 1;
+	var $form_list = $frame.find('#form-list'),
+			$table_list = $form_list.find('#table-list'),
+			$tbody = $table_list.find('tbody'),
+			$pagination = $table_list.find('.pagination'),
+			$form_import = $frame.find('#form-import'),
+			validExts = ['xls'],
+			params = getURLParams(),
+			page = parseInt(params['page']) || 1,
+			trTmpl = $tbody.find('#tr-tmpl').html();
 
-    $form_import.on('submit', function(event) {
-        event.preventDefault();  // 禁止默认转页行为
-    }).find('[name="_XLSFILE"]').ajaxfileupload({
-        submit_button: $form_import.find('[type="submit"]'),
-        'action': 'modules/FD_ctl.jsp?action=import&target=FT_Data',
-        valid_extensions: validExts,
-        onCancel: function() {
-            alert('请选择文件');
-        },
-        onComplete: function(resObj) {
-            if (_.isObject(resObj) && 'status' in resObj && ! resObj['status']) {
-                alert('仅支持格式 ' + validExts.join(', '));
-                return $form_import[0].reset();
-            }
-            if (_.isString(resObj)) {
-                var resTxt = resObj;
-                resTxt.match(/^[^\{]*(\{[\s\S]*\})[^\}]*$/);
-                json = RegExp.$1;
-                resObj = JSON.parse(json);
-            }
-            resObj['__MESSAGE__'] && alert(resObj['__MESSAGE__']);
-            reloadPage();
-        }
-    });
-    $form_list.ajaxForm({
-        success: function(resTxt) {
-            var resObj = $.parseJSON(resTxt),
-                    msg = resObj['__MESSAGE__'];
-            msg && alert(msg);
-            reloadPage();
-        }
-    });
+	$form_import.on('submit', function(event) {
+		event.preventDefault();  // 禁止默认转页行为
+	}).find('[name="_XLSFILE"]').ajaxfileupload({
+		submit_button: $form_import.find('[type="submit"]'),
+		'action': 'modules/FD_ctl.jsp?action=import&target=FT_Data',
+		valid_extensions: validExts,
+		onCancel: function() {
+			alert('请选择文件');
+		},
+		onComplete: function(resObj) {
+			if (_.isObject(resObj) && 'status' in resObj && ! resObj['status']) {
+				alert('仅支持格式 ' + validExts.join(', '));
+				return $form_import[0].reset();
+			}
+			if (_.isString(resObj)) {
+				var resTxt = resObj;
+				resTxt.match(/^[^\{]*(\{[\s\S]*\})[^\}]*$/);
+				json = RegExp.$1;
+				resObj = JSON.parse(json);
+			}
+			resObj['__MESSAGE__'] && alert(resObj['__MESSAGE__']);
+			reloadPage();
+		}
+	});
+	$form_list.ajaxForm({
+		success: function(resTxt) {
+			var resObj = $.parseJSON(resTxt),
+					msg = resObj['__MESSAGE__'];
+			msg && alert(msg);
+			reloadPage();
+		}
+	});
 
-    $.get('modules/FD_ctl.jsp?action=list&target=FT_Data', {
-        'page': page
-    }, function(resTxt) {
-        var resObj = $.parseJSON(resTxt),
-                pageList = resObj['_PageList'],
-                $tbody = $table_list.find('tbody');
-        if (pageList.length === 0) {
-            return $tbody.html([
-                '<tr>',
-                    '<td class="td-sole" colspan="7">没有记录</td>',
-                '</tr>'
+	$.get('modules/FD_ctl.jsp?action=list&target=FT_Data', {
+		'page': page
+	}, function(resTxt) {
+		var resObj = $.parseJSON(resTxt),
+				pageList = resObj['_PageList'];
+		if (! pageList || pageList.length === 0) {
+			$tbody.html([
+				'<tr>',
+					'<td class="text-center" colspan="7">没有记录</td>',
+				'</tr>'
+			].join(''));
+		} else {
+            var tbodyHtml = _.reduce(pageList, function(memo, item) {
+                var trHtml = _.template(trTmpl, item, {
+                    variable: 'item'
+                });
+                return memo + trHtml;
+            }, '');
+            $tbody.html(tbodyHtml);
+            // 分页
+            $pagination.html([
+                '<span><a href="html/FT_DataList.html?page=1">首页</a></span>',
+                '<span><a href="html/FT_DataList.html?page='+ Math.max((resObj['_curPage'] - 1), 1) +'">上一页</a></span>',
+                '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+                '<span><a href="html/FT_DataList.html?page='+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +'">下一页</a></span>',
+                '<span><a href="html/FT_DataList.html?page='+ resObj['_pageCount'] +'">尾页</a></span>'
             ].join(''));
         }
-        var tbodyHtml = _.reduce(pageList, function(memo, item) {
-            return memo + [
-                '<tr>',
-                    '<td>',
-                        '<input type="checkbox" name="DelNodes[]" value="'+ item['ID'] +'">',
-                    '</td>',
-                    '<td>'+ item['SSYF'] +'</td>',
-                    '<td>'+ item['SSQY'] +'</td>',
-                    '<td>'+ item['ZSR'] +'</td>',
-                    '<td>'+ item['ZZC'] +'</td>',
-                    '<td>'+ item['LJJY'] +'</td>',
-                    '<td>',
-                        '<a href="html/FT_DataShow.html?ID='+ item['ID'] +'">详细</a>',
-                    '</td>',
-                '</tr>'
-            ].join('');
-        }, '');
-        $tbody.html(tbodyHtml);
-        $table_list.removeClass('hidden');
-        // 分页
-        $pagination.html([
-            '<span><a href="html/FT_DataList.html?page=1">首页</a></span>',
-            '<span><a href="html/FT_DataList.html?page='+ Math.max((resObj['_curPage'] - 1), 1) +'">上一页</a></span>',
-            '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
-            '<span><a href="html/FT_DataList.html?page='+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +'">下一页</a></span>',
-            '<span><a href="html/FT_DataList.html?page='+ resObj['_pageCount'] +'">尾页</a></span>'
-        ].join(''));
-    });
+		$table_list.removeClass('hidden');
+	});
 </script>

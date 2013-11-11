@@ -90,8 +90,7 @@
 
 
 <script>
-	var params = getURLParams(),
-		userID = params['ID'],
+	var userID = parseInt(getURLParams()['ID']),
 		$form = $frame.find('form');
 	
 	$.get('modules/UserManage_ctl.jsp', {
@@ -100,18 +99,18 @@
 	}, function(resTxt) {
 		var resObj = JSON.parse(resTxt),
 			pageValue = resObj['_PageValue'],
-			qysy = parseInt(pageValue['QYSY']),
+			qysy = pageValue['QYSY'],
 			$areaboxes = $form.find('[name="AREABOX[]"]');
 		_.each(pageValue, function(val, key) {
 			$form.find('[name="'+ key +'"]').val(val);
 		});
 		// 地区选项
+        var areas = qysy.split('|');
 		$areaboxes.each(function(i, el) {
-			var $el = $(el),
-				_2_val = Math.pow(2, parseInt($el.val()));
-			if ((qysy & _2_val) === _2_val) {	// 优先级： `===` > `&`
-				$el[0].checked = true;
-			}
+			var $el = $(el);
+            if (_.contains(areas, $el.val())) {
+                el.checked = true;
+            }
 		});
 	});
 	

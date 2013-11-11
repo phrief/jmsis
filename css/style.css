@@ -95,6 +95,9 @@ legend>i, caption>i {
 .text-center {
     text-align: center;
 }
+.text-right {
+    text-align: right;
+}
 
 /* 去除 highcharts.com LOGO */
 svg > text:last-child {

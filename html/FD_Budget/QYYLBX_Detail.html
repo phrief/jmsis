@@ -1,20 +1,129 @@
 <meta charset="utf-8" />
 
 <style>
+	table th:nth-child(2),
+	table th:nth-child(3),
+	table th:nth-child(5),
+	table th:nth-child(6) {
+		width: 60px;
+	}
 </style>
 
-<table class="table-striped">
+<table id="table" class="hidden" data-colspans="6">
 	<caption>
-	    <i class="icon-th-list"></i>二〇一三年企业职工基本养老保险基金预算表
+		<i class="icon-th-list"></i>二〇一三年企业职工基本养老保险基金预算表
 	</caption>
 	<thead>
-	<tr>
-		<th colspan="6" class="text-right">社预02表</th>
-	</tr>
-	<tr>
-		<th colspan="5">江门市</th>
-		<th class="text-right">单位: 元</th>
-	</tr>
+		<tr>
+			<th>社预02表</th>
+			<th colspan="4">区域: 江门市</th>
+			<th class="text-right">单位: 元</th>
+		</tr>
+		<tr>
+			<th>项目</th>
+			<th>2012年执行数</th>
+			<th>2013年预算数</th>
+			<th>项目</th>
+			<th>2012年执行数</th>
+			<th>2013年预算数</th>
+		</tr>
 	</thead>
-	<tbody></tbody>
+	<tbody>
+		<tr>
+			<td>一、基本养老保险费收入</td><td></td><td></td>
+			<td>一、基本养老金支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>二、利息收入</td><td></td><td></td>
+			<td>二、医疗补助金支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>三、财政补贴收入</td><td></td><td></td>
+			<td>三、丧葬抚恤补助支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>其中: 本级财政补助</td><td></td><td></td>
+			<td></td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>四、其他收入</td><td></td><td></td>
+			<td>四、其他支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>五、转移收入</td><td></td><td></td>
+			<td>五、转移支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>六、本年收入小计</td><td></td><td></td>
+			<td>六、本年支出小计</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>七、上级补助收入</td><td></td><td></td>
+			<td>七、补助下级支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>八、下级上解收入</td><td></td><td></td>
+			<td>八、上解上级支出</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>九、本年收入合计</td><td></td><td></td>
+			<td>九、本年支出合计</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td></td><td></td><td></td>
+			<td>十、本年收支结余</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>十、上年结余</td><td></td><td></td>
+			<td>十一、年末滚存结余</td><td></td><td></td>
+		</tr>
+		<tr>
+			<td>总结</td><td></td><td></td>
+			<td>总结</td><td></td><td></td>
+		</tr>
+	</tbody>
 </table>
+
+<script>
+	var $table = $frame.find('table'),
+		budgetID = parseInt(getURLParams()['ID']);
+
+
+	// 测试数据
+
+	var resObj = {};
+	showTable(resObj);
+	/*
+	$.get('modules/FD_ctl.jsp?action=Detail' + budgetID, {
+		'ID': budgetID
+	}, function(resTxt){
+		var resObj = $.parseJSON(resTxt);
+		showTable(resObj);
+	});
+	*/
+
+	function showTable(resObj){
+		var $tbody = $table.find('tbody');
+
+		// 测试数据
+		var fakeTVALUES = {};
+		_.times(5, function(i) {
+			
+		});
+		resObj = {
+			'TVALUES': fakeTVALUES
+		}
+
+		$table.addClass('hidden');
+		var tValues = resObj['TVALUES'],
+		matrix = _.reduce(tValues, function(memo, val, key) {
+			var mat = key.match(/(\w)(\d+)/),
+					r = parseInt(mat[1].charCodeAt(0) - 65),
+					c = parseInt(mat[2] - 1);
+			memo[r] = memo[r] || [];
+			memo[r][c] = val;
+			return memo;
+		}, []);
+		$table.removeClass('hidden');
+	}
+</script>

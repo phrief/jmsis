@@ -1,13 +1,13 @@
 
 _.templateSettings = {
-    interpolate: /\{\{(.+?)\}\}/g
+	interpolate: /\{\{(.+?)\}\}/g
 }
 
 // 全局变量
 var global = {},
-    $body = $('body'),
+	$body = $('body'),
 	$frame = $body.find('#main-frame'),
-    hrefPage = window.location.hash.substr(1);
+	hrefPage = location.hash.substr(1);
 
 // 默认所有ajax不缓存
 $.ajaxSetup({
@@ -16,7 +16,7 @@ $.ajaxSetup({
 
 // hash改变时自动加载子页面
 $(window).on('hashchange', function() {
-	var href = window.location.hash.substr(1);
+	var href = location.hash.substr(1);
 	if (href && href !== hrefPage) {
 		loadPage(href);
 	}
@@ -25,17 +25,17 @@ $(window).on('hashchange', function() {
 
 // 获取url参数
 function getURLParams(hash) {
-    var pat = /([^?=&#]*)=([^?=&#]+)/g, params = {};
-    decodeURIComponent(hash || window.location.hash)
-        .replace(pat, function(a, b, c){
-            if (b in params) {  // 已有该键
-                if (! _.isArray(params[b])) params[b] = [params[b]];    // 数组化
-                params[b].push(c);
-            } else {
-                params[b] = c;
-            }
-        });
-    return params;
+	var pat = /([^?=&#]*)=([^?=&#]+)/g, params = {};
+	decodeURIComponent(hash || location.hash)
+		.replace(pat, function(a, b, c){
+			if (b in params) {  // 已有该键
+				if (! _.isArray(params[b])) params[b] = [params[b]];	// 数组化
+				params[b].push(c);
+			} else {
+				params[b] = c;
+			}
+		});
+	return params;
 }
 
 // 刷新子页面
@@ -44,23 +44,23 @@ function reloadPage(success) {
 }
 // ajax加载子页面
 function loadPage(href, success){
-    console.log('正在加载子页面 ' + href);
+	//console.log('正在加载子页面 ' + href);
 	$.ajax({
 		url: href,
 		success: function(data){
-            try {
-                var obj = $.parseJSON(data);
-                if (! obj['__LOGINED__']) {    // 若未登录
-                    window.location.href = '.';
-                    return;
-                }
-            } catch(err) {}
+			try {
+				var obj = $.parseJSON(data);
+				if (! obj['__LOGINED__']) {	// 若未登录
+					location.href = '.';
+					return;
+				}
+			} catch(err) {}
 
-            window.location.hash = hrefPage = href;
-            $(window).scrollTop(0);
+			location.hash = hrefPage = href;
+			$(window).scrollTop(0);
 
-            // 移除对话框
-            //$body.children('[role="dialog"]').remove();
+			// 移除对话框
+			//$body.children('[role="dialog"]').remove();
 
 			$frame.html(data);
 
@@ -86,8 +86,8 @@ function loadPage(href, success){
 			success && success();
 		},
 		error: function(){
-            alert('子页面 '+ href +' 加载失败!');
-            window.location.back();
+			alert('子页面 '+ href +' 加载失败!');
+			history.back();
 		}
 	});
 }

@@ -8,7 +8,7 @@
 </style>
 
 <!-- 表格 -->
-<table id="table-list" class="hidden">
+<table id="table-list" class="hidden" data-colspans="7">
     <caption>
         <i class="icon-th-list"></i>社会保险基金收支月报表
     </caption>
@@ -20,41 +20,38 @@
         <th colspan="5">
             <span name="CNNY"></span>
         </th>
-        <th>单位: 万元</th>
+        <th class="text-right">单位: 万元</th>
     </tr>
     <tr>
         <th></th>
-        <th>总收入</th>
-        <th>其中: 征缴收入</th>
-        <th>总支出</th>
-        <th>其中: 待遇支出</th>
-        <th>当年收支对比</th>
-        <th>历年累计结存数</th>
+        <th class="text-right">总收入</th>
+        <th class="text-right">其中: 征缴收入</th>
+        <th class="text-right">总支出</th>
+        <th class="text-right">其中: 待遇支出</th>
+        <th class="text-right">当年收支对比</th>
+        <th class="text-right">历年累计结存数</th>
     </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="td-sole" colspan="7">没有记录</td>
-        </tr>
+        <script type="text/html" id="tr-tmpl">
+            <tr>
+                <td>{{row.title}}</td>
+                <td class="text-right">{{row[0]}}</td>
+                <td class="text-right">{{row[1]}}</td>
+                <td class="text-right">{{row[2]}}</td>
+                <td class="text-right">{{row[3]}}</td>
+                <td class="text-right">{{row[4]}}</td>
+                <td class="text-right">{{row[5]}}</td>
+            </tr>
+        </script>
     </tbody>
 </table>
 <!-- /表格 -->
 
-<script type="tempalte" id="tr-tmpl">
-<tr>
-    <td>{{ row.title }}</td>
-    <td>{{ row[0] }}</td>
-    <td>{{ row[1] }}</td>
-    <td>{{ row[2] }}</td>
-    <td>{{ row[3] }}</td>
-    <td>{{ row[4] }}</td>
-    <td>{{ row[5] }}</td>
-</tr>
-</script>
 <script>
     var $table_list = $frame.find('#table-list'),
             $tbody = $table_list.find('tbody'),
-            trTmpl = $('#tr-tmpl').html(),
+            trTmpl = $tbody.find('#tr-tmpl').html(),
             titles = [
                 '一、企业养老保险', '其中:统筹账户', '个人账户',
                     '二、失业保险', '三、职工基本医疗保险',
@@ -81,10 +78,10 @@
         }, []);
         var tbodyHtml = _.reduce(matrix, function(memo, row, i) {
             row.title = titles[i];
-            var rowHtml = _.template(trTmpl, row, {
+            var trHtml = _.template(trTmpl, row, {
                 variable: 'row'
             });
-            return memo + rowHtml;
+            return memo + trHtml;
         }, '');
         $tbody.html(tbodyHtml);
         $table_list.removeClass('hidden');

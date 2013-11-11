@@ -1,5 +1,5 @@
 
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 
 <style>
     #table-list th {
@@ -8,8 +8,13 @@
     #table-list th:nth-child(1) {
         min-width: 0;
     }
+    #table-list th:nth-child(4),
+    #table-list td:nth-child(4) {
+        padding-right: 20px;
+    }
     #table-list th:nth-child(6) {
         min-width: 40px;
+        width: 40px;
     }
 </style>
 
@@ -87,24 +92,39 @@
 		<thead>
 			<tr>
 				<th>
-					<input type="checkbox" class="check-all" data-name="DelNodes[]">
+					<input type="checkbox" class="check-all" data-name="DelNodes[]" />
 				</th>
 				<th>扫描时间</th>
 				<th>扫描状态</th>
-				<th>记录数</th>
+				<th class="text-right">记录数</th>
 				<th>扫描项</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 	
-		<tbody></tbody>
+		<tbody>
+            <script type="text/html" id="tr-tmpl">
+                <tr>
+                    <td>
+                        <input type="checkbox" name="DelNodes[]" value="{{item['ID']}}" />
+                    </td>
+                    <td>{{item['SMSJ']}}</td>
+                    <td>{{item['SMZT']}}</td>
+                    <td class="text-right">{{item['JLS']}}</td>
+                    <td>{{item['SMX']}}</td>
+                    <td>
+                        <a href="html/PI_AUPLDetail.html?ID={{item['ID']}}">详细</a>
+                    </td>
+                </tr>
+            </script>      
+        </tbody>
 	
 		<!-- 表底 -->
 		<tfoot>
 			<tr>
 				<td colspan="6">
                     <div class="bulk-actions align-left">
-                        <input type="submit" class="btn btn-danger" value="删除记录" >
+                        <input type="submit" class="btn btn-danger" value="删除记录" onclick="return confirm('删除的信息将无法恢复 是否确认继续?')" />
                     </div>
                     <div class="pagination"></div>
                 </td>
@@ -122,7 +142,8 @@
         $form_list = $('#form-list'),
         $table_list = $('#table-list'),
         $tbody = $table_list.find('tbody'),
-        $pagin = $table_list.find('.pagination');
+        $pagin = $table_list.find('.pagination'),
+        trTmpl = $tbody.find('#tr-tmpl').html();
 
     $frame.find(".datepicker_c").datepicker({
 		"changeYear" : true,
@@ -162,34 +183,6 @@
         });
     }
     function showTable(resObj) {
-
-        // 测试数据
-        /*var fakePageList = [];
-        _.times(_.random(5, 10), function(i) {
-            fakePageList.push({
-                'ID': i + 1,
-                'TIME': _.sample([
-                    '2013-10-30 10:19:31',
-                    '2013-10-30 09:21:14',
-                    '2013-10-28 15:48:45',
-                    '2013-10-17 23:15:15'
-                ]),
-                'STATUS': '已完成',
-                'AMOUNT': _.random(0, 500),
-                'CONDITION': _.sample([
-                    '扫描2013年07月个人月发放养老金大于3000元的参保户。',
-                    '扫描2013年06月个人月发放养老金与上月差额大于2000元的参保户。',
-                    '扫描2013年07月个人月发放养老金与上月差额大于10元的参保户。',
-                    '扫描2011年04月个人一次性待遇发放大于20000元的参保户。'
-                ])
-            });
-        });
-        resObj = {
-            '_curPage': 1,
-            '_pageCount': 1,
-            '_PageList': fakePageList
-        }*/
-
         $table_list.addClass('hidden');
         var pageList = resObj['_PageList'];
         if (! pageList || pageList.length < 1) {
@@ -200,20 +193,10 @@
             ].join(''));
         } else {
             var tbodyHtml = _.reduce(pageList, function(memo, item) {
-                return memo + [
-                    '<tr>',
-                        '<td>',
-                            '<input type="checkbox" name="DelNodes[]" value="'+ item['ID'] +'">',
-                        '</td>',
-                        '<td>'+ item['SMSJ'] +'</td>',
-                        '<td>'+ item['SMZT'] +'</td>',
-                        '<td>'+ item['JLS'] +'</td>',
-                        '<td>'+ item['SMX'] +'</td>',
-                        '<td>',
-                            '<a href="html/PI_AUPLDetail.html?ID='+ item['ID'] +'">详细</a>',
-                        '</td>',
-                    '</tr>'
-                ].join('');
+                var trHtml = _.template(trTmpl, item, {
+                    variable: 'item'
+                });
+                return memo + trHtml;
             }, '');
             $tbody.html(tbodyHtml);
             // 分页
