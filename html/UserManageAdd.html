@@ -2,88 +2,88 @@
 <meta charset="UTF-8">
 
 <form class="form-horizontal" method="post" action="modules/UserManage_ctl.jsp?action=saveuser">
-    <div class="block">
-        <legend>
-            <i class="icon-check"></i>添加用户
-        </legend>
-        <div class="control-group">
-            <label class="control-label">用户名 </label>
-            <div class="controls">
-                <input type="text" name="YHM">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">中文名 </label>
-            <div class="controls">
-                <input type="text" name="ZWM">
-            </div>
-        </div>
+   <div class="block">
+	   <legend>
+		   <i class="icon-check"></i>添加用户
+	   </legend>
+	   <div class="control-group">
+		   <label class="control-label">用户名</label>
+		   <div class="controls">
+			   <input type="text" name="YHM">
+		   </div>
+	   </div>
+	   <div class="control-group">
+		   <label class="control-label">中文名</label>
+		   <div class="controls">
+			   <input type="text" name="ZWM">
+		   </div>
+	   </div>
 
-        <div class="control-group">
-            <label class="control-label">用户密码 </label>
-            <div class="controls">
-                <input type="password" name="PASS1">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">密码验证 </label>
-            <div class="controls">
-                <input type="password" name="PASS2">
-            </div>
-        </div>
+	   <div class="control-group">
+		   <label class="control-label">用户密码</label>
+		   <div class="controls">
+			   <input type="password" name="PASS1">
+		   </div>
+	   </div>
+	   <div class="control-group">
+		   <label class="control-label">密码验证</label>
+		   <div class="controls">
+			   <input type="password" name="PASS2">
+		   </div>
+	   </div>
 
-        <div class="control-group">
-            <label class="control-label">所属区域 </label>
-            <div class="controls">
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440700">市区
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440703">蓬江
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440704">江海
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440781">台山
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440705">新会
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440783">开平
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440784">鹤山
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440785">恩平
-                </label>
-            </div>
-        </div>
+	   <div class="control-group">
+		   <label class="control-label">所属区域</label>
+		   <div class="controls">
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440700">市区
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440704">江海
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440781">台山
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440705">新会
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440783">开平
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+			   </label>
+			   <label class="checkbox">
+				   <input type="checkbox" name="AREABOX[]" value="440785">恩平
+			   </label>
+		   </div>
+	   </div>
 
-        <div class="control-group">
-            <label class="control-label">权限说明 </label>
-            <div class="controls">
-                <input type="text" name="DW">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">备注 </label>
-            <div class="controls">
-                <textarea name="BZ" rows="5">系统管理员，管理系统所有权限和基础数据设置</textarea>
-            </div>
-        </div>
+	   <div class="control-group">
+		   <label class="control-label">权限说明</label>
+		   <div class="controls">
+			   <input type="text" name="DW">
+		   </div>
+	   </div>
+	   <div class="control-group">
+		   <label class="control-label">备注</label>
+		   <div class="controls">
+			   <textarea name="BZ" rows="5" placeholder="系统管理员，管理系统所有权限和基础数据设置"></textarea>
+		   </div>
+	   </div>
 
-        <div class="control-group">
-            <button type="submit" class="btn btn-primary">
-                保存信息
-            </button>
-            <button class="btn" href="html/UserManageList.html">
-                返回列表
-            </button>
-        </div>
-    </div>
+	   <div class="control-group">
+		   <button type="submit" class="btn btn-primary">
+				保存信息
+		   </button>
+		   <button class="btn" href="html/UserManageList.html">
+				返回列表
+		   </button>
+	   </div>
+   </div>
 </form>
 
 <script>

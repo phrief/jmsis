@@ -1,5 +1,10 @@
 
 <meta charset="UTF-8">
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 
 <style>
 	#table-list th {
@@ -42,7 +47,7 @@
 							<label class="control-label">区域选择</label>
 							<div class="controls">
 								<select name="AREA">
-									<option value="440700">市区</option>
+									<option value="440700">市直</option>
 									<option value="440703">蓬江</option>
 									<option value="440704">江海</option>
 									<option value="440705">新会</option>
@@ -118,10 +123,19 @@
             trTmpl = $tbody.find('#tr-tmpl').html();
 
 	$frame.find('.datepicker_c').datepicker({
-		"changeYear" : true,
-		"changeMonth": true,
-		"dateFormat" : 'yy-mm'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy-mm',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month));
+        }
 	});
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
 
 	// 检索
 	$form_query.ajaxForm({

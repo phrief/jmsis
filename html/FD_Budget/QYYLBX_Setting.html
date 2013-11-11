@@ -157,7 +157,8 @@
 </form>
 
 <script>
-	var $form = $frame.find('form');
+	var budgetID = parseInt(getURLParams()['ID']),
+		$form = $frame.find('form');
 
 	$form.ajaxForm({
 		success: function(data) {
@@ -173,9 +174,11 @@
 			loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + ID);
 		}
 	}).find('#btn-reset').on('click', function() {
-		if (confirm('所有参数的修改都将撤销 确定继续?')) {
+		if (confirm('当前所有修改都将撤销 是否确定重置表单?')) {
 			$form[0].reset();
 		}
 	});
+
+	//$.get();
 </script>
 

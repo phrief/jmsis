@@ -69,7 +69,7 @@
             $frame.find('[name="'+ name +'"]').text(resObj[name]);
         });
         var matrix = _.reduce(resObj['TVALUES'], function(memo, val, key) {
-            var mat = key.match(/(\d+)_(\d+)/),
+            var mat = key.match(/^(\d+)_(\d+)$/),
                     r = parseInt(mat[1]),
                     c = parseInt(mat[2]);
             memo[r] = memo[r] || [];

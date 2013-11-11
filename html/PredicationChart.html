@@ -1,5 +1,11 @@
 <meta charset="UTF-8">
 
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
 <script>
     var $oldDialogs = $body.children('[role="dialog"]');
     [].forEach.call($oldDialogs, function(el){
@@ -25,13 +31,13 @@
 				<div class="control-group">
 					<label class="control-label">开始年份</label>
 					<div class="controls">
-						<input type="text" class="datepicker_k" name="KSNF"/>
+						<input type="text" class="datepicker_c" name="KSNF"/>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">结束年份</label>
 					<div class="controls">
-						<input type="text" class="datepicker_j" name="JSNF"/>
+						<input type="text" class="datepicker_c" name="JSNF"/>
 					</div>
 				</div>
 				<div class="control-group">
@@ -62,23 +68,19 @@
     $('[name="KSNF"]').val(myDate.getFullYear() - 3);
     $('[name="JSNF"]').val(myDate.getFullYear() + 2);
 
-    $(".datepicker_k").datepicker({
-        dateFormat : 'yy',
-        changeYear : true,
-        onChangeMonthYear : function() {
-            var year = $('[data-handler="selectYear"]').val();
-            $('[name="KSNF"]').val(year);
+    $(".datepicker_c").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month));
         }
     });
-
-
-    $(".datepicker_j").datepicker({
-        changeYear : true,
-        dateFormat : 'yy',
-        onChangeMonthYear : function() {
-            var year = $('[data-handler="selectYear"]').val();
-            $('[name="JSNF"]').val(year);
-        }
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
     });
 
 
@@ -91,7 +93,15 @@
         hide: {
             effect: "blind",
             duration: 500
-        }
+        },
+        modal: true,
+        buttons: {
+            确定: function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        resizable: false,
+        draggable: false
     });
 </script>
 

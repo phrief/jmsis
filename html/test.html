@@ -1,4 +1,11 @@
 <meta charset="UTF-8">
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+
 
 <div class="accordion" id="accordion2">
     <div class="accordion-group">
@@ -19,14 +26,14 @@
                             <label class="control-label">开始月份</label>
 
                             <div class="controls">
-                                <input type="text" class="datepicker_k" name="KSYF"/>
+                                <input type="text" class="datepicker_c" name="KSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">结束月份</label>
 
                             <div class="controls">
-                                <input type="text" class="datepicker_j" name="JSYF"/>
+                                <input type="text" class="datepicker_c" name="JSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
@@ -173,34 +180,26 @@
 </script>
 
 <script>
-    var myDate = new Date();
-    $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-    $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
-    $(function() {
-        $(".datepicker_k").datepicker({
-            altField: '.datepicker_k',
-            dateFormat : 'yy-mm',
-            changeYear : true,
-            changeMonth: true ,
-            onChangeMonthYear : function() {
-                var year = $('[data-handler="selectYear"]').val();
-                var month = parseInt($('[data-handler="selectMonth"]').val()) + 1;
-                $('[name="KSYF"]').val(year + '-' + month);
+    $(function(){
+        var myDate = new Date();
+        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
+        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+
+        $(".datepicker_c").datepicker({
+            changeMonth: true,
+            changeYear: true,
+
+            dateFormat: 'yy-mm',
+            onClose: function(dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
             }
         });
     });
-    $(function() {
-        $(".datepicker_j").datepicker({
-            altField: '.datepicker_j',
-            changeYear : true,
-            changeMonth: true,
-            dateFormat : 'yy-mm',
-            onChangeMonthYear : function() {
-                var year = $('[data-handler="selectYear"]').val();
-                var month = parseInt($('[data-handler="selectMonth"]').val()) + 1;
-                $('[name="JSYF"]').val(year + '-' + month);
-            }
-        });
+
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
     });
 </script>
 

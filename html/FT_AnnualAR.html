@@ -148,7 +148,8 @@ function makeChart(htmlStr) {
 			var okmonths = resObj['OKMONTHS'];
 			var period = resObj['PERIOD'];
 			var area = resObj['AREA'];
-			var division = resObj['DIVISION'];
+			var division1 = resObj['DIVISION1'];
+            var division2 = resObj['DIVISION2'];
 			var type = resObj['TYPE'];
 			var kind = resObj['KIND'];
 			var balanceArr = new Array();
@@ -180,25 +181,34 @@ function makeChart(htmlStr) {
 				}],
 				yAxis: [{
 					title: {
-						text: '单位(' + division + ')'
+						text: '单位(' + division1 + ')'
 					}
 				}, {
 					title: {
-						text: '可支付月数'
+						text:  '单位(' + division2 + ')'
 					},
 					opposite: true
 				}],
+                tooltip: {
+                    shared: true
+                },
 				series: [{
 					name: '历年累计结余',
 					color: '#4572A7',
 					type: 'column',
 					yAxis: 1,
-					data: okmonthsArr
+					data: okmonthsArr,
+                    tooltip: {
+                        valueSuffix: division1
+                    }
 				}, {
-					name: '历年累计结余',
+					name: '可支付月数',
 					color: '#89A54E',
 					type: 'line',
-					data: balanceArr
+					data: balanceArr,
+                    tooltip: {
+                        valueSuffix: division2
+                    }
 				}]
 			});
 		}

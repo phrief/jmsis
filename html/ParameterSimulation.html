@@ -1,6 +1,12 @@
 <meta charset="UTF-8">
 
 <style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<style>
     textarea {
         resize: none;
         width: 400px;
@@ -120,10 +126,20 @@
     $('[name="KSNF"]').val(myDate.getFullYear() - 3);
     $('[name="JSNF"]').val(myDate.getFullYear() + 2);
     $(".datepicker_c").datepicker({
-        //"changeMonth" : false,
-        "changeYear" : true,
-        "dateFormat" : 'yy'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month));
+        }
     });
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+
     $( ".dialog_c" ).dialog({
         autoOpen: false,
         show: {
@@ -133,7 +149,15 @@
         hide: {
             effect: "blind",
             duration: 500
-        }
+        },
+        modal: true,
+        buttons: {
+            确定: function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        resizable: false,
+        draggable: false
     });
 </script>
 

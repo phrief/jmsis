@@ -1,5 +1,11 @@
 <meta charset="UTF-8">
 
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
 <form class="form-horizontal" method="post" action="modules/FD_ctl.jsp?action=chart&target=AnnualAnalyze">
     <div class="block">
         <legend>
@@ -50,7 +56,7 @@
             <label class="control-label">分析区域</label>
             <div class="controls">
                 <select name="AREA">
-                    <option value="440700">市区</option>
+                    <option value="440700">市直</option>
                     <option value="440703">蓬江</option>
                     <option value="440704">江海</option>
                     <option value="440781">台山</option>
@@ -74,10 +80,20 @@
 <script>
     var $datepicker = $frame.find('.datepicker_c');
     $datepicker.datepicker({
-        //"changeMonth" : false,
-        "changeYear" : true,
-        "dateFormat" : 'yy'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month));
+        }
     });
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+
 </script>
 
 <script>

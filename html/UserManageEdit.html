@@ -37,7 +37,7 @@
             <label class="control-label">所属区域 </label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440700">市区
+                    <input type="checkbox" name="AREABOX[]" value="440700">市直
                 </label>
                 <label class="checkbox">
                     <input type="checkbox" name="AREABOX[]" value="440703">蓬江
@@ -90,7 +90,7 @@
 
 
 <script>
-	var userID = parseInt(getURLParams()['ID']),
+	var userID = getURLParams()['ID'],
 		$form = $frame.find('form');
 	
 	$.get('modules/UserManage_ctl.jsp', {

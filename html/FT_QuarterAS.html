@@ -2,6 +2,12 @@
 <meta charset="UTF-8">
 
 <style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<style>
     input[name="FXNF"] {
         margin-bottom: 10px;
     }
@@ -51,12 +57,16 @@
             <label class="control-label">分析内容</label>
             <div class="controls">
                 <select name="StatType">
-                    <option value="0">总收入/总支出年度环比</option>
-                    <option value="1">征缴收入/待遇支出年度环比</option>
-                    <option value="2">总收入/总支出年度环比增幅百分比</option>
-                    <option value="3">征缴收入/待遇支出年度环比增幅百分比</option>
-                    <option value="4">历年累计结余年度环比</option>
-                    <option value="5">历年累计结余年度环比增幅百分比</option>
+                    <option value="0">总收入同季度同比</option>
+                    <option value="1">征缴收入同季度同比</option>
+                    <option value="2">总支出同季度同比</option>
+                    <option value="3">待遇支出同季度同比</option>
+                    <option value="4">总收入同季度同比增幅百分比</option>
+                    <option value="5">征缴收入同季度同比增幅百分比</option>
+                    <option value="6">总支出同季度同比增幅百分比</option>
+                    <option value="7">待遇支出同季度同比增幅百分比</option>
+                    <option value="8">历季度累计结余季度同比</option>
+                    <option value="9">历季度累计结余同比增幅百分比</option>
                 </select>
             </div>
         </div>
@@ -65,7 +75,7 @@
             <label class="control-label">对比区域</label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name="AREABOX[]" value="440700">市区
+                    <input type="checkbox" name="AREABOX[]" value="440700">市直
                 </label>
                 <label class="checkbox">
                     <input type="checkbox" name="AREABOX[]" value="440703">蓬江
@@ -117,8 +127,17 @@
     });
     var  $datepicker = $frame.find('.datepicker_c');
     $datepicker.datepicker({
-        //"changeMonth" : false,
-        "changeYear" : true,
-        "dateFormat" : 'yy'
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) {
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month));
+        }
+    });
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
     });
 </script>
