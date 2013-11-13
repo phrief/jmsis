@@ -14,7 +14,7 @@
 		padding: 5px;
 	}
 
-	#table input[type="text"] {
+	#form [type="text"] {
 		width: 94%;
 		padding: 1px 2px;
 		margin-bottom: 0;
@@ -45,7 +45,7 @@
 		</script>
 		<tbody>
 			<script type="text/html" id="tmpl-input">
-				<input type="text" name="{{name}}" value="{{value}}" />
+				<input type="text" name="{{name}}" value="{{value}}" placeholder="{{value}}" />
 			</script>
 			<tr>
 				<td>一、基本养老保险费收入</td><td></td><td></td>
@@ -107,7 +107,7 @@
 						<input type="submit" class="btn btn-primary" value="保存修改"
 							onclick="return confirm('确定要保存所做的修改?')" />
 						<input type="button" id="btn-reset" value="重置" class="btn" />
-						<button class="btn" id="btn-setting">返回参数设置</button>
+						<button class="btn" id="btn-params">返回参数设置</button>
 					</div>
 					<div class="pagination"></div>
 				</td>
@@ -122,6 +122,7 @@
 		$table = $frame.find('#table'),
 		$form = $frame.find('#form');
 
+	
 	$form.ajaxForm({
 		success: function(data) {
 			var resObj = {};
@@ -141,9 +142,9 @@
 			$form[0].reset();
 		}
 	});
-	$form.find('#btn-setting').attr('href', 'html/FD_Budget/QYYLBX_Setting.html?ID=' + budgetID);
+	$form.find('#btn-params').attr('href', 'html/FD_Budget/QYYLBX_Params.html?ID=' + budgetID);
 
-	showTable(null);
+	
 	/*
 	$.get('modules/FD_ctl.jsp?action=Detail' + budgetID, {
 		'ID': budgetID
@@ -152,6 +153,7 @@
 		showTable(resObj);
 	});
 	*/
+	showTable(null);
 
 	function showTable(resObj){
 

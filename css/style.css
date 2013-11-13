@@ -1,46 +1,46 @@
 body {
-    line-height: 1 !important;
+	line-height: 1 !important;
 }
 .hidden {
-    display: none;
+	display: none;
 }
 a, input[type="checkbox"], input[type="radio"] {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 /* 表单 form */
 textarea {
-    resize: none;
-    width: 360px !important;
-    height: 180px;
+	resize: none;
+	width: 360px !important;
+	height: 180px;
 }
 .form-horizontal .control-label {
-    width: 190px !important;
+	width: 190px !important;
 }
 .form-horizontal .controls {
-    margin-left: 210px !important;
+	margin-left: 210px !important;
 }
 legend {
-    font-weight: bold;
-    margin-bottom: 0;
-    border-bottom: none;
+	font-weight: bold;
+	margin-bottom: 0;
+	border-bottom: none;
 }
 form legend {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #e5e5e5;
 }
 fieldset legend {
-    font-weight: normal;
-    font-size: 19px;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #e5e5e5;
+	font-weight: normal;
+	font-size: 19px;
+	margin-bottom: 10px;
+	border-bottom: 1px dashed #e5e5e5;
 }
 form label {
-    cursor: pointer;
+	cursor: pointer;
 }
 form label.checkbox, form label.radio {
-    display: inline-block;
-    margin-right: 28px;
+	display: inline-block;
+	margin-right: 28px;
 }
 
 
@@ -55,14 +55,13 @@ table>caption {
 	text-align: center;
 }
 table tbody tr:nth-child(odd) td {
-    background-color: #f3f3f3;
+	background-color: #f3f3f3;
 }
 table .td-sole {
 	text-align: center;
 }
 table th, table td {
-    word-break: break-all;
-    vertical-align: middle;
+	word-break: break-all;
 }
 
 .content-box-header {
@@ -84,26 +83,26 @@ legend>i, caption>i {
 }
 
 .accordion-toggle .icon-chevron-down {
-    display: none;
+	display: none;
 }
 .accordion-toggle .icon-chevron-up {
-    display: inline-block;
+	display: inline-block;
 }
 .accordion-toggle.collapsed .icon-chevron-down {
-    display: inline-block;
+	display: inline-block;
 }
 .accordion-toggle.collapsed .icon-chevron-up {
-    display: none;
+	display: none;
 }
 
 .text-center {
-    text-align: center;
+	text-align: center;
 }
 .text-right {
-    text-align: right;
+	text-align: right;
 }
 
 /* 去除 highcharts.com LOGO */
 svg > text:last-child {
-    display: none;
+	display: none;
 }

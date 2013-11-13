@@ -32,19 +32,19 @@ function makeChart(htmlStr) {
 				currentArr.push(parseInt(current[i]));
 			}
 			var name1,name2;
-			if(type == '总收入同季度同比') {
+			if(type == '总收入同季度同比分析图') {
 				name1 = period + fxjd + '总收入';
 				name2 = (period-1) + fxjd + '总收入';
 			}
-			if(type == '征缴收入同季度同比') {
+			if(type == '征缴收入同季度同比分析图') {
 				name1 = period + fxjd + '征缴收入';
 				name2 = (period-1) + fxjd + '征缴收入';
 			}
-			if(type == '总支出同季度同比') {
+			if(type == '总支出同季度同比分析图') {
 				name1 = period + fxjd + '总支出';
 				name2 = (period-1) + fxjd + '总支出';
 			}
-			if(type == '待遇支出同季度同比') {
+			if(type == '待遇支出同季度同比分析图') {
 				name1 = period + fxjd + '征缴支出';
 				name2 = (period-1) + fxjd + '征缴支出';
 			}
@@ -263,7 +263,7 @@ function makeChart(htmlStr) {
             'FXJD' : fxjd
         },
         success : function(htmlStr) {
-            //makeChart(htmlStr);
+            makeChart(htmlStr);
            // alert('success');
             console.log(htmlStr);
         }

@@ -5,6 +5,9 @@
     .ui-datepicker-calendar {
         display: none;
     }
+    .ui-datepicker-month {
+        display: none;
+    }
 </style>
 
 <style>
@@ -127,14 +130,14 @@
     });
     var  $datepicker = $frame.find('.datepicker_c');
     $datepicker.datepicker({
-        changeMonth: true,
+        //changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
         dateFormat: 'yy',
         onClose: function(dateText, inst) {
             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month));
+            $(this).datepicker('setDate', new Date(year));
         }
     });
     $('.datepicker_c').on('click', function(){
