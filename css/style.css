@@ -60,6 +60,10 @@ table tbody tr:nth-child(odd) td {
 table .td-sole {
 	text-align: center;
 }
+table th, table td {
+    word-break: break-all;
+    vertical-align: middle;
+}
 
 .content-box-header {
 	margin-bottom: -1px;

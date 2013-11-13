@@ -228,7 +228,7 @@ a.remove-link:hover {
 /************ Layout ************/
 
 #main-content {
-                margin: 0 20px 0 250px;
+                margin: 0 15px 0 245px;
                 padding: 10px 0 0 0;
                 }
 
@@ -334,7 +334,7 @@ ul.content-box-tabs li a.current {
                 }
 
 .content-box-content {
-                padding: 16px;
+                padding: 12px;
                 font-size: 13px;
                 border-top: 1px solid #ccc;
                 }
