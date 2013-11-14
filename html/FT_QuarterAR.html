@@ -94,19 +94,19 @@ function makeChart(htmlStr) {
 				incomeArr.push(parseInt(income[i]));
 			}
 			var name;
-			if(type == '总收入同季度同比增幅百分比') {
+			if(type == '总收入同季度同比增幅百分比分析图') {
 				name = period + fxjd + '总收入同比增幅百分比';
 			}
-			if(type == '征缴收入同季度同比增幅百分比') {
+			if(type == '征缴收入同季度同比增幅百分比分析图') {
 				name = period + fxjd + '征缴收入同比增幅百分比';
 			}
-			if(type == '总支出同季度同比增幅百分比') {
+			if(type == '总支出同季度同比增幅百分比分析图') {
 				name = period + fxjd + '总支出同比增幅百分比';
 			}
-			if(type == '待遇支出同季度同比增幅百分比') {
+			if(type == '待遇支出同季度同比增幅百分比分析图') {
 				name = period + fxjd + '征缴支出同比增幅百分比';
 			}
-			if(type == '历季度累计结余同比增幅百分比') {
+			if(type == '历季度累计结余同比增幅百分比分析图') {
 				name = period + fxjd + '累计结存同比增幅百分比';
 			}
 			$('#container').highcharts({
@@ -243,7 +243,7 @@ function makeChart(htmlStr) {
     var fxnf = params['FXNF'];
     var fxjd = params['FXJD'];
     var insutype = params['InsuType'];
-    var stattype = params['InsuType'];
+    var stattype = params['StatType'];
     var areabox = params['AREABOX[]'];
 
     console.log(params);

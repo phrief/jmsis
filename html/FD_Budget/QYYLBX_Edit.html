@@ -16,7 +16,7 @@
 
 	#form [type="text"] {
 		width: 94%;
-		padding: 1px 2px;
+		padding: 2px 3px;
 		margin-bottom: 0;
 	}
 </style>
@@ -131,10 +131,7 @@
 			} catch (err) {}
 			var msg = resObj['__MESSAGE__'];
 			msg && alert(msg);
-
-			// todo
-			var ID = resObj['ID'] || 123;
-			loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + ID);
+			loadPage('html/FD_Budget.html');
 		}
 	});
 	$form.find('#btn-reset').on('click', function() {

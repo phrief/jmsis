@@ -12,6 +12,7 @@
 	}
 	#form-qyylbx [type="text"] {
 		width: 35%;
+		padding: 2px 3px;
 		margin-bottom: 0;
 	}
 </style>
@@ -178,7 +179,7 @@
 		$form.on('submit', function(ev){
 			ev.preventDefault();
 			var ID = 222;
-			loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + ID);
+			loadPage('html/FD_Budget/QYYLBX_Edit.html?ID=' + ID);
 		});
 	} else {
 		/*
@@ -196,7 +197,7 @@
 		*/
 		$form.on('submit', function(ev){
 			ev.preventDefault();
-			loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + budgetID);
+			loadPage('html/FD_Budget/QYYLBX_Edit.html?ID=' + budgetID);
 		});
 
 		$.get('modules/FD_ctl.jsp?action=InitBudget', {
