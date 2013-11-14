@@ -1,243 +1,243 @@
 ﻿<meta charset="UTF-8">
 
 <style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
+	.ui-datepicker-calendar {
+		display: none;
+	}
 </style>
 
 <div class="accordion" id="accordion2">
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                <legend>
-                    <i class="icon-chevron-down"></i>
-                    <i class="icon-chevron-up"></i>
-                    查看区间
-                </legend>
-            </a>
-        </div>
-        <div id="collapseOne" class="accordion-body collapse">
-            <div class="accordion-inner">
-                <form class="form-horizontal" action="modules/PI_ctl.jsp?action=FundautoMonitor">
-                    <div class="block">
-                        <div class="control-group">
-                            <label class="control-label">开始月份</label>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				<legend>
+					<i class="icon-chevron-down"></i>
+					<i class="icon-chevron-up"></i>
+					查看区间
+				</legend>
+			</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<form class="form-horizontal" action="modules/PI_ctl.jsp?action=FundautoMonitor">
+					<div class="block">
+						<div class="control-group">
+							<label class="control-label">开始月份</label>
 
-                            <div class="controls">
-                                <input type="text" class="datepicker_c" name="KSYF"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">结束月份</label>
+							<div class="controls">
+								<input type="text" class="datepicker_c" name="KSYF"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">结束月份</label>
 
-                            <div class="controls">
-                                <input type="text" class="datepicker_c" name="JSYF"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">区域选择</label>
+							<div class="controls">
+								<input type="text" class="datepicker_c" name="JSYF"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">区域选择</label>
 
-                            <div class="controls">
-                                <select name="AREA">
-                                    <option value="440700">市直</option>
-                                    <option value="440703">蓬江</option>
-                                    <option value="440704">江海</option>
-                                    <option value="440781">台山</option>
-                                    <option value="440705">新会</option>
-                                    <option value="440783">开平</option>
-                                    <option value="440784">鹤山</option>
-                                    <option value="440785">恩平</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">账户类型</label>
+							<div class="controls">
+								<select name="AREA">
+									<option value="440700">市直</option>
+									<option value="440703">蓬江</option>
+									<option value="440704">江海</option>
+									<option value="440781">台山</option>
+									<option value="440705">新会</option>
+									<option value="440783">开平</option>
+									<option value="440784">鹤山</option>
+									<option value="440785">恩平</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">账户类型</label>
 
-                            <div class="controls">
-                                <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
-                                    <option value="2">合并账户</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
-                            <input type="reset" value="重置" class="btn"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+							<div class="controls">
+								<select name="ZHLX">
+									<option value="1">统筹账户</option>
+									<option value="0">个人账户</option>
+									<option value="2">合并账户</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+							<input type="reset" value="重置" class="btn"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="block">
-    <div><h3 id="chartname"></h3></div>
-    <div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-</div>
+
+<div><h3 id="chartname"></h3></div>
+<div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 
 <script>
-    //出图函数
-    function makeChart(htmlStr) {
-        var resObj = JSON.parse(htmlStr);
+	//出图函数
+	function makeChart(htmlStr) {
+		var resObj = JSON.parse(htmlStr);
 
-        if (resObj) {
-            var months = resObj['FUNDMONTHS'];
-            var division = resObj['FUNDDIVISION'];
-            var dataset = resObj['FUNDDATASET'];
-            var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
-            var type = resObj['TYPE'];
+		if (resObj) {
+			var months = resObj['FUNDMONTHS'];
+			var division = resObj['FUNDDIVISION'];
+			var dataset = resObj['FUNDDATASET'];
+			var period = resObj['PERIOD'];
+			var area = resObj['AREA'];
+			var type = resObj['TYPE'];
 
-            var income = new Array();
-            var payout = new Array();
-            var balance = new Array();
+			var income = new Array();
+			var payout = new Array();
+			var balance = new Array();
 
-            for (var i = 0; i < dataset.length; i++) {
-                income.push(parseInt(dataset[i]['income']));
-                payout.push(parseInt(dataset[i]['payout']));
-                balance.push(parseInt(dataset[i]['income']) - parseInt(dataset[i]['payout']));
-            }
+			for (var i = 0; i < dataset.length; i++) {
+				income.push(parseInt(dataset[i]['income']));
+				payout.push(parseInt(dataset[i]['payout']));
+				balance.push(parseInt(dataset[i]['income']) - parseInt(dataset[i]['payout']));
+			}
 
-            months = makeAdapt(months);
-            console.log(months);
+			months = makeAdapt(months);
+			console.log(months);
 
-            $('#MonthlyIAE').highcharts({
-                exporting: false,
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: area + '养老保险基金(' + type + ')走势图',
-                    x: -20,//center
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-                subtitle: {
-                    text: period,
-                    x: -20
-                },
-                xAxis: {
-                    categories: months,
-                    labels: {
-                        rotation: -45
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: '单位(' + division + ')'
-                    },
-                    plotLines: [
-                        {
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }
-                    ]
-                },
-                tooltip: {
-                    shared: true
-                },
-                series: [
-                    {
-                        name: '养老保险基金收入',
-                        data: income,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '养老保险基金支出',
-                        data: payout,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '养老保险基金余额',
-                        data: balance,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    }
-                ]
-            });
-        }
-    }
+			$('#MonthlyIAE').highcharts({
+				exporting: false,
+				chart: {
+					type: 'line'
+				},
+				title: {
+					text: area + '养老保险基金(' + type + ')走势图',
+					x: -20,//center
+					style: {
+						fontFamily: '微软雅黑'
+					}
+				},
+				subtitle: {
+					text: period,
+					x: -20
+				},
+				xAxis: {
+					categories: months,
+					labels: {
+						rotation: -45
+					}
+				},
+				yAxis: {
+					title: {
+						text: '单位(' + division + ')'
+					},
+					plotLines: [
+						{
+							value: 0,
+							width: 1,
+							color: '#808080'
+						}
+					]
+				},
+				tooltip: {
+					shared: true
+				},
+				series: [
+					{
+						name: '养老保险基金收入',
+						data: income,
+						tooltip: {
+							valueSuffix: division
+						}
+					},
+					{
+						name: '养老保险基金支出',
+						data: payout,
+						tooltip: {
+							valueSuffix: division
+						}
+					},
+					{
+						name: '养老保险基金余额',
+						data: balance,
+						tooltip: {
+							valueSuffix: division
+						}
+					}
+				]
+			});
+		}
+	}
 </script>
 
 <script>
-    $.ajax({
-        url: 'modules/PI_ctl.jsp',
-        success: function (htmlStr) {
-            makeChart(htmlStr);
-        }
-    });
+	$.ajax({
+		url: 'modules/PI_ctl.jsp',
+		success: function (htmlStr) {
+			makeChart(htmlStr);
+		}
+	});
 </script>
 
 <script>
-    $(function(){
-        var myDate = new Date();
-        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+	$(function(){
+		var myDate = new Date();
+		$('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
+		$('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
 
-        $(".datepicker_c").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            dateFormat: 'yy-mm',
-            onClose: function(dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).datepicker('setDate', new Date(year, month));
-            }
-        });
-    });
+		$(".datepicker_c").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm',
+			onClose: function(dateText, inst) {
+				var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+				var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+				$(this).datepicker('setDate', new Date(year, month));
+			}
+		});
+	});
 
-    $('.datepicker_c').on('click', function(){
-        $(this).datepicker('setDate', new Date($(this).val()));
-    });
+	$('.datepicker_c').on('click', function(){
+		$(this).datepicker('setDate', new Date($(this).val()));
+	});
 </script>
 
 
 <script>
-    var $form = $frame.find('form'),
-            $collapse = $('#collapseOne');
+	var $form = $frame.find('form'),
+			$collapse = $('#collapseOne');
 
-    $form.ajaxForm({
-        beforeSend: function () {
-            var ksyf = $form.find('[name="KSYF"]').val();
-            var jsyf = $form.find('[name="JSYF"]').val();
-            if (ksyf == "" || jsyf == "") {
-                alert("开始月份和结束月份均不能为空");
-                return false;
-            }
-        },
-        success: function (resTxt) {
-            makeChart(resTxt);
-            $(".collapse").collapse('hide');
-        }
-    });
+	$form.ajaxForm({
+		beforeSend: function () {
+			var ksyf = $form.find('[name="KSYF"]').val();
+			var jsyf = $form.find('[name="JSYF"]').val();
+			if (ksyf == "" || jsyf == "") {
+				alert("开始月份和结束月份均不能为空");
+				return false;
+			}
+		},
+		success: function (resTxt) {
+			makeChart(resTxt);
+			$(".collapse").collapse('hide');
+		}
+	});
 </script>
 
 <script>
-    function makeAdapt(years) {
-        if(years.length > 12) {
-            var len = years.length;
-            var delta = parseInt(len / 12);
-            var yearsAfter = new Array();
-            for(var i=0; i < len; i++) {
-                if(i % delta == 0)
-                    yearsAfter.push(years[i]);
-                else
-                    yearsAfter.push("");
-            }
-            return yearsAfter;
-        } else {
-            return years;
-        }
-    }
+	function makeAdapt(years) {
+		if(years.length > 12) {
+			var len = years.length;
+			var delta = parseInt(len / 12);
+			var yearsAfter = new Array();
+			for(var i=0; i < len; i++) {
+				if(i % delta == 0)
+					yearsAfter.push(years[i]);
+				else
+					yearsAfter.push("");
+			}
+			return yearsAfter;
+		} else {
+			return years;
+		}
+	}
 </script>
