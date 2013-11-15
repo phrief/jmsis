@@ -5,35 +5,38 @@
 	#table td:nth-child(4) {
 		padding-left: 30px;
 	}
-
+	
 	#table > thead > tr:last-child > th:nth-child(2), #table td:nth-child(2),
 	#table > thead > tr:last-child > th:nth-child(3), #table td:nth-child(3),
 	#table > thead > tr:last-child > th:nth-child(5), #table td:nth-child(5),
 	#table > thead > tr:last-child > th:nth-child(6), #table td:nth-child(6) {
 		min-width: 115px;
+		padding: 5px;
 		text-align: right;
 	}
 </style>
 
 <table id="table" class="hidden" data-colspans="6">
-	<caption>
-		<i class="icon-th-list"></i>二〇一三年企业职工基本养老保险基金预算表
-	</caption>
-	<thead>
-		<tr>
-			<th>社预02表</th>
-			<th colspan="4">区域: 江门市</th>
-			<th class="text-right">单位: 元</th>
-		</tr>
-		<tr>
-			<th>项目</th>
-			<th></th>
-			<th></th>
-			<th>项目</th>
-			<th></th>
-			<th></th>
-		</tr>
-	</thead>
+	<script type="text/html" id="tmpl-titles">
+		<caption>
+			<i class="icon-th-list"></i>{{year2}}年企业职工基本养老保险基金预算表
+		</caption>
+		<thead>
+			<tr>
+				<th>社预02表</th>
+				<th colspan="4">区域: 江门市</th>
+				<th class="text-right">单位: 元</th>
+			</tr>
+			<tr>
+				<th>项目</th>
+				<th>{{year1}}年执行数</th>
+				<th>{{year2}}年预算数</th>
+				<th>项目</th>
+				<th>{{year1}}年执行数</th>
+				<th>{{year2}}年预算数</th>
+			</tr>
+		</thead>
+	</script>
 	<tbody>
 		<tr>
 			<td>一、基本养老保险费收入</td><td></td><td></td>
@@ -94,16 +97,16 @@
 	var $table = $frame.find('table'),
 		budgetID = parseInt(getURLParams()['ID']);
 
-
-	showTable(null);
+	
 	/*
-	$.get('modules/FD_ctl.jsp?action=Detail' + budgetID, {
+	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
 	}, function(resTxt){
 		var resObj = $.parseJSON(resTxt);
 		showTable(resObj);
 	});
 	*/
+	showTable(null);
 
 	function showTable(resObj){
 
@@ -159,19 +162,25 @@
 			"F14": "10962566591.33"
 		}
 		resObj = {
-			'TVALUES': fakeTVALUES
+			'TVALUES': fakeTVALUES,
+			'year': 2012
 		}
 
 		$table.addClass('hidden');
 		var tValues = resObj['TVALUES'],
-		matrix = _.reduce(tValues, function(memo, val, key){
-			var mat = key.match(/^(\w)(\d+)$/),
-					c = parseInt(mat[1].charCodeAt(0) - 65),
-					r = parseInt(mat[2] - 1);
-			memo[r] = memo[r] || [];
-			memo[r][c] = val;
-			return memo;
-		}, []);
+			year = resObj['year'],
+			$tmplTitles = $table.find('#tmpl-titles'),
+			matrix = _.reduce(tValues, function(memo, val, key){
+				var mat = key.match(/^(\w)(\d+)$/),
+						c = parseInt(mat[1].charCodeAt(0) - 65),
+						r = parseInt(mat[2] - 1);
+				memo[r] = memo[r] || [];
+				memo[r][c] = val;
+				return memo;
+			}, []);
+		$tmplTitles.after(_.template($tmplTitles.html(), {
+			year1: year, year2: year + 1
+		}));
 		var $trows = $table.find('thead > tr:last, tbody > tr');
 		_.each(matrix, function(row, i){
 			var $trow = $trows.eq(i);

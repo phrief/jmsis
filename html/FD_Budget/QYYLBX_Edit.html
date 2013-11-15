@@ -36,9 +36,9 @@
 				<tr>
 					<th>项目</th>
 					<th>{{year1}}年执行数</th>
-					<th>{{year1}}年预算数</th>
+					<th>{{year2}}年预算数</th>
 					<th>项目</th>
-					<th>{{year2}}年执行数</th>
+					<th>{{year1}}年执行数</th>
 					<th>{{year2}}年预算数</th>
 				</tr>
 			</thead>
@@ -143,7 +143,7 @@
 
 	
 	/*
-	$.get('modules/FD_ctl.jsp?action=Detail' + budgetID, {
+	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
 	}, function(resTxt){
 		var resObj = $.parseJSON(resTxt);

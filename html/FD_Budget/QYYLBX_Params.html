@@ -2,7 +2,7 @@
 <meta charset="utf-8" />
 
 <style>
-	#form-qyylbx label, input[type="text"] {
+	#form-qyylbx label, .input {
 		display: inline-block;
 	}
 	#form-qyylbx label {
@@ -10,10 +10,25 @@
 		text-align: right;
 		margin-right: 5px;
 	}
-	#form-qyylbx [type="text"] {
+
+	#form-qyylbx .input {
 		width: 35%;
+		
+	}
+	#form-qyylbx .input-append {
+		width: 100%;
+		margin-bottom: 0;
+	}
+	#form-qyylbx [type="text"] {
+		width: 100%;
 		padding: 2px 3px;
 		margin-bottom: 0;
+	}
+	#form-qyylbx .add-on {
+		padding: 2px 3px;
+		position: relative;
+		margin-left: -22px;
+		z-index: 2;
 	}
 </style>
 
@@ -29,27 +44,52 @@
 				<div class="span4">
 					<div class="control-group">
 						<label>个人缴费率</label>
-						<input type="text" name="Indirate" />
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Indirate" value="8" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
 					</div>
                     <div class="control-group">
                         <label>单位缴费率</label>
-                        <input type="text" name="Unitrate" />
+                        <div class="input">
+							<div class="input-append">
+								<input type="text" name="Unitrate" value="12" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
                     </div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>其他人员缴费率</label>
-						<input type="text" name="Othertrate" />
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Othertrate" value="20" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
 					</div>
                     <div class="control-group">
                         <label>用人单位征缴率</label>
-                        <input type="text" name="Unitcorate" />
+                        <div class="input">
+							<div class="input-append">
+								<input type="text" name="Unitcorate" value="98" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
                     </div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>其他人员征缴率</label>
-						<input type="text" name="Othercorate" />
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Othercorate" value="98" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -60,36 +100,51 @@
 				<div class="span4">
 					<div class="control-group">
 						<label>定期存款金额</label>
-						<input type="text" name="Deamount" />
+						<div class="input">
+							<input type="text" name="Deamount" />
+						</div>
 					</div>
 					<div class="control-group">
 						<label>定期存款年数</label>
-						<input type="text" name="Deyears" />
+						<div class="input">
+							<input type="text" name="Deyears" />
+						</div>
 					</div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>定期存款年利率</label>
-						<input type="text" name="Deyearpa" />
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Deyearpa" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
 					</div>
 					<div class="control-group">
 						<label>当年到期定存额</label>
-						<input type="text" name="Madeamount" />
+						<div class="input">
+							<input type="text" name="Madeamount" />
+						</div>
 					</div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>活期存款金额</label>
-						<input type="text" name="Dedeamount" />
+						<div class="input">
+							<input type="text" name="Dedeamount" />
+						</div>
 					</div>
 					<div class="control-group">
 						<label>活期存款利息</label>
-						<input type="text" name="Dedeaminter" />
+						<div class="input">
+							<input type="text" name="Dedeaminter" />
+						</div>
 					</div>
 				</div>
 			</div>
 		</fieldset>
-		<fieldset>
+		<!--<fieldset>
 			<legend>其他相关参数</legend>
 			<div class="row-fluid">
 				<div class="span4">
@@ -147,7 +202,7 @@
 					</div>
 				</div>
 			</div>
-		</fieldset>
+		</fieldset>-->
 
 		<div class="control-group">
 			<input type="hidden" name="BZLX" value="QYYLBX">
