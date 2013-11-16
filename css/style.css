@@ -47,6 +47,9 @@ form label.checkbox, form label.radio {
 #logo {
 	margin-left: 10px !important;
 }
+#test {
+	color: #FF3333;
+}
 
 table>caption {
 	font-size: 21px;

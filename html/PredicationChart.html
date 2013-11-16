@@ -128,8 +128,7 @@
 </script>
 
 <script>
-function makeChart(htmlStr) {
-	var resObj = JSON.parse(htmlStr);
+function makeChart(resObj) {
 	if(resObj) {
 		var years = resObj['YEARS'];
 		var division = resObj['DIVISION'];
@@ -233,19 +232,18 @@ function makeChart(htmlStr) {
 	if(isYellow) $('#pre_yellowAlert').dialog('open');
 	if(isRed) $('#pre_redAlert').dialog('open');
 }
+
+var testData = '{"AREA":"市区直属(测试数据)","INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950"],"__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2010","2011","2012","2013","2014","2015"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人帐户","__LOGINED__":true,"PERIOD":"2012年10月——2013年9月","DIVISION":"万元","YELLOW":"550","RED":"300", "__ISTEST__":true}';
 </script>
 
 <script>
-/*
 	$.ajax({
 		url : 'modules/PI_ctl.jsp?action=ExpensesPredication',
-		success : function(htmlStr) {
-			makeChart(htmlStr);
+		success : function(data) {
+			var resObj = readResObj(data, testData);
+			makeChart(resObj);
 		}
 	});
-*/
-	var	htmlStr = '{"AREA":"市区直属","INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950"],"__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2010","2011","2012","2013","2014","2015"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人帐户","__LOGINED__":true,"PERIOD":"2012年10月——2013年9月","DIVISION":"万元","YELLOW":"550","RED":"300"}';
-	makeChart(htmlStr);
 </script>
 
 <script>
@@ -259,8 +257,9 @@ function makeChart(htmlStr) {
 				return false;
 			}
 		},
-		success: function(resTxt) {
-			makeChart(resTxt);
+		success: function(data) {
+			var resObj = readResObj(data, testData);
+			makeChart(resObj);
 			$(".collapse").collapse('hide');
 		}
 	});

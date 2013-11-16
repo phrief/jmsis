@@ -371,7 +371,7 @@ ul.content-box-tabs li a.current {
                 }        
 				
 #main-content table tfoot td .bulk-actions {
-                padding: 15px 0 5px 0;
+                padding: 5px 0 5px 0;
                 } 
 				
 #main-content table tfoot td .bulk-actions select {
@@ -383,7 +383,7 @@ ul.content-box-tabs li a.current {
 
 #main-content .pagination {
                 text-align: right;
-                padding: 20px 0 5px 0;
+                padding: 10px 0 5px 0;
                 font-family: Verdana, Arial, Helvetica, sans-serif;
                 font-size: 10px;
                 }

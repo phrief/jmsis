@@ -217,24 +217,15 @@
 		$form = $frame.find('form');
 
 	if (! budgetID) {
-		/*
 		$form.ajaxForm({
 			data: {
 				action: 'NewBudget'
 			},
 			success: function(data){
-				var resObj = $.parseJSON(data), msg = resObj['__MESSAGE__'];
-				msg && alert(msg);
-
-				// todo
-				var ID = resObj['ID'] || 123;
-				loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + ID);
+				var testData = {'ID': 123}
+				var resObj = readResObj(data, testData);
+				loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + resObj['ID']);
 			}
-		});*/
-		$form.on('submit', function(ev){
-			ev.preventDefault();
-			var ID = 222;
-			loadPage('html/FD_Budget/QYYLBX_Edit.html?ID=' + ID);
 		});
 	} else {
 		/*

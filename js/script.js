@@ -23,6 +23,35 @@ $(window).on('hashchange', function() {
 	return false;
 });
 
+// 从后台读取数据对象或使用测试数据
+function readResObj(data, testData) {
+	var resObj;
+	try {
+		if (typeof data === 'string') {
+			data = JSON.parse(data);
+		}
+		resObj = data;
+	} catch(err) {
+		if (typeof testData === 'string') {
+			testData = JSON.parse(testData);
+		}
+		resObj = testData;
+	}
+	if (typeof resObj !== 'object') {
+		console.error('Error reading resObj', err);
+	}
+	// 通知消息
+	var msg = resObj['__MESSAGE__'];
+	if (msg) {
+		notify(msg);
+	}
+	return resObj;
+}
+// 通知消息
+function notify(msg) {
+	alert(msg);
+}
+
 // 获取url参数
 function getURLParams(hash) {
 	var pat = /([^?=&#]*)=([^?=&#]+)/g, params = {};

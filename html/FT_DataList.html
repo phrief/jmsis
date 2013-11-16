@@ -123,37 +123,34 @@
 		'action': 'modules/FD_ctl.jsp?action=import&target=FT_Data',
 		valid_extensions: validExts,
 		onCancel: function() {
-			alert('请选择文件');
+			notify('请选择文件');
 		},
-		onComplete: function(resObj) {
-			if (_.isObject(resObj) && 'status' in resObj && ! resObj['status']) {
-				alert('仅支持格式 ' + validExts.join(', '));
+		onComplete: function(data) {
+			if (_.isObject(data) && 'status' in data && ! data['status']) {
+				notify('仅支持格式 ' + validExts.join(', '));
 				return $form_import[0].reset();
 			}
-			if (_.isString(resObj)) {
-				var resTxt = resObj;
-				resTxt.match(/^[^\{]*(\{[\s\S]*\})[^\}]*$/);
+			if (_.isString(data)) {
+				data.match(/^[^\{]*(\{[\s\S]*\})[^\}]*$/);
 				json = RegExp.$1;
-				resObj = JSON.parse(json);
+				data = JSON.parse(json);
 			}
-			resObj['__MESSAGE__'] && alert(resObj['__MESSAGE__']);
+			var resObj = readResObj(data);
 			reloadPage();
 		}
 	});
 	$form_list.ajaxForm({
-		success: function(resTxt) {
-			var resObj = $.parseJSON(resTxt),
-					msg = resObj['__MESSAGE__'];
-			msg && alert(msg);
+		success: function(data) {
+			var resObj = readResObj(data);
 			reloadPage();
 		}
 	});
 
 	$.get('modules/FD_ctl.jsp?action=list&target=FT_Data', {
 		'page': page
-	}, function(resTxt) {
-		var resObj = $.parseJSON(resTxt),
-				pageList = resObj['_PageList'];
+	}, function(data) {
+		var resObj = readResObj(data),
+			pageList = resObj['_PageList'];
 		if (! pageList || pageList.length === 0) {
 			$tbody.html([
 				'<tr>',
@@ -161,22 +158,22 @@
 				'</tr>'
 			].join(''));
 		} else {
-            var tbodyHtml = _.reduce(pageList, function(memo, item) {
-                var trHtml = _.template(trTmpl, item, {
-                    variable: 'item'
-                });
-                return memo + trHtml;
-            }, '');
-            $tbody.html(tbodyHtml);
-            // 分页
-            $pagination.html([
-                '<span><a href="html/FT_DataList.html?page=1">首页</a></span>',
-                '<span><a href="html/FT_DataList.html?page='+ Math.max((resObj['_curPage'] - 1), 1) +'">上一页</a></span>',
-                '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
-                '<span><a href="html/FT_DataList.html?page='+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +'">下一页</a></span>',
-                '<span><a href="html/FT_DataList.html?page='+ resObj['_pageCount'] +'">尾页</a></span>'
-            ].join(''));
-        }
+			var tbodyHtml = _.reduce(pageList, function(memo, item) {
+				var trHtml = _.template(trTmpl, item, {
+					variable: 'item'
+				});
+				return memo + trHtml;
+			}, '');
+			$tbody.html(tbodyHtml);
+			// 分页
+			$pagination.html([
+				'<span><a href="html/FT_DataList.html?page=1">首页</a></span>',
+				'<span><a href="html/FT_DataList.html?page='+ Math.max((resObj['_curPage'] - 1), 1) +'">上一页</a></span>',
+				'<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+				'<span><a href="html/FT_DataList.html?page='+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +'">下一页</a></span>',
+				'<span><a href="html/FT_DataList.html?page='+ resObj['_pageCount'] +'">尾页</a></span>'
+			].join(''));
+		}
 		$table_list.removeClass('hidden');
 	});
 </script>

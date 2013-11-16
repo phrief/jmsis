@@ -24,7 +24,7 @@
 		</div>
 		<div id="collapseOne" class="accordion-body collapse">
 			<div class="accordion-inner">
-				<form id="form-query" class="form-horizontal" method="post" action="">
+				<form id="form-query" class="form-horizontal">
 					<div class="block">
 						<div class="control-group">
 							<label class="control-label">编制类型</label>
@@ -51,7 +51,7 @@
 	<!-- 表格 -->
 	<table id="table-list" data-colspans="6">
 		<caption>
-			<i class="icon-th-list"></i>编制列表
+			<i class="icon-th-list"></i>编制列表<span id="test"></span>
 		</caption>
 		<thead>
 			<tr>
@@ -108,53 +108,45 @@
 			trTmpl = $tbody.find('#tr-tmpl').html();
 
 	// 检索
-	$form_query.ajaxForm({
-		success: function(data) {
-			var resObj = {};
-			try {
-				resObj = _.isObject(data) ? data : $.parseJSON(data);
-			} catch (err) {}
-			var msg = resObj['__MESSAGE__'];
-			msg && alert(msg);
-			var BZLX = $form_query.find('[name="BZLX"]').val();
-			loadPage('html/FD_Budget/' + BZLX + '_Params.html');
-		}
+	$form_query.on('submit', function(ev) {
+		ev.preventDefault();
+		var BZLX = $form_query.find('[name="BZLX"]').val();
+		loadPage('html/FD_Budget/' + BZLX + '_Params.html');
 	});
 
-	//getPage(1);
-	showTable();
+	getPage(1);
 
 	function getPage(n) {
 		$.get('modules/FD_ctl.jsp?action=Budget', {
 			'Page': n
-		}, function(resObj) {
-			if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+		}, function(data) {
+			var testData = (function(){
+				var fakePageList = [];
+				_.times(5, function(i) {
+					var rec = {
+						'ID': i + 1,
+						'BZLX': 'QYYLBX',
+						'ND': '2013',
+						'ZT': '已完成',
+						'BZR': '王柱'
+					}
+		            rec.title = {
+		                'QYYLBX': '企业养老保险'
+		            }[rec.BZLX];
+					fakePageList.push(rec);
+				});
+				return {
+					'_curPage': 1,
+					'_pageCount': 1,
+					'_PageList': fakePageList,
+					'__ISTEST__': true
+				}
+			})();
+			var resObj = readResObj(data, testData);
 			showTable(resObj);
 		});
 	}
 	function showTable(resObj) {
-
-		// 测试数据
-		var fakePageList = [];
-		_.times(5, function(i) {
-			var rec = {
-				'ID': i + 1,
-				'BZLX': 'QYYLBX',
-				'ND': '2013',
-				'ZT': '已完成',
-				'BZR': '王柱'
-			}
-            rec.title = {
-                'QYYLBX': '企业养老保险'
-            }[rec.BZLX];
-			fakePageList.push(rec);
-		});
-		resObj = {
-			'_curPage': 1,
-			'_pageCount': 1,
-			'_PageList': fakePageList
-		}
-
 		$table_list.addClass('hidden');
 		var pageList = resObj['_PageList'];
 		if (! pageList || pageList.length < 1) {
@@ -179,6 +171,9 @@
 				'<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
 				'<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
 			].join(''));
+		}
+		if (resObj['__ISTEST__']) {
+			$table_list.find('#test').text('(测试数据)');
 		}
 		$table_list.removeClass('hidden');
 	}
