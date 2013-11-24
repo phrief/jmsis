@@ -11,7 +11,8 @@ var global = {},
 
 // 默认所有ajax不缓存
 $.ajaxSetup({
-	cache: false
+	cache: false,
+	async: false
 });
 
 // hash改变时自动加载子页面
