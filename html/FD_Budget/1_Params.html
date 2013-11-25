@@ -2,29 +2,29 @@
 <meta charset="utf-8" />
 
 <style>
-	#form-qyylbx label, .input {
+	#form-1 label, .input {
 		display: inline-block;
 	}
-	#form-qyylbx label {
+	#form-1 label {
 		width: 50%;
 		text-align: right;
 		margin-right: 5px;
 	}
 
-	#form-qyylbx .input {
+	#form-1 .input {
 		width: 35%;
 		
 	}
-	#form-qyylbx .input-append {
+	#form-1 .input-append {
 		width: 100%;
 		margin-bottom: 0;
 	}
-	#form-qyylbx [type="text"] {
+	#form-1 [type="text"] {
 		width: 100%;
 		padding: 2px 3px;
 		margin-bottom: 0;
 	}
-	#form-qyylbx .add-on {
+	#form-1 .add-on {
 		padding: 2px 3px;
 		position: relative;
 		margin-left: -22px;
@@ -32,7 +32,7 @@
 	}
 </style>
 
-<form id="form-qyylbx" method="post" action="modules/FD_ctl.jsp">
+<form id="form-1" method="post" action="modules/FD_ctl.jsp">
 	<div class="block">
 		<legend>
 			<i class="icon-check"></i>编制设置 - 企业养老保险
@@ -205,7 +205,7 @@
 		</fieldset>-->
 
 		<div class="control-group">
-			<input type="hidden" name="BZLX" value="QYYLBX">
+			<input type="hidden" name="BZLX" value="1">
 			<input type="submit" value="生成编制" class="btn btn-primary">
 			<input type="button" id="btn-reset" value="重置" class="btn" />
 		</div>
@@ -224,45 +224,44 @@
 			success: function(data){
 				var testData = {'ID': 123}
 				var resObj = readResObj(data, testData);
-				loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + resObj['ID']);
+				loadPage('html/FD_Budget/1_Edit.html?ID=' + resObj['ID']);
 			}
 		});
 	} else {
-		/*
 		$form.ajaxForm({
 			data: {
 				action: 'EditParams',
 				ID: budgetID
 			},
 			success: function(data){
-				var resObj = $.parseJSON(data), msg = resObj['__MESSAGE__'];
+				var testData = {
+					budgetID: 123
+				}
+				var resObj = readResObj(data, testData),
+					msg = resObj['__MESSAGE__'];
 				msg && alert(msg);
-				loadPage('html/FD_Budget/QYYLBX_Detail.html?ID=' + budgetID);
+				loadPage('html/FD_Budget/1_Edit.html?ID=' + budgetID);
 			}
-		});
-		*/
-		$form.on('submit', function(ev){
-			ev.preventDefault();
-			loadPage('html/FD_Budget/QYYLBX_Edit.html?ID=' + budgetID);
 		});
 
 		$.get('modules/FD_ctl.jsp?action=InitBudget', {
 			ID: budgetID
 		}, function(data){
-			/*
-			var resObj = $.parseJSON(data), params = resObj['PARAMS'];
-			_.each(params, function(val, key){
-				val = 123;
-				$form.find('[name="'+ key +'"]').val(val)
-					.attr('placehodler', val);
-			});
-			*/
-			// 测试
-			$form.find('[name]').each(function(i, el){
-				var val = _.random(1000, 999999);
-				$(el).val(val).attr('value', val)
-					.attr('placehodler', val);
-			});
+			try {
+				var resObj = $.parseJSON(data),
+					params = resObj['PARAMS'];
+				_.each(params, function(val, key){
+					$form.find('[name="'+ key +'"]').val(val)
+						.attr('placehodler', val);
+				});
+			} catch(err) {
+				// 测试
+				$form.find('[name]').each(function(i, el){
+					var val = _.random(1000, 999999);
+					$(el).val(val).attr('value', val)
+						.attr('placehodler', val);
+				});
+			}
 		});
 	}
 	$form.find('#btn-reset').on('click', function() {

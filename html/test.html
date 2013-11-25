@@ -1,244 +1,702 @@
 <meta charset="UTF-8">
-<style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
-</style>
+<div class="row-fluid">
+    <div class="span4">
+        <form class="form-inline">
+
+                <div id="container1" ></div>
+                <label class="control-label">开始年份</label>
+
+                    <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
 
 
-
-<div class="accordion" id="accordion2">
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                <legend>
-                    <i class="icon-chevron-down"></i>
-                    <i class="icon-chevron-up"></i>
-                    查看区间
-                </legend>
-            </a>
-        </div>
-        <div id="collapseOne" class="accordion-body collapse">
-            <div class="accordion-inner">
-                <form class="form-horizontal" action="modules/PI_ctl.jsp?action=FundautoMonitor">
-                    <div class="block">
-                        <div class="control-group">
-                            <label class="control-label">开始月份</label>
-
-                            <div class="controls">
-                                <input type="text" class="datepicker_c" name="KSYF"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">结束月份</label>
-
-                            <div class="controls">
-                                <input type="text" class="datepicker_c" name="JSYF"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">区域选择</label>
-
-                            <div class="controls">
-                                <select name="AREA">
-                                    <option value="440700">市区</option>
-                                    <option value="440703">蓬江</option>
-                                    <option value="440704">江海</option>
-                                    <option value="440781">台山</option>
-                                    <option value="440705">新会</option>
-                                    <option value="440783">开平</option>
-                                    <option value="440784">鹤山</option>
-                                    <option value="440785">恩平</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">账户类型</label>
-
-                            <div class="controls">
-                                <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
-                                    <option value="2">合并账户</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
-                            <input type="reset" value="重置" class="btn"/>
-                        </div>
-                    </div>
-                </form>
+        </form>
+        <div class="control-group">
+            <div id="container4" ></div>
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
             </div>
         </div>
     </div>
+
+    <div class="span4">
+        <div class="control-group">
+            <div id="container2" ></div>
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
+            </div>
+        </div>
+        <div class="control-group">
+            <div id="container5" ></div>
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="control-group">
+            <div id="container3" ></div>
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
+            </div>
+        </div>
+        <div class="control-group">
+            <div id="container6" ></div>
+            <label class="control-label">开始年份</label>
+            <div class="controls">
+                <input type="text" class="datepicker_c hasDatepicker input-small" name="KSNF">
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<div class="block">
-    <div><h3 id="chartname"></h3></div>
-    <div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-</div>
+
+
+
 
 <script>
-    //出图函数
-    function makeChart(htmlStr) {
-        var resObj = JSON.parse(htmlStr);
+    $('#container1').highcharts({
 
-        if (resObj) {
-            var months = resObj['FUNDMONTHS'];
-            var division = resObj['FUNDDIVISION'];
-            var dataset = resObj['FUNDDATASET'];
-            var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
-            var type = resObj['TYPE'];
-
-            var income = new Array();
-            var payout = new Array();
-            var balance = new Array();
-
-            for (var i = 0; i < dataset.length; i++) {
-                income.push(parseInt(dataset[i]['income']));
-                payout.push(parseInt(dataset[i]['payout']));
-                balance.push(parseInt(dataset[i]['income']) - parseInt(dataset[i]['payout']));
-            }
-
-            months = makeAdapt(months);
-            console.log(months);
-
-            $('#MonthlyIAE').highcharts({
-                exporting: false,
                 chart: {
-                    type: 'line'
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
                 },
+
                 title: {
-                    text: area + '养老保险基金(' + type + ')走势图',
-                    x: -20,//center
+                    text: '养老保险基金',
                     style: {
                         fontFamily: '微软雅黑'
                     }
                 },
-                subtitle: {
-                    text: period,
-                    x: -20
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
                 },
-                xAxis: {
-                    categories: months,
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
                     labels: {
-                        rotation: -45
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    //tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
                     }
-                },
-                yAxis: {
-                    title: {
-                        text: '单位(' + division + ')'
-                    },
-                    plotLines: [
-                        {
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }
-                    ]
-                },
-                tooltip: {
-                    shared: true
-                },
-                series: [
-                    {
-                        name: '养老保险基金收入',
-                        data: income,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '养老保险基金支出',
-                        data: payout,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '养老保险基金余额',
-                        data: balance,
-                        tooltip: {
-                            valueSuffix: division
-                        }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
                     }
-                ]
+
+                    point.update(newVal);
+
+                }, 3000);
+
             });
-        }
-    }
+</script>
+<script>
+    $('#container2').highcharts({
+
+                chart: {
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
+                },
+
+                title: {
+                    text: '抚养比走势',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
+                },
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
+                    labels: {
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+
+                }, 3000);
+
+            });
+</script>
+<script>
+    $('#container3').highcharts({
+
+                chart: {
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
+                },
+
+                title: {
+                    text: '养老基金趋势预测',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
+                },
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
+                    labels: {
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+
+                }, 3000);
+
+            });
+</script>
+
+
+
+<script>
+    $('#container4').highcharts({
+
+                chart: {
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
+                },
+
+                title: {
+                    text: '养老保险基金',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
+                },
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
+                    labels: {
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+
+                }, 3000);
+
+            });
 </script>
 
 <script>
-    $.ajax({
-        url: 'modules/PI_ctl.jsp',
-        success: function (htmlStr) {
-            makeChart(htmlStr);
-        }
-    });
+    $('#container5').highcharts({
+
+                chart: {
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
+                },
+
+                title: {
+                    text: '抚养比走势',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
+                },
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
+                    labels: {
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+
+                }, 3000);
+
+            });
 </script>
 
-<script>
-    $(function(){
-        var myDate = new Date();
-        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
-
-        $(".datepicker_c").datepicker({
-            changeMonth: true,
-            changeYear: true,
-
-            dateFormat: 'yy-mm',
-            onClose: function(dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).datepicker('setDate', new Date(year, month, 1));
-            }
-        });
-    });
-
-    $('.datepicker_c').on('click', function(){
-        $(this).datepicker('setDate', new Date($(this).val()));
-    });
-</script>
-
 
 <script>
-    var $form = $frame.find('form'),
-            $collapse = $('#collapseOne');
+    $('#container6').highcharts({
 
-    $form.ajaxForm({
-        beforeSend: function () {
-            var ksyf = $form.find('[name="KSYF"]').val();
-            var jsyf = $form.find('[name="JSYF"]').val();
-            if (ksyf == "" || jsyf == "") {
-                alert("开始月份和结束月份均不能为空");
-                return false;
-            }
-        },
-        success: function (resTxt) {
-            makeChart(resTxt);
-            $(".collapse").collapse('hide');
-        }
-    });
-</script>
+                chart: {
+                    type: 'gauge',
+                    alignTicks: false,
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    width: 300,
+                    height: 300
+                },
 
-<script>
-    function makeAdapt(years) {
-        if(years.length > 12) {
-            var len = years.length;
-            var delta = parseInt(len / 12);
-            var yearsAfter = new Array();
-            for(var i=0; i < len; i++) {
-                if(i % delta == 0)
-                    yearsAfter.push(years[i]);
-                else
-                    yearsAfter.push("");
-            }
-            return yearsAfter;
-        } else {
-            return years;
-        }
-    }
+                title: {
+                    text: '养老基金趋势预测',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150
+                },
+
+                yAxis: [{
+                    min: 0,
+                    max: 200,
+                    lineColor: '#339',
+                    tickColor: '#339',
+                    minorTickColor: '#339',
+                    offset: -25,
+                    lineWidth: 2,
+                    labels: {
+                        distance: -20,
+                        rotation: 'auto'
+                    },
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    endOnTick: false
+                }, {
+                    min: 0,
+                    max: 124,
+                    tickPosition: 'outside',
+                    lineColor: '#933',
+                    lineWidth: 2,
+                    minorTickPosition: 'outside',
+                    tickColor: '#933',
+                    minorTickColor: '#933',
+                    tickLength: 5,
+                    minorTickLength: 5,
+                    labels: {
+                        distance: 12,
+                        rotation: 'auto'
+                    },
+                    offset: -20,
+                    endOnTick: false
+                }],
+
+                series: [{
+                    name: 'Speed',
+                    data: [80],
+                    dataLabels: {
+                        formatter: function () {
+                            var kmh = this.y,
+                                    mph = Math.round(kmh * 0.621);
+                            return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
+                                    '<span style="color:#933">' + mph + ' mph</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' km/h'
+                    }
+                }]
+
+            },
+            // Add some life
+            function(chart) {
+                setInterval(function() {
+                    var point = chart.series[0].points[0],
+                            newVal, inc = Math.round((Math.random() - 0.5) * 20);
+
+                    newVal = point.y + inc;
+                    if (newVal < 0 || newVal > 200) {
+                        newVal = point.y - inc;
+                    }
+
+                    point.update(newVal);
+
+                }, 3000);
+
+            });
 </script>

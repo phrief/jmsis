@@ -63,14 +63,123 @@
 
 <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+<script>
+    function makeChart(resObj) {
 
+        if(resObj) {
+            var division = resObj['DIVISION'];
+            var months = resObj['MONTHS'];
+            var dataset = resObj['DATASET'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var DataSet = new Array();
+            var charttype = '养老保险基金监测';
+
+            for(var i=0; i < months.length; i++) {
+                DataSet.push(parseInt(dataset[i]));
+            }
+
+            months = makeAdapt(months);
+
+            $('#FirmArrearageList').highcharts({
+                exporting : false,
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: area + '养老保险抚养比走势图',
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: [{
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                }],
+                yAxis: [{ // Primary yAxis
+                    title: {
+                        text: '单位(' + division + ')',
+                        style: {
+                            color: '#4572A7'
+                        }
+                    },
+                    labels: {
+                        format: '{value}%',
+                        style: {
+                            color: '#4572A7'
+                        }
+                    },
+                    max : 100
+                },{ // Secondary yAxis
+                    labels: {
+                        enabled : false,
+                        format: '{value}' + division,
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                series: [{
+                    name: '养老保险抚养比',
+                    color: '#4572A7',
+                    type: 'column',
+                    yAxis: 1,
+                    data: DataSet,
+                    tooltip: {
+                        valueSuffix: '%'
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        //rotation: -90,
+                        color: '#000000',
+                        align: 'center',
+                        x: 0,
+                        y: 0,
+                        style: {
+                            fontSize: '5px',
+                            fontFamily: 'Verdana, sans-serif'
+                            //textShadow: '0 0 3px black'
+                        }
+                    }
+                }/*, {
+                 name: '抚养比走势',
+                 color: '#89A54E',
+                 type: 'spline',
+                 data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+                 tooltip: {
+                 valueSuffix: '°C'
+                 }
+                 }*/]
+            });
+        }
+    }
+
+
+    var testData = '{"DATASET":["0.00","0.00","0.00","192.11","99000.00","∞","0.00","0.00","0.00","0.00","0.00","0.00"],"AREA":"市区直属","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"百分比(%)"}';
+</script>
 
 
 <script>
 	$.ajax({
 		url : 'modules/PI_ctl.jsp?action=DependencyRatio',
-		success : function(htmlStr) {
-			makeChart(htmlStr);
+		success : function(data) {
+            var resObj = readResObj(data, testData);
+			makeChart(resObj);
 		}
 	});
 </script>
@@ -111,120 +220,15 @@
 				return false;
 			}
 		},
-		success: function(resTxt) {
-			makeChart(resTxt);
+		success: function(data) {
+            var resObj = readResObj(data, testData);
+			makeChart(resObj);
 			$(".collapse").collapse('hide');
 		}
 	});
 </script>
 
-<script>
-	function makeChart(htmlStr) {
-		console.log(htmlStr);
-		var resObj = JSON.parse(htmlStr);
-		if(resObj) {
-			var division = resObj['DIVISION'];
-			var months = resObj['MONTHS'];
-			var dataset = resObj['DATASET'];
-			var period = resObj['PERIOD'];
-			var area = resObj['AREA'];
-			var DataSet = new Array();
-			var charttype = '养老保险基金监测';
 
-			for(var i=0; i < months.length; i++) {
-				DataSet.push(parseInt(dataset[i]));
-			}
-
-			months = makeAdapt(months);
-
-			$('#FirmArrearageList').highcharts({
-				exporting : false,
-				chart: {
-					zoomType: 'xy'
-				},
-				title: {
-					text: area + '养老保险抚养比走势图',
-					style: {
-						fontFamily: '微软雅黑'
-					}
-				},
-				subtitle: {
-					text: period
-				},
-				xAxis: [{
-					categories: months,
-					labels: {
-						rotation: -45
-					}
-				}],
-				yAxis: [{ // Primary yAxis
-					title: {
-						text: '单位(' + division + ')',
-						style: {
-							color: '#4572A7'
-						}
-					},
-					labels: {
-						format: '{value}%',
-						style: {
-							color: '#4572A7'
-						}
-					},
-					max : 100
-				},{ // Secondary yAxis
-					labels: {
-						enabled : false,
-						format: '{value}' + division,
-						style: {
-							color: '#89A54E'
-						}
-					},
-					title: {
-						text: '',
-						style: {
-							color: '#89A54E'
-						}
-					},
-					opposite: true
-				}],
-				tooltip: {
-					shared: true
-				},
-				series: [{
-					name: '养老保险抚养比',
-					color: '#4572A7',
-					type: 'column',
-					yAxis: 1,
-					data: DataSet,
-					tooltip: {
-						valueSuffix: '%'
-					},
-					dataLabels: {
-						enabled: false,
-						//rotation: -90,
-						color: '#000000',
-						align: 'center',
-						x: 0,
-						y: 0,
-						style: {
-							fontSize: '5px',
-							fontFamily: 'Verdana, sans-serif'
-							//textShadow: '0 0 3px black'
-						}
-					}
-				}/*, {
-				 name: '抚养比走势',
-				 color: '#89A54E',
-				 type: 'spline',
-				 data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-				 tooltip: {
-				 valueSuffix: '°C'
-				 }
-				 }*/]
-			});
-		}
-	}
-</script>
 <script>
 	function makeAdapt(years) {
 		if(years.length > 12) {

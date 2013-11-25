@@ -77,11 +77,28 @@
 <div><h3 id="chartname"></h3></div>
 <div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
 
 <script>
 	//出图函数
-	function makeChart(htmlStr) {
-		var resObj = JSON.parse(htmlStr);
+	function makeChart(resObj) {
 
 		if (resObj) {
 			var months = resObj['FUNDMONTHS'];
@@ -102,7 +119,6 @@
 			}
 
 			months = makeAdapt(months);
-			console.log(months);
 
 			$('#MonthlyIAE').highcharts({
 				exporting: false,
@@ -167,13 +183,16 @@
 			});
 		}
 	}
+
+    var testData = '{"AREA":"市区直属","FUNDDATASET":[{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"4","income":"8"},{"payout":"5","income":"0"},{"payout":"1","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"}],"__MESSAGE__":"","__NEXTACTION__":"","FUNDMONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","FUNDDIVISION":"万元"}';
 </script>
 
 <script>
 	$.ajax({
 		url: 'modules/PI_ctl.jsp',
-		success: function (htmlStr) {
-			makeChart(htmlStr);
+		success: function (data) {
+            var resObj = readResObj(data, testData);
+			makeChart(resObj);
 		}
 	});
 </script>
@@ -216,28 +235,11 @@
 				return false;
 			}
 		},
-		success: function (resTxt) {
-			makeChart(resTxt);
+		success: function (data) {
+            var resObj = readResObj(data, testData);
+			makeChart(resObj);
 			$(".collapse").collapse('hide');
 		}
 	});
 </script>
 
-<script>
-	function makeAdapt(years) {
-		if(years.length > 12) {
-			var len = years.length;
-			var delta = parseInt(len / 12);
-			var yearsAfter = new Array();
-			for(var i=0; i < len; i++) {
-				if(i % delta == 0)
-					yearsAfter.push(years[i]);
-				else
-					yearsAfter.push("");
-			}
-			return yearsAfter;
-		} else {
-			return years;
-		}
-	}
-</script>
