@@ -36,16 +36,16 @@
 			<script type="text/html" id="tr-tmpl">
 				<tr>
         			<td>
-	                     <input type="checkbox" name="DelNodes[]" value="{{user['ID']}}">
+	                     <input type="checkbox" name="DelNodes[]" value="{{-user['ID']}}">
                     </td>
-                    <td>{{user['YHM']}}</td>
-                    <td>{{user['ZWM']}}</td>
-                    <td>{{user['DW']}}</td>
-                    <td>{{user['BZ']}}</td>
+                    <td>{{-user['YHM']}}</td>
+                    <td>{{-user['ZWM']}}</td>
+                    <td>{{-user['DW']}}</td>
+                    <td>{{-user['BZ']}}</td>
                     <td>
-                        <a href="html/UserManageEdit.html?ID={{user['ID']}}">编辑</a>
+                        <a href="html/UserManageEdit.html?ID={{-user['ID']}}">编辑</a>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a href="html/AuthEdit.html?ID={{user['ID']}}">权限</a>
+                        <a href="html/AuthEdit.html?ID={{-user['ID']}}">权限</a>
                     </td>
                 </tr>
 			</script>

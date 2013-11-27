@@ -1,6 +1,8 @@
 
 _.templateSettings = {
-	interpolate: /\{\{(.+?)\}\}/g
+	interpolate: /\{\{=(.+?)\}\}/g,
+	evaluate: /\{\{(.+?)\}\}/g,
+	escape: /\{\{\-(.+?)\}\}/g
 }
 
 // 全局变量

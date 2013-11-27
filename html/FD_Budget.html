@@ -69,14 +69,16 @@
 					<td>
 						<input type="checkbox" class="check-all" name="DelNodes[]" />
 					</td>
-					<td>{{item['title']}}</td>
-					<td>{{item['ND']}}</td>
-					<td>{{item['BZR']}}</td>
-					<td>{{item['ZT']}}</td>
+					<td>{{-item['title']}}</td>
+					<td>{{-item['ND']}}</td>
+					<td>{{-item['BZR']}}</td>
+					<td>{{-item['ZT']}}</td>
 					<td>
-						<a href="html/FD_Budget/{{item['BZLX']}}_Detail.html?ID={{item['ID']}}">查看</a>
+						<a href="html/FD_Budget/{{-item['BZLX']}}
+						_Detail.html?ID={{-item['ID']}}">查看</a>
 						&nbsp;&nbsp;|&nbsp;&nbsp;
-						<a href="html/FD_Budget/{{item['BZLX']}}_Edit.html?ID={{item['ID']}}">修改</a>
+						<a href="html/FD_Budget/{{-item['BZLX']}}
+						_Edit.html?ID={{-item['ID']}}">修改</a>
 					</td>
 				</tr>
 			</script>
@@ -100,14 +102,14 @@
 
 <script>
 	var $form_query = $frame.find('#form-query'),
-			$sel_BZLX = $form_query.find('[name="BZLX"]'),
-			$table_list = $('#table-list'),
-			$tbody = $table_list.find('tbody'),
-			$pagination = $table_list.find('.pagination'),
-			trTmpl = $tbody.find('#tr-tmpl').html(),
-			mapBZLX = {
-				'1': '企业养老保险'
-			}
+		$sel_BZLX = $form_query.find('[name="BZLX"]'),
+		$table_list = $('#table-list'),
+		$tbody = $table_list.find('tbody'),
+		$pagination = $table_list.find('.pagination'),
+		trTmpl = $tbody.find('#tr-tmpl').html(),
+		mapBZLX = {
+			'1': '企业养老保险'
+		};
 
 	// 检索
 	_.each(mapBZLX, function(title, val){
@@ -143,7 +145,7 @@
 					'_pageCount': 1,
 					'_PageList': fakePageList,
 					'__ISTEST__': true
-				}
+				};
 			})();
 			var resObj = readResObj(data, testData);
 			_.each(resObj['_PageList'], function(item){

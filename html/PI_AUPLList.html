@@ -1,9 +1,9 @@
 
 <meta charset="UTF-8">
 <style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
+	.ui-datepicker-calendar {
+		display: none;
+	}
 </style>
 
 <style>
@@ -89,17 +89,17 @@
 	</thead>
 
 	<tbody>
-        <script type="text/html" id="tr-tmpl">
-            <tr>
-                <td>{{item['STATISTICMONTH']}}</td>
-                <td class="text-right">{{item['CURRENTPEOPLE']}}</td>
-                <td class="text-right">{{item['LASTPEOPLE']}}</td>
-                <td class="text-right">{{item['PEOPLECHAGE']}}</td>
-                <td class="text-right">{{item['CURRENTMONEY']}}</td>
-                <td class="text-right">{{item['LASTMONEY']}}</td>
-                <td class="text-right">{{item['MONEYCHANGE']}}</td>
-            </tr>
-        </script>
+		<script type="text/html" id="tr-tmpl">
+			<tr>
+				<td>{{-item['STATISTICMONTH']}}</td>
+				<td class="text-right">{{-item['CURRENTPEOPLE']}}</td>
+				<td class="text-right">{{-item['LASTPEOPLE']}}</td>
+				<td class="text-right">{{-item['PEOPLECHAGE']}}</td>
+				<td class="text-right">{{-item['CURRENTMONEY']}}</td>
+				<td class="text-right">{{-item['LASTMONEY']}}</td>
+				<td class="text-right">{{-item['MONEYCHANGE']}}</td>
+			</tr>
+		</script>
 	</tbody>
 
 	<!-- 表底 -->
@@ -120,22 +120,22 @@
 			$table_list = $('#table-list'),
 			$tbody = $table_list.find('tbody'),
 			$pagination = $table_list.find('.pagination'),
-            trTmpl = $tbody.find('#tr-tmpl').html();
+			trTmpl = $tbody.find('#tr-tmpl').html();
 
 	$frame.find('.datepicker_c').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'yy-mm',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month));
-        }
+		changeMonth: true,
+		changeYear: true,
+		showButtonPanel: true,
+		dateFormat: 'yy-mm',
+		onClose: function(dateText, inst) {
+			var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+			var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+			$(this).datepicker('setDate', new Date(year, month));
+		}
 	});
-    $('.datepicker_c').on('click', function(){
-        $(this).datepicker('setDate', new Date($(this).val()));
-    });
+	$('.datepicker_c').on('click', function(){
+		$(this).datepicker('setDate', new Date($(this).val()));
+	});
 
 	// 检索
 	$form_query.ajaxForm({
@@ -174,9 +174,9 @@
 			].join(''));
 		} else {
 			var tbodyHtml = _.reduce(pageList, function(memo, item) {
-                var trHtml = _.template(trTmpl, item, {
-                    variable: 'item'
-                });
+				var trHtml = _.template(trTmpl, item, {
+					variable: 'item'
+				});
 				return memo + trHtml;
 			}, '');
 			$tbody.html(tbodyHtml);

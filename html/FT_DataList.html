@@ -33,15 +33,15 @@
 			<script type="text/html" id="tr-tmpl">
 				<tr>
 					<td>
-						<input type="checkbox" name="DelNodes[]" value="{{item['ID']}}" />
+						<input type="checkbox" name="DelNodes[]" value="{{-item['ID']}}" />
 					</td>
-					<td>{{item['SSYF']}}</td>
-					<td>{{item['SSQY']}}</td>
-					<td class="text-right">{{item['ZSR']}}</td>
-					<td class="text-right">{{item['ZZC']}}</td>
-					<td class="text-right">{{item['LJJY']}}</td>
+					<td>{{-item['SSYF']}}</td>
+					<td>{{-item['SSQY']}}</td>
+					<td class="text-right">{{-item['ZSR']}}</td>
+					<td class="text-right">{{-item['ZZC']}}</td>
+					<td class="text-right">{{-item['LJJY']}}</td>
 					<td>
-						<a href="html/FT_DataShow.html?ID={{item['ID']}}">详细</a>
+						<a href="html/FT_DataShow.html?ID={{-item['ID']}}">详细</a>
 					</td>
 				</tr>
 			</script>

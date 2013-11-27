@@ -19,7 +19,7 @@
 <table id="table" class="hidden" data-colspans="6">
 	<script type="text/html" id="tmpl-titles">
 		<caption>
-			<i class="icon-th-list"></i>{{year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
+			<i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
 		</caption>
 		<thead>
 			<tr>
@@ -109,24 +109,28 @@
 	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
 	}, function(data){
-		var testData = {"TVALUES":{"B1":"2012年执行数","B2":"4794250652.08","B3":"57883448.72","B6":"1164808.04","B7":"21227384.85","B8":"4874526293.69","B9":"170340000.00","B10":"23864901.00","B11":"5068731194.69","B13":"4503035646.92","B14":"9571766841.61","C1":"2013年预算数","C2":"4535256150.45","C3":"64201139.85","C6":"1185875.23","C7":"2465870.44","C8":"4625301865.97","C9":"167000000.00","C10":"21654826.00","C11":"4813956691.97","C13":"6148609899.36","C14":"10962566591.33","E1":"2012年执行数","E2":"3063423060.38","E3":"0.00","E4":"64410851.21","E6":"0.00","E7":"33813902.82","E8":"3161647814.41","E9":"0.00","E10":"261509127.84","E11":"3423156942.25","E12":"1645574252.44","E13":"6148609899.36","E14":"9571766841.61","F1":"2013年预算数","F2":"3731210158.14","F3":"0.00","F4":"76671626.75","F6":"0.00","F7":"38701872.67","F8":"3846583657.56","F9":"0.00","F10":"283537640.86","F11":"4130121298.42","F12":"683835393.55","F13":"6832445292.91","F14":"10962566591.33"},"year":2012,"__ISTEST__":true}
+		var testData = {"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","TVALUES":{"myHashMap":{"C8":"0.00","C7":"0.00","C9":"0.00","C3":"0.00","C6":"0.00","B11":"0.00","CURYEAR":"2013","E6":"0.00","E7":"0.00","B10":"0.00","E8":"0.00","E9":"0.00","B13":"0.00","B14":"0.00","E2":"3,412,735,501.05","E1":"2013年执行数","E3":"0.00","C1":"2013年预算数","C2":"3,504,377,705.22","F11":"0.00","B3":"0.00","B2":"3,504,377,705.22","F10":"0.00","B9":"0.00","B8":"0.00","B7":"0.00","B6":"0.00","F8":"0.00","F9":"0.00","F6":"0.00","C10":"0.00","F7":"0.00","C11":"0.00","C13":"0.00","F13":"0.00","C14":"0.00","F14":"0.00","F1":"2013年预算数","E11":"0.00","E10":"0.00","E13":"0.00","F3":"0.00","F2":"3,412,735,501.05","E14":"0.00","B1":"2013年执行数"}},"__LOGINED__":true,"__CURRENTUSER__":"admin", "__ISTEST__": true}
+
+
 		var resObj = readResObj(data, testData);
 		showTable(resObj);
 	});
 
 	function showTable(resObj){
 		$table.addClass('hidden');
-		var tValues = resObj['TVALUES'],
-			year = resObj['year'],
-			$tmplTitles = $table.find('#tmpl-titles'),
+		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
+			tValues = resObj['TVALUES']['myHashMap'],
 			matrix = _.reduce(tValues, function(memo, val, key){
-				var mat = key.match(/^(\w)(\d+)$/),
-						c = parseInt(mat[1].charCodeAt(0) - 65),
+				var mat = key.match(/^(\w)(\d+)$/);
+				if (mat) {
+					var c = parseInt(mat[1].charCodeAt(0) - 65),
 						r = parseInt(mat[2] - 1);
-				memo[r] = memo[r] || [];
-				memo[r][c] = val;
+					memo[r] = memo[r] || [];
+					memo[r][c] = val;
+				}
 				return memo;
-			}, []);
+			}, []),
+			$tmplTitles = $table.find('#tmpl-titles');
 		$tmplTitles.after(_.template($tmplTitles.html(), {
 			year1: year, year2: year + 1
 		}));

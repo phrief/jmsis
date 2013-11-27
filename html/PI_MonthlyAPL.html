@@ -115,14 +115,14 @@
             <script type="text/html" id="tr-tmpl">
                 <tr>
                     <td>
-                        <input type="checkbox" name="DelNodes[]" value="{{item['ID']}}">
+                        <input type="checkbox" name="DelNodes[]" value="{{-item['ID']}}">
                     </td>
-                    <td>{{item['SMSJ']}}</td>
-                    <td>{{item['SMZT']}}</td>
-                    <td class="text-right">{{item['JLS']}}</td>
-                    <td>{{item['SMX']}}</td>
+                    <td>{{-item['SMSJ']}}</td>
+                    <td>{{-item['SMZT']}}</td>
+                    <td class="text-right">{{-item['JLS']}}</td>
+                    <td>{{-item['SMX']}}</td>
                     <td>
-                        <a href="html/PI_AUPLDetail.html?ID={{item['ID']}}">详细</a>
+                        <a href="html/PI_AUPLDetail.html?ID={{-item['ID']}}">详细</a>
                     </td>
                 </tr>
             </script>      

@@ -20,7 +20,7 @@ function init(resObj) {
     // 生成菜单
     makeMenu('system/menu.jsp', function() {
         // 首次加载子页面
-        defaultHref = 'html/MonthlyIAE.html';
+        defaultHref = 'html/MainCharts.html';
         loadPage(location.hash.substr(1) || defaultHref);
     });
 }

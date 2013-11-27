@@ -46,47 +46,47 @@
 						<label>个人缴费率</label>
 						<div class="input">
 							<div class="input-append">
-								<input type="text" name="Indirate" value="8" />
+								<input type="text" name="Indirate" />
 								<span class="add-on">%</span>
 							</div>
 						</div>
 					</div>
-                    <div class="control-group">
-                        <label>单位缴费率</label>
-                        <div class="input">
+					<div class="control-group">
+						<label>单位缴费率</label>
+						<div class="input">
 							<div class="input-append">
-								<input type="text" name="Unitrate" value="12" />
+								<input type="text" name="Unitrate" />
 								<span class="add-on">%</span>
 							</div>
 						</div>
-                    </div>
+					</div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>其他人员缴费率</label>
 						<div class="input">
 							<div class="input-append">
-								<input type="text" name="Othertrate" value="20" />
+								<input type="text" name="Othertrate" />
 								<span class="add-on">%</span>
 							</div>
 						</div>
 					</div>
-                    <div class="control-group">
-                        <label>用人单位征缴率</label>
-                        <div class="input">
+					<div class="control-group">
+						<label>用人单位征缴率</label>
+						<div class="input">
 							<div class="input-append">
-								<input type="text" name="Unitcorate" value="98" />
+								<input type="text" name="Unitcorate" />
 								<span class="add-on">%</span>
 							</div>
 						</div>
-                    </div>
+					</div>
 				</div>
 				<div class="span4">
 					<div class="control-group">
 						<label>其他人员征缴率</label>
 						<div class="input">
 							<div class="input-append">
-								<input type="text" name="Othercorate" value="98" />
+								<input type="text" name="Othercorate" />
 								<span class="add-on">%</span>
 							</div>
 						</div>
@@ -213,7 +213,7 @@
 </form>
 
 <script>
-	var budgetID = parseInt(getURLParams()['ID']),
+	var budgetID = parseInt(getURLParams()['ID']) || undefined,
 		$form = $frame.find('form');
 
 	if (! budgetID) {
@@ -235,32 +235,12 @@
 			},
 			success: function(data){
 				var testData = {
-					budgetID: 123
+					budgetID: 123456
 				}
 				var resObj = readResObj(data, testData),
 					msg = resObj['__MESSAGE__'];
 				msg && alert(msg);
 				loadPage('html/FD_Budget/1_Edit.html?ID=' + budgetID);
-			}
-		});
-
-		$.get('modules/FD_ctl.jsp?action=InitBudget', {
-			ID: budgetID
-		}, function(data){
-			try {
-				var resObj = $.parseJSON(data),
-					params = resObj['PARAMS'];
-				_.each(params, function(val, key){
-					$form.find('[name="'+ key +'"]').val(val)
-						.attr('placehodler', val);
-				});
-			} catch(err) {
-				// 测试
-				$form.find('[name]').each(function(i, el){
-					var val = _.random(1000, 999999);
-					$(el).val(val).attr('value', val)
-						.attr('placehodler', val);
-				});
 			}
 		});
 	}
@@ -270,6 +250,24 @@
 		}
 	});
 
-	//$.get();
+	$.get('modules/FD_ctl.jsp?action=InitBudget', {
+		ID: budgetID
+	}, function(data){
+		try {
+			var resObj = $.parseJSON(data),
+				params = resObj['PARAMS']['myHashMap'];
+			_.each(params, function(val, key){
+				$form.find('[name="'+ key +'"]').val(val)
+					.attr('placehodler', val);
+			});
+		} catch(err) {
+			// 测试
+			$form.find('[name]').each(function(i, el){
+				var val = _.random(1000, 999999);
+				$(el).val(val).attr('value', val)
+					.attr('placehodler', val);
+			});
+		}
+	});
 </script>
 
