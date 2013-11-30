@@ -1,13 +1,12 @@
-
-	var authIcons=new Array();
-	authIcons[0]="images/Tmenu/Tblank.gif";
-	authIcons[1]="images/Tmenu/TL.gif";
-	authIcons[2]="images/Tmenu/TI.gif";
-	authIcons[3]="images/Tmenu/TT.gif";
-	authIcons[4]="images/Tmenu/Tminus1.gif";
-	authIcons[5]="images/Tmenu/Tplus1.gif";
-	authIcons[6]="images/Tmenu/Tminus.gif";
-	authIcons[7]="images/Tmenu/Tplus.gif";
+	var icons=new Array();
+	icons[0]="images/Tmenu/Tblank.gif";
+	icons[1]="images/Tmenu/TL.gif";
+	icons[2]="images/Tmenu/TI.gif";
+	icons[3]="images/Tmenu/TT.gif";
+	icons[4]="images/Tmenu/Tminus1.gif";
+	icons[5]="images/Tmenu/Tplus1.gif";
+	icons[6]="images/Tmenu/Tminus.gif";
+	icons[7]="images/Tmenu/Tplus.gif";
 	var fcicon="images/Tmenu/Tfc.gif";
 	var foicon="images/Tmenu/Tfo.gif";
 	var nodelen=0;
@@ -73,13 +72,13 @@
 			if (document.all["N"+Nodeid+"_CHILD"].style.display=="")
 			{
 				document.all["N"+Nodeid+"_CHILD"].style.display="none";
-				document.all["N"+Nodeid+"_img"].src=authIcons[iv];
+				document.all["N"+Nodeid+"_img"].src=icons[iv];
 				document.all["N"+Nodeid+"_img2"].src=fcicon;
 			}
 			else
 			{
 				document.all["N"+Nodeid+"_CHILD"].style.display="";
-				document.all["N"+Nodeid+"_img"].src=authIcons[iv-1];
+				document.all["N"+Nodeid+"_img"].src=icons[iv-1];
 				document.all["N"+Nodeid+"_img2"].src=foicon;
 			}
 		}
@@ -140,7 +139,7 @@
 		return authNode;
 	}
 
-	function appendTreeNode(Node)//澧炲姞鑺傜偣锛堝湪鏈妭鐐规湯灏撅級
+	function appendTreeNode(Node)//增加节点（在本节点末尾）
 	{
 		Node.parentNode=this.parentNode;
 		if (this.nextNode==0)
@@ -155,7 +154,7 @@
 		}
 	}
 	
-	function addChildNode(Node)//鍦ㄦ湰鑺傜偣涓嬮潰
+	function addChildNode(Node)//在本节点下面
 	{
 		Node.parentNode=this;
 		if (this.firstChildNode==0)
@@ -173,10 +172,16 @@
 	{
 		var sHtm="";
 		var i=0;
+		var begin=true;
 		for (i=0;i<authlen;i++)
 		{
 			if (authlist[i].MKID==nid)
 			{
+				if (begin) 
+				{
+					sHtm+=' -- ';
+					begin=false;
+				}
 				sHtm+='<input type=checkbox title="'+authlist[i].QXSM+'" id="A'+authlist[i].ID+'" '+authlist[i].CHK+' name=QXID value="'+authlist[i].ID+'" onclick="fillCheckBox(findnode(\'0\'));"><font title="'+authlist[i].QXSM+'">'+authlist[i].QXMC+'</font> '
 			}
 		}
@@ -206,18 +211,18 @@
 				if (iconV>Nvalue)Nvalue=iconV;
 				if(iconV>3)
 				{
-					space="<img class='NODEIMG' id='N"+Node.ID+"_img' src='"+authIcons[iconV]+"' onClick=showchild('"+Node.ID+"',"+iconV+") align=absMiddle>"+
+					space="<img class='NODEIMG' id='N"+Node.ID+"_img' src='"+icons[iconV]+"' onClick=showchild('"+Node.ID+"',"+iconV+") align=absMiddle>"+
 					"<img class='NODEIMG' id='N"+Node.ID+"_img2' src='"+fcicon+"' onClick=showchild('"+Node.ID+"',"+iconV+") align=absMiddle>"+space;
 				}
 				else
 				{if (i==Level && pnode.Img && pnode.Img!="")
 					{
-						space="<img class='NODEIMG1' src='"+authIcons[iconV]+"' align=absMiddle>"+
-						"<img class='NODEIMG' src='images/Tmenu/"+pnode.Img+"' align=absMiddle>"+space;
+						space="<img class='NODEIMG1' src='"+icons[iconV]+"' align=absMiddle>"+
+						"<img class='NODEIMG' src='../images/Tmenu/"+pnode.Img+"' align=absMiddle>"+space;
 					}
 					else
 					{
-						space="<img class='NODEIMG1' src='"+authIcons[iconV]+"' align=absMiddle>"+space;
+						space="<img class='NODEIMG1' src='"+icons[iconV]+"' align=absMiddle>"+space;
 					}
 				}
 					pnode=pnode.parentNode;
@@ -272,15 +277,53 @@
 		 if (document.all[divname]) document.all[divname].innerHTML=getTreeNodeHtml(findnode("0").firstChildNode,1);
 		 if (document.all[divname+"_HTM"]) document.all[divname+"_HTM"].value=getTreeNodeHtml(findnode("0").firstChildNode,1);
 	}
+	
+	function isAbled(Node)
+	{
+		if (Node && Node.Text=="ROOT") return true;
+		if (Node)
+		{
+			var nid=Node.ID;
+			if (document.all["C"+nid] && !document.all["C"+nid].disabled)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	function fillCheckBox(Node)
 	{
-		var fillState=0;
-		if (Node)
+		var fillState=-1;
+		if (Node && isAbled(Node))
 		{
 			var nid=Node.ID;
 			if (Node.firstChildNode)
 			{
-				fillState=fillCheckBox(Node.firstChildNode)
+				//fillState=fillCheckBox(Node.firstChildNode)
+				var kNode=Node.firstChildNode;
+				do 
+				{
+					var sonState=fillCheckBox(kNode);
+					//alert(kNode.Text+":"+sonState);
+					if (fillState==-1)
+					{
+						fillState=sonState;
+					}
+					else if (fillState==2 && (sonState=-1 || sonState==2))
+					{
+						fillState=2;
+					}
+					else if (fillState==0 && (sonState=-1 || sonState==0))
+					{
+						fillState=0;
+					}
+					else
+					{
+						fillState=1;
+					}
+					kNode=kNode.nextNode;
+				}
+				while(kNode);
 			}
 			else
 			{
@@ -298,31 +341,11 @@
 					document.all["C"+nid].indeterminate=true;
 					document.all["C"+nid].checked=true;
 				}
-				else	
+				else if (fillState==0)
 				{
 					
 					document.all["C"+nid].indeterminate=false;
 					document.all["C"+nid].checked=false;
-				}
-			}
-			if (Node.nextNode)
-			{
-				var broState=fillCheckBox(Node.nextNode);
-				if (broState==-1)
-				{
-					fillState=fillState;
-				}
-				else if (fillState==0 && broState==0)
-				{
-					fillState=0
-				}
-				else if (fillState==2 && broState==2)
-				{
-					fillState=2;
-				}
-				else
-				{
-					fillState=1;
 				}
 			}
 		}

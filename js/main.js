@@ -4,7 +4,7 @@ $('body').delegate('[href]', 'click', function(ev) {
     var href = $(this).attr('href');
     if (! $(this).is('.external') && href && href !== '#') {
         ev.preventDefault();
-        href = href.match(/(html\/.+)/)[1]; // fix IE bug
+        href = href.match(/((html|modules)\/.+)/)[1]; // fix IE bug
         loadPage(href);
     }
 }).delegate('a, button, [href]', 'click', function() {

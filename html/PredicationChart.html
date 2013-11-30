@@ -1,5 +1,8 @@
-<meta charset="UTF-8">
+<!-- 
+2013-11-27 10:55 查询区域添加”全市“ update by wharry 
 
+-->
+<meta charset="UTF-8">
 <style>
 	.ui-datepicker-calendar {
 		display: none;
@@ -47,6 +50,7 @@
                     <label class="control-label">区域选择</label>
                     <div class="controls">
                         <select name="AREA">
+                            <option value="0">全市</option>
                             <option value="440700">市直</option>
                             <option value="440703">蓬江</option>
                             <option value="440704">江海</option>
@@ -75,7 +79,7 @@
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <div id="pre_redAlert" class="dialog_c" title="警告！">
-	<p>依当前参数预测，<span dataname="redYear"></span>年养老基金余额将跌破黄色警戒线，资金不够3个月使用！</p>
+	<p>依当前参数预测，<span dataname="redYear"></span>年养老基金余额将跌破红色警戒线，资金不够3个月使用！</p>
 </div>
 <div id="pre_yellowAlert" class="dialog_c" title="警告！">
 	<p>依当前参数预测，<span dataname="yellowYear"></span>年养老基金余额将跌破黄色警戒线，资金不够半年使用！</p>

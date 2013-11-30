@@ -1,0 +1,208 @@
+<meta charset="UTF-8">
+<div class="row-fluid">
+    <div class="span4">
+        <div id="QYYLBXJJ" ></div>
+        <div id="GSBXJJ" ></div>
+    </div>
+
+    <div class="span4">
+        <div id="SYBXJJ0" ></div>
+        <div id="SYBXJJ1" ></div>
+    </div>
+    <div class="span4">
+        <div id="CZZGYLBXJJ" ></div>
+        <div id="CXJMJBYL" ></div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function makeChart(resObj) {
+
+        if(resObj) {
+            var title = resObj['TITLE'];
+            var start = resObj['START'];
+            var end = resObj['END'];
+            var red1 = resObj['RED1'];
+            var red2 = resObj['RED2'];
+            var yellow1 = resObj['YELLOW1'];
+            var yellow2 = resObj['YELLOW2'];
+            var green1 = resObj['GREEN1'];
+            var green2 = resObj['GREEN2'];
+            var division = resObj['DIVISION'];
+            var balance = resObj['BALANCE'];
+
+            var id;
+
+            if(title == '企业养老保险基金') id = "#QYYLBXJJ";
+            if(title == '工伤保险基金') id = '#GSBXJJ';
+            if(title == '失业保险基金') id = '#SYBXJJ0';
+            if(title == '生育保险基金') id = '#SYBXJJ1';
+            if(title == '城镇职工医疗保险基金') id = '#CZZGYLBXJJ';
+            if(title == '城乡居民基本医疗') id = '#CXJMJBYL';
+
+            $(id).highcharts({
+                chart: {
+                    type: 'gauge',
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false ,
+                    width: 300,
+                    height: 300
+                },
+
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150,
+                    background: [{
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                            stops: [
+                                [0, '#FFF'],
+                                [1, '#333']
+                            ]
+                        },
+                        borderWidth: 0,
+                        outerRadius: '109%'
+                    }, {
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                            stops: [
+                                [0, '#333'],
+                                [1, '#FFF']
+                            ]
+                        },
+                        borderWidth: 1,
+                        outerRadius: '107%'
+                    }, {
+                        // default background
+                    }, {
+                        backgroundColor: '#DDD',
+                        borderWidth: 0,
+                        outerRadius: '105%',
+                        innerRadius: '103%'
+                    }]
+                },
+
+                // the value axis
+                yAxis: {
+                    min: start,
+                    max: end,
+
+                    minorTickInterval: 'auto',
+                    minorTickWidth: 1,
+                    minorTickLength: 10,
+                    minorTickPosition: 'inside',
+                    minorTickColor: '#666',
+
+                    tickPixelInterval: 30,
+                    tickWidth: 2,
+                    tickPosition: 'inside',
+                    tickLength: 10,
+                    tickColor: '#666',
+                    labels: {
+                        step: 2,
+                        rotation: 'auto'
+                    },
+                    title: {
+                        text: '单位:' + division
+                    },
+                    plotBands: [{
+                        from: red1,
+                        to: red2,
+                        color: '#DF5353' // red
+                    }, {
+                        from: yellow1,
+                        to: yellow2,
+                        color: '#DDDF0D' // yellow
+                    }, {
+                        from: green1,
+                        to: green2,
+                        color: '#55BF3B' // green
+                    }]
+                },
+
+                series: [{
+                    name: '基金余额',
+                    data: [money],
+                    tooltip: {
+                        valueSuffix: division
+                    },dataLabels: {
+                        formatter: function () {
+                            return '<span style="color:#339">'+ money + division +'元</span>';
+                        },
+                        backgroundColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#DDD'],
+                                [1, '#FFF']
+                            ]
+                        }
+                    }
+                }]
+
+            });
+        } else {
+            alert("no data!");
+        }
+    }
+
+    var testData = '{"QYYLJJ":{"TITLE":"企业养老保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"GSBXJJ":{"TITLE":"工伤保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"SYBXJJ0":{"TITLE":"失业保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"SYBXJJ1":{"TITLE":"生育保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"CZZGYLBXJJ":{"TITLE":"城镇职工医疗保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"CXJMJBYL":{"TITLE":"城乡居民基本医疗","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120}}';
+</script>
+
+<script>
+
+    var money = 120;
+
+    //ajax
+    /*$.ajax({
+     url : '/modules/main.jsp?action=GetMain',
+     type: 'post',
+     success : function(data) {
+     console.log(data);
+     var resObj = readResObj(data, testData);
+     var qyylbxjj = resObj['QYYLJJ'];
+     var gsbxjj = resObj['GSBXJJ'];
+     var sybxjj0 = resObj['SYBXJJ0'];
+     var sybxjj1 = resObj['SYBXJJ1'];
+     var czzgylbxjj = resObj['CZZGYLBXJJ'];
+     var cxjmjbyl = resObj['CXJMJBYL'];
+     makeChart(qyylbxjj);
+     makeChart(gsbxjj);
+     makeChart(sybxjj0);
+     makeChart(sybxjj1);
+     makeChart(czzgylbxjj);
+     makeChart(cxjmjbyl);
+     }
+     });*/
+    var resObj = JSON.parse(testData);
+    var qyylbxjj = resObj['QYYLJJ'];
+    var gsbxjj = resObj['GSBXJJ'];
+    var sybxjj0 = resObj['SYBXJJ0'];
+    var sybxjj1 = resObj['SYBXJJ1'];
+    var czzgylbxjj = resObj['CZZGYLBXJJ'];
+    var cxjmjbyl = resObj['CXJMJBYL'];
+    makeChart(qyylbxjj);
+    makeChart(gsbxjj);
+    makeChart(sybxjj0);
+    makeChart(sybxjj1);
+    makeChart(czzgylbxjj);
+    makeChart(cxjmjbyl);
+
+
+</script>

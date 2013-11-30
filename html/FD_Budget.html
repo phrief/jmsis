@@ -45,7 +45,7 @@
 </div>
 <!-- /表顶 -->
 
-<form method="post" action="modules/FD_ctl.jsp?action=DelNodes">
+<form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelNodes">
 	<!-- 表格 -->
 	<table id="table-list" data-colspans="6">
 		<caption>
@@ -67,7 +67,7 @@
 			<script type="text/html" id="tr-tmpl">
 				<tr>
 					<td>
-						<input type="checkbox" class="check-all" name="DelNodes[]" />
+						<input type="checkbox" class="check-all" name="DelNodes[]" value="{{-item['ID']}}" />
 					</td>
 					<td>{{-item['title']}}</td>
 					<td>{{-item['ND']}}</td>
@@ -100,8 +100,9 @@
 
 <script>
 	var $form_query = $frame.find('#form-query'),
+		$form_table = $frame.find('#form-table'),
 		$sel_BZLX = $form_query.find('[name="BZLX"]'),
-		$table_list = $('#table-list'),
+		$table_list = $form_table.find('#table-list'),
 		$tbody = $table_list.find('tbody'),
 		$pagination = $table_list.find('.pagination'),
 		trTmpl = $tbody.find('#tr-tmpl').html(),
@@ -118,6 +119,15 @@
 		ev.preventDefault();
 		var BZLX = $sel_BZLX.val();
 		loadPage('html/FD_Budget/' + BZLX + '_Params.html');
+	});
+
+	$form_table.ajaxForm({
+		success: function(data){
+			var resObj = JSON.parse(resTxt),
+				msg = resObj['__MESSAGE__'];
+			msg && alert(msg);
+            reloadPage();
+		}
 	});
 
 	getPage(1);

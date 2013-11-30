@@ -1,3 +1,7 @@
+<!--
+2013-11-28 11:39 "deal with stat inputs" update by fritz 
+-->
+
 <meta charset="utf-8" />
 
 <style>
@@ -121,6 +125,7 @@
 <script>
 	var budgetID = parseInt(getURLParams()['ID']),
 		$table = $frame.find('#table'),
+		$tbody = $table.find('tbody'),
 		$form = $frame.find('#form');
 
 	$form.find('[name="ID"]').val(budgetID);
@@ -177,9 +182,33 @@
 				$trow.children().eq(j).html(inputHtml);
 			});
 		});
+
+		// disable stat inputs
+		$trows.last().children().each(function(i, td){
+			$(td).find('input').attr('readonly', true);
+		});
+
 		if (resObj['__ISTEST__']) {
 			$table.find('#test').text('(测试数据)');
 		}
+
+		// count stat
+		var $trs = $tbody.find('tr'),
+			$itemTrs = $trs.slice(0, -1),
+			$statTrs = $trs.slice(-1);
+		$itemTrs.find('input').on('input', function(){
+			var $input = $(this),
+				iCol = $input.parent().index(),
+				total = _.reduce($itemTrs, function(memo, tr){
+					var $item = $(tr).children().eq(iCol).find('input'),
+						val = $item.val() || '';
+					return memo + Number(val.replace(/[, ]/g, '')) || 0;
+				}, 0);
+			// TODO: format the total str
+			$trs.last().children().eq(iCol)
+				.find('input').val(total.toFixed(2));
+		});
+		
 		$table.removeClass('hidden');
 	}
 </script>
