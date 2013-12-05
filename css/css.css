@@ -1,0 +1,32 @@
+body{font-family: "ËÎÌו" , Tahoma , Arial, Helvetica, sans-serif;margin:10;padding:0;background:#F8FCF6;font-size:12px;color:#404040;}
+input,button{color:#5b5f6b;font-size:12px;border: 1px solid #afda8c;}
+ 
+.textinput1{width:125px;}
+.textinput2{width:275px;}
+.buttoninput{width:55px;}
+.checkbox{width:25px;}
+
+textarea{FONT-SIZE: 12px;border: 1px solid #afda8c;}
+table{background-color:#afda8c;}
+td{FONT-SIZE: 12px;height:20px;COLOR: #000000;WORD-BREAK: break-all; background:#f8fcf6;vertical-align: middle;padding-left:5px;padding-right:5px;}
+select{border: 1px solid #afda8c;;font-size: 12px;background-color:#f8fcf6;vertical-align:middle;width:174px;}
+
+A{COLOR: #BB0000;TEXT-DECORATION: underline;}
+A:link{color:#0066CC;TEXT-DECORATION: none;}
+A:visited{COLOR: #BB0000;TEXT-DECORATION: none;}
+A:hover{COLOR: #BB0000;TEXT-DECORATION: underline;}
+A:active{TEXT-DECORATION: none;}
+
+.Text_TD{padding-left:10px;padding-right:10px;}
+.Text_TD1{padding-left:5px;padding-right:5px;}
+.Text_error{font-size:12px;color:#0000FF;}
+.TextTR1{font-weight:bold;font-family:"Comic Sans MS";font-size:14px;background-color:#d9ec9d;color:#000000;}
+.TextTR2{font-weight:bold;font-family:"Comic Sans MS";font-size:14px;color:#BB0000;padding-bottom:10px;}
+.TextTR2_BL{font-weight:bold;font-family:"Comic Sans MS";font-size:14px;color:#BB0000;padding-bottom:5px; border-bottom: #993300 1px solid;}
+
+.gb_search{border:1px solid #FFD02A;background-color:#F8FCF6; padding:2px;}
+.gb_show{background-color:#F8FCF6;}
+.gb_show td{border-bottom:1px solid #CCCCCC;background-color:#F8FCF6; padding-top:5px; padding-bottom:5px; padding-right:20px;}
+.b_td{font-weight:bold;}
+.rmb_td{background:url(../images/rmb.png) no-repeat; height:28px; padding-left:30px;background-color:#F8FCF6;}
+.gb_add{FONT-SIZE: 14px; padding-left:10px; padding-right:15px;}
