@@ -184,7 +184,10 @@
 		});
 
 		// disable stat inputs
-		$trows.last().children().each(function(i, td){
+		$(_.extract($trows, [0, 7, 10, 12])).children().each(function(i, td){
+			$(td).find('input').attr('readonly', true);
+		});
+		$trows.find().children().each(function(i, td){
 			$(td).find('input').attr('readonly', true);
 		});
 

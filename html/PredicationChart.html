@@ -1,4 +1,5 @@
-<!-- 
+<!--
+ 
 2013-11-27 10:55 查询区域添加”全市“ update by wharry 
 
 -->
@@ -169,7 +170,20 @@ function makeChart(resObj) {
 		var balanceArr = new Array();
 		var yellowLine = new Array();
 		var redLine = new Array();
-		for(var i=0; i < years.length; i++) {
+
+        var mark = 0;
+        var CURYEAR = new Date().getFullYear();
+        console.log(years.length);
+        for(var j=0; i < years.length; i++) {
+            if(years[j] == CURYEAR ) {
+                mark = j;
+                console.log('OK');
+            }
+            alert(1);
+            console.log(years[j]);
+        }
+
+		for(var i= 0; i < years.length; i++) {
 			incomeArr.push(parseFloat(income[i]));
 			payoutArr.push(parseFloat(payout[i]));
 			balanceArr.push(parseFloat(balance[i]));
@@ -260,10 +274,10 @@ function makeChart(resObj) {
 		alert('no data');
 	}
 
-    if(isYellow) {
+    /*if(isYellow) {
         if(isRed) $('#pre_redAlert').dialog('open');
         else $('#pre_yellowAlert').dialog('open');
-    }
+    }*/
 
 }
 
