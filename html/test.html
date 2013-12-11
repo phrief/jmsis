@@ -1,208 +1,213 @@
 <meta charset="UTF-8">
-<div class="row-fluid">
-    <div class="span4">
-        <div id="QYYLBXJJ" ></div>
-        <div id="GSBXJJ" ></div>
-    </div>
 
-    <div class="span4">
-        <div id="SYBXJJ0" ></div>
-        <div id="SYBXJJ1" ></div>
-    </div>
-    <div class="span4">
-        <div id="CZZGYLBXJJ" ></div>
-        <div id="CXJMJBYL" ></div>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=DependencyRatio">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF" id="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF" id="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择:</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="%">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
 
 
+<div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+
+
+
+
 
 <script>
-function makeChart(resObj) {
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+<script>
+    function makeChart(resObj) {
 
-    if(resObj) {
-        var title = resObj['TITLE'];
-        var start = resObj['START'];
-        var end = resObj['END'];
-        var red1 = resObj['RED1'];
-        var red2 = resObj['RED2'];
-        var yellow1 = resObj['YELLOW1'];
-        var yellow2 = resObj['YELLOW2'];
-        var green1 = resObj['GREEN1'];
-        var green2 = resObj['GREEN2'];
-        var division = resObj['DIVISION'];
-        var balance = resObj['BALANCE'];
+        if(resObj) {
+            var division = resObj['DIVISION'];
+            var months = resObj['MONTHS'];
 
-        var id;
+            var srrs = resObj['SRRS'];
+            var zcrs = resObj['ZCRS'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
 
-        if(title == '企业养老保险基金') id = "#QYYLBXJJ";
-        if(title == '工伤保险基金') id = '#GSBXJJ';
-        if(title == '失业保险基金') id = '#SYBXJJ0';
-        if(title == '生育保险基金') id = '#SYBXJJ1';
-        if(title == '城镇职工医疗保险基金') id = '#CZZGYLBXJJ';
-        if(title == '城乡居民基本医疗') id = '#CXJMJBYL';
+            var SRRS = new Array();
+            var ZCRS = new Array();
+            var charttype = '养老保险基金监测';
 
-        $(id).highcharts({
-            chart: {
-                type: 'gauge',
-                plotBackgroundColor: null,
-                plotBackgroundImage: null,
-                plotBorderWidth: 0,
-                plotShadow: false ,
-                width: 300,
-                height: 300
-            },
+            var name1 = resObj['NAME1'];    //缴费人数
+            var name2 = resObj['NAME2'];    //养老人数
 
-            title: {
-                text: title,
-                style: {
-                    fontFamily: '微软雅黑'
-                }
-            },
+            var title = resObj['TITLE'];
 
-            pane: {
-                startAngle: -150,
-                endAngle: 150,
-                background: [{
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                        stops: [
-                            [0, '#FFF'],
-                            [1, '#333']
-                        ]
-                    },
-                    borderWidth: 0,
-                    outerRadius: '109%'
-                }, {
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                        stops: [
-                            [0, '#333'],
-                            [1, '#FFF']
-                        ]
-                    },
-                    borderWidth: 1,
-                    outerRadius: '107%'
-                }, {
-                    // default background
-                }, {
-                    backgroundColor: '#DDD',
-                    borderWidth: 0,
-                    outerRadius: '105%',
-                    innerRadius: '103%'
-                }]
-            },
+            for(var i=0; i < months.length; i++) {
+                //DataSet.push(parseInt(dataset[i]));
+               SRRS.push(parseInt(srrs[i]));
+               ZCRS.push(parseInt(zcrs[i]));
+            }
 
-            // the value axis
-            yAxis: {
-                min: start,
-                max: end,
+            months = makeAdapt(months);
 
-                minorTickInterval: 'auto',
-                minorTickWidth: 1,
-                minorTickLength: 10,
-                minorTickPosition: 'inside',
-                minorTickColor: '#666',
-
-                tickPixelInterval: 30,
-                tickWidth: 2,
-                tickPosition: 'inside',
-                tickLength: 10,
-                tickColor: '#666',
-                labels: {
-                    step: 2,
-                    rotation: 'auto'
+            $('#FirmArrearageList').highcharts({
+                chart: {
+                    type: 'column'
                 },
                 title: {
-                    text: '单位:' + division
-                },
-                plotBands: [{
-                    from: red1,
-                    to: red2,
-                    color: '#DF5353' // red
-                }, {
-                    from: yellow1,
-                    to: yellow2,
-                    color: '#DDDF0D' // yellow
-                }, {
-                    from: green1,
-                    to: green2,
-                    color: '#55BF3B' // green
-                }]
-            },
-
-            series: [{
-                name: '基金余额',
-                data: [money],
-                tooltip: {
-                    valueSuffix: division
-                },dataLabels: {
-                    formatter: function () {
-                        return '<span style="color:#339">'+ money + division +'元</span>';
-                    },
-                    backgroundColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, '#DDD'],
-                            [1, '#FFF']
-                        ]
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
                     }
-                }
-            }]
-
-        });
-    } else {
-        alert("no data!");
+                },
+                xAxis: {
+                    categories: months
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                    shared: true
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'percent'
+                    }
+                },
+                series: [{
+                    name: name1,
+                    data: SRRS
+                }, {
+                    name: name2,
+                    data: ZCRS
+                }]
+            });
+        }
     }
- }
 
-    var testData = '{"QYYLJJ":{"TITLE":"企业养老保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"GSBXJJ":{"TITLE":"工伤保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"SYBXJJ0":{"TITLE":"失业保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"SYBXJJ1":{"TITLE":"生育保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"CZZGYLBXJJ":{"TITLE":"城镇职工医疗保险基金","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120},"CXJMJBYL":{"TITLE":"城乡居民基本医疗","START":0,"END":200,"RED1":0,"RED2":40,"YELLOW1":40,"YELLOW2":80,"GREEN1":80,"GREEN2":200,"DIVISION":"万","BALANCE":120}}';
+
+    var testData = '{"DATASET":["0.00","0.00","0.00","192.11","99000.00","∞","0.00","0.00","0.00","0.00","0.00","0.00"],"AREA":"市区直属","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"百分比(%)"}';
 </script>
 
+
 <script>
-
-    var money = 120;
-
-    //ajax
-    /*$.ajax({
-        url : '/modules/main.jsp?action=GetMain',
-        type: 'post',
+    $.ajax({
+        url : 'modules/PI_ctl.jsp?action=DependencyRatio',
         success : function(data) {
             console.log(data);
             var resObj = readResObj(data, testData);
-            var qyylbxjj = resObj['QYYLJJ'];
-            var gsbxjj = resObj['GSBXJJ'];
-            var sybxjj0 = resObj['SYBXJJ0'];
-            var sybxjj1 = resObj['SYBXJJ1'];
-            var czzgylbxjj = resObj['CZZGYLBXJJ'];
-            var cxjmjbyl = resObj['CXJMJBYL'];
-            makeChart(qyylbxjj);
-            makeChart(gsbxjj);
-            makeChart(sybxjj0);
-            makeChart(sybxjj1);
-            makeChart(czzgylbxjj);
-            makeChart(cxjmjbyl);
+            makeChart(resObj);
         }
-    });*/
-    var resObj = JSON.parse(testData);
-    var qyylbxjj = resObj['QYYLJJ'];
-    var gsbxjj = resObj['GSBXJJ'];
-    var sybxjj0 = resObj['SYBXJJ0'];
-    var sybxjj1 = resObj['SYBXJJ1'];
-    var czzgylbxjj = resObj['CZZGYLBXJJ'];
-    var cxjmjbyl = resObj['CXJMJBYL'];
-    makeChart(qyylbxjj);
-    makeChart(gsbxjj);
-    makeChart(sybxjj0);
-    makeChart(sybxjj1);
-    makeChart(czzgylbxjj);
-    makeChart(cxjmjbyl);
-
-
+    });
 </script>
+
+<script>
+    $(function() {
+        var myDate = new Date();
+        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
+        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.ajaxForm({
+        beforeSend: function(){
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if(ksyf == "" || jsyf == "") {
+                alert("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function(data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+

@@ -156,6 +156,9 @@
 
 	function showTable(resObj){
 		$table.addClass('hidden');
+		if (resObj['__ISTEST__']) {
+			$table.find('#test').text('(测试数据)');
+		}
 		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
 			tValues = resObj['TVALUES']['myHashMap'],
 			matrix = _.reduce(tValues, function(memo, val, key){
@@ -184,32 +187,30 @@
 		});
 
 		// disable stat inputs
-		$(_.extract($trows, [0, 7, 10, 12])).children().each(function(i, td){
-			$(td).find('input').attr('readonly', true);
+		$(_.values(_.pick($trows, [0, 7, 10, 13]))).children().each(function(i, td){
+			$(td).find('input')
+				.addClass('stat').attr('readonly', true);
 		});
 		$trows.find().children().each(function(i, td){
 			$(td).find('input').attr('readonly', true);
 		});
 
-		if (resObj['__ISTEST__']) {
-			$table.find('#test').text('(测试数据)');
-		}
-
 		// count stat
-		var $trs = $tbody.find('tr'),
-			$itemTrs = $trs.slice(0, -1),
-			$statTrs = $trs.slice(-1);
-		$itemTrs.find('input').on('input', function(){
+		var $trs = $tbody.find('tr');
+		$trs.find('input').on('input', function(){
 			var $input = $(this),
-				iCol = $input.parent().index(),
-				total = _.reduce($itemTrs, function(memo, tr){
-					var $item = $(tr).children().eq(iCol).find('input'),
+				iCol = $input.parent().index();
+			$trs.each(function(iRow, tr){
+				var $cell = $(tr).children().eq(iCol).find('input');
+				if (! $cell.is('.stat')) return;
+				var total = _.reduce($trs.slice(0, iRow), function(memo, tr){
+					var $item = $(tr).children().eq(iCol).find('input:not(.stat)'),
 						val = $item.val() || '';
 					return memo + Number(val.replace(/[, ]/g, '')) || 0;
 				}, 0);
-			// TODO: format the total str
-			$trs.last().children().eq(iCol)
-				.find('input').val(total.toFixed(2));
+				// TODO: format the total str
+				$cell.val(total.toFixed(2));
+			});
 		});
 		
 		$table.removeClass('hidden');

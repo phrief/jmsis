@@ -1,97 +1,406 @@
-<meta charset="UTF-8">
 
+<meta charset="UTF-8">
 <style>
     .ui-datepicker-calendar {
         display: none;
     }
     .ui-datepicker-month {
-                 display: none;
+        display: none;
     }
 </style>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>基金科年度分析设置
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="post" action="modules/FD_ctl.jsp?action=chart&target=AnnualAnalyze">
+                    <div class="block">
 
-<form class="form-horizontal" method="post" action="modules/FD_ctl.jsp?action=chart&target=AnnualAnalyze">
-    <div class="block">
-        <legend>
-            <i class="icon-check"></i>基金科年度分析设置
-        </legend>
-        <div class="control-group">
-            <label class="control-label">开始年份</label>
-            <div class="controls">
-                <input type="text" class="datepicker_c" name="KSNF" max-length="4">
+                        <div class="control-group">
+                            <label class="control-label">开始年份</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSNF" max-length="4">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">结束年份</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSNF" max-length="4">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">分析险种</label>
+                            <div class="controls">
+                                <select name="InsuType">
+                                    <option value="0">企业养老保险</option>
+                                    <option value="3">失业保险</option>
+                                    <option value="4">职工基本医疗保险</option>
+                                    <option value="7">工伤保险</option>
+                                    <option value="8">生育保险</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">分析内容</label>
+                            <div class="controls">
+                                <select name="StatType">
+                                    <option value="0">总收入/总支出年度环比</option>
+                                    <option value="1">征缴收入/待遇支出年度环比</option>
+                                    <option value="2">总收入/总支出年度环比增幅百分比</option>
+                                    <option value="3">征缴收入/待遇支出年度环比增幅百分比</option>
+                                    <option value="4">历年累计结余年度环比</option>
+                                    <option value="5">历年累计结余年度环比增幅百分比</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">分析区域</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <input type="submit" class="btn btn-primary" value="开始分析">
+                            <input type="reset" class="btn" value="重置">
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
         </div>
-
-        <div class="control-group">
-            <label class="control-label">结束年份</label>
-            <div class="controls">
-                <input type="text" class="datepicker_c" name="JSNF" max-length="4">
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">分析险种</label>
-            <div class="controls">
-                <select name="InsuType">
-                    <option value="0">企业养老保险</option>
-                    <option value="3">失业保险</option>
-                    <option value="4">职工基本医疗保险</option>
-                    <option value="7">工伤保险</option>
-                    <option value="8">生育保险</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">分析内容</label>
-            <div class="controls">
-                <select name="StatType">
-                    <option value="0">总收入/总支出年度环比</option>
-                    <option value="1">征缴收入/待遇支出年度环比</option>
-                    <option value="2">总收入/总支出年度环比增幅百分比</option>
-                    <option value="3">征缴收入/待遇支出年度环比增幅百分比</option>
-                    <option value="4">历年累计结余年度环比</option>
-                    <option value="5">历年累计结余年度环比增幅百分比</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">分析区域</label>
-            <div class="controls">
-                <select name="AREA">
-                    <option value="440700">市直</option>
-                    <option value="440703">蓬江</option>
-                    <option value="440704">江海</option>
-                    <option value="440781">台山</option>
-                    <option value="440705">新会</option>
-                    <option value="440783">开平</option>
-                    <option value="440784">鹤山</option>
-                    <option value="440785">恩平</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <input type="submit" class="btn btn-primary" value="开始分析">
-            <input type="reset" class="btn" value="重置">
-        </div>
-
     </div>
+</div>
 
-</form>
+
+
+
+
+
+<div class="block">
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+
 
 <script>
-    var $datepicker = $frame.find('.datepicker_c');
-    $datepicker.datepicker({
-        //changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'yy',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year));
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
         }
+    }
+</script>
+
+<script>
+function makeChart(resObj) {
+    if(resObj) {
+        var charttype = parseInt(resObj['CHARTTYPE']);
+
+        //柱状图
+        if(charttype == 0) {
+            var years = resObj['YEARS'];
+            var income = resObj['INCOME'];
+            var payout = resObj['PAYOUT'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var division = resObj['DIVISION'];
+            var type = resObj['TYPE'];
+            var kind = resObj['KIND'];
+            var incomeArr = new Array();
+            var payoutArr = new Array();
+            for(var i=0; i < years.length; i++) {
+                incomeArr.push(parseInt(income[i]));
+                payoutArr.push(parseInt(payout[i]));
+            }
+            var name1,name2;
+            if(type == '总收入/总支出年度环比分析图') {
+                name1 = '总收入';
+                name2 = '总支出';
+            }
+            if(type == '征缴收入/待遇支出年度环比分析图') {
+                name1 = '征缴收入';
+                name2 = '待遇支出';
+            }
+
+            years = makeAdapt(years);
+
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: area + kind + ':' +type,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                xAxis: {
+                    categories: years
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                series: [{
+                    name: name1,
+                    data: incomeArr
+
+                }, {
+                    name: name2,
+                    data: payoutArr
+
+                }]
+            });
+        }
+
+        //折线图
+        if(charttype == 1) {
+            var years = resObj['YEARS'];
+            var income = resObj['INCOME'];
+            var payout = resObj['PAYOUT'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var division = resObj['DIVISION'];
+            var type = resObj['TYPE'];
+            var kind = resObj['KIND'];
+            var incomeArr = new Array();
+            var payoutArr = new Array();
+            for(var i=0; i < years.length; i++) {
+                incomeArr.push(parseInt(income[i]));
+                payoutArr.push(parseInt(payout[i]));
+            }
+            var name1,name2;
+            if(type == '总收入/总支出环比增幅百分比分析图') {
+                name1 = '总收入环比百分率';
+                name2 = '总支出环比百分率';
+            }
+            if(type == '征缴收入/待遇支出环比增幅百分比分析图') {
+                name1 = '征缴收入环比百分率';
+                name2 = '待遇支出环比百分率';
+            }
+
+            years = makeAdapt(years);
+
+            $('#container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: area + kind + ':' +type,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                xAxis: {
+                    categories: years
+                },
+                yAxis: {
+                    //min: 0,
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                series: [{
+                    name: name1,
+                    data: incomeArr
+
+                }, {
+                    name: name2,
+                    data: payoutArr
+
+                }]
+            });
+        }
+
+        //折线柱状图
+        if(charttype == 2) {
+            var years = resObj['YEARS'];
+            var balance = resObj['BALANCE'];
+            var okmonths = resObj['OKMONTHS'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var division1 = resObj['DIVISION1'];
+            var division2 = resObj['DIVISION2'];
+            var type = resObj['TYPE'];
+            var kind = resObj['KIND'];
+            var balanceArr = new Array();
+            var okmonthsArr = new Array();
+            for(var i=0; i < years.length; i++) {
+                balanceArr.push(parseInt(balance[i]));
+                okmonthsArr.push(parseInt(okmonths[i]));
+            }
+
+            years = makeAdapt(years);
+
+            $('#container').highcharts({
+                chart: {
+                },
+                title: {
+                    text: area + kind + ':' +type,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                xAxis: [{
+                    categories: years
+                }],
+                yAxis: [{
+                    title: {
+                        text: '单位(' + division1 + ')'
+                    }
+                }, {
+                    title: {
+                        text:  '单位(' + division2 + ')'
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                series: [{
+                    name: '历年累计结余',
+                    color: '#4572A7',
+                    type: 'column',
+                    yAxis: 1,
+                    data: okmonthsArr,
+                    tooltip: {
+                        valueSuffix: division1
+                    }
+                }, {
+                    name: '可支付月数',
+                    color: '#89A54E',
+                    type: 'line',
+                    data: balanceArr,
+                    tooltip: {
+                        valueSuffix: division2
+                    }
+                }]
+            });
+        }
+
+        //单折线图
+        if(charttype == 3) {
+            var years = resObj['YEARS'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var division = resObj['DIVISION'];
+            var type = resObj['TYPE'];
+            var kind = resObj['KIND'];
+            var dataset = resObj['DATASET'];
+            var datasetArr = new Array();
+            alert(years.length);
+            for(var i=0; i < years.length; i++) {
+                datasetArr.push(parseInt(dataset[i]));
+            }
+
+            years = makeAdapt(years);
+
+            $('#container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: area + kind + ':' +type,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                xAxis: {
+                    categories: years
+                },
+                yAxis: {
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                series: [{
+                    name: '累计结余环比百分率',
+                    data: datasetArr
+
+                }]
+            });
+        }
+    } else {
+        alert('no data');
+    }
+}
+var testData = '{"CHARTTYPE":"0","YEARS":["2010","2011","2012","2013","2014","2015"],"INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"PERIOD":"2012年10月-2013年10月","AREA":"蓬江","DIVISION":"万元","TYPE":"总收入/总支出年度环比","KIND":"企业养老保险","OKMONTHS":["14","14","129","126","0","127"],"DATASET":["0","31.7","931.7","-36.3","-100","0"],"BALANCE":["39460","51980","536292","341209","0","57639"]}';
+</script>
+
+<script>
+    $(".collapse").collapse('show');
+    var $datepicker = $frame.find('.datepicker_c');
+    $('.datepicker_c').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
     });
     $('.datepicker_c').on('click', function(){
         $(this).datepicker('setDate', new Date($(this).val()));
@@ -99,23 +408,29 @@
 
 </script>
 
+
+
 <script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
 
-	var $form = $frame.find('form');
-	
-	$form.on('submit', function(ev) {
-        ev.preventDefault();
-        var ksyf = $form.find('[name="KSNF"]').val();
-        var jsyf = $form.find('[name="JSNF"]').val();
-        if(ksyf == "" || jsyf == "") {
-            alert("开始年份和结束年份均不能为空");
-            return false;
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSNF"]').val();
+            var jsyf = $form.find('[name="JSNF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                alert("开始年份和结束年份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            console.log(data);
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
         }
-        var query = $form.serialize();
-		console.log(query);
-        loadPage('html/FT_AnnualAR.html?' + query);
-	});
-
-
-
+    });
 </script>
+
+
+

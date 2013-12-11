@@ -99,10 +99,7 @@
                 $('#BZ').text(pageValue['BZ']);
                 $('#ID').attr('value',pageValue['ID']);
             }
-            else
-            {
-                reloadPage('main.jsp');
-            }
+
         }
     });
 
@@ -116,9 +113,14 @@
     $('#password-form').ajaxForm({
         success: function(data) {
             var resObj = JSON.parse(data);
-            //loadPage('html/PInfo.html');
             if(resObj['__MESSAGE__'])
+            {
                 alert(resObj['__MESSAGE__']);
+            }
+            if(!resObj['__ERROR__'])
+            {
+                reloadPage();
+            }
         }
     });
 </script>

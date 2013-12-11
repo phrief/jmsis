@@ -86,6 +86,10 @@ function loadPage(href, success){
 					location.href = '.';
 					return;
 				}
+				if (obj['__ERROR__']) {	// 后台汇报载入页面错误
+					alert(obj['__MESSAGE__']);
+					return;
+				}
 			} catch(err) {}
 
 			location.hash = hrefPage = href;
@@ -119,7 +123,7 @@ function loadPage(href, success){
 		},
 		error: function(){
 			alert('子页面 '+ href +' 加载失败!');
-			history.back();
+			//history.back();
 		}
 	});
 }

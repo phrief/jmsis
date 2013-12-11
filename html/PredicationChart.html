@@ -91,17 +91,20 @@
 	$('[name="KSNF"]').val(myDate.getFullYear() - 3);
 	$('[name="JSNF"]').val(myDate.getFullYear() + 2);
 
-	$(".datepicker_c").datepicker({
-		changeMonth: true,
-		changeYear: true,
-		showButtonPanel: true,
-		dateFormat: 'yy',
-		onClose: function(dateText, inst) {
-			var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-			var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-			$(this).datepicker('setDate', new Date(year, month));
-		}
-	});
+    $('.datepicker_c').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
+    });
 	$('.datepicker_c').on('click', function(){
 		$(this).datepicker('setDate', new Date($(this).val()));
 	});
@@ -174,13 +177,10 @@ function makeChart(resObj) {
         var mark = 0;
         var CURYEAR = new Date().getFullYear();
         console.log(years.length);
-        for(var j=0; i < years.length; i++) {
+        for(var j=0; j < years.length; j++) {
             if(years[j] == CURYEAR ) {
                 mark = j;
-                console.log('OK');
             }
-            alert(1);
-            console.log(years[j]);
         }
 
 		for(var i= 0; i < years.length; i++) {
@@ -189,6 +189,10 @@ function makeChart(resObj) {
 			balanceArr.push(parseFloat(balance[i]));
 			yellowLine.push(parseFloat(yellow[i]));
 			redLine.push(parseFloat(red[i]));
+		}
+
+
+        for(var i=mark; i < years.length; i++) {
             if(balanceArr[i] < redLine[i] && !isRed) {
                 isRed = true;
                 isYellow = true;
@@ -199,10 +203,11 @@ function makeChart(resObj) {
                 isYellow = true;
                 yellowYear = years[i];
             }
-		}
+        }
+
 		years = makeAdapt(years);
 
-        $('[dataname="yellowYear"]').text(redYear);
+        $('[dataname="yellowYear"]').text(yellowYear);
         $('[dataname="redYear"]').text(redYear);
 
 		$('#container').highcharts({
@@ -274,10 +279,10 @@ function makeChart(resObj) {
 		alert('no data');
 	}
 
-    /*if(isYellow) {
-        if(isRed) $('#pre_redAlert').dialog('open');
-        else $('#pre_yellowAlert').dialog('open');
-    }*/
+    if(isYellow) {
+     if(isRed) $('#pre_redAlert').dialog('open');
+     else $('#pre_yellowAlert').dialog('open');
+     }
 
 }
 

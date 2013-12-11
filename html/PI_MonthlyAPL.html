@@ -155,17 +155,19 @@
         $pagin = $table_list.find('.pagination'),
         trTmpl = $tbody.find('#tr-tmpl').html();
 
-    $frame.find(".datepicker_c").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'yy-mm',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month));
-        }
-	});
+    $frame.find(".datepicker_c").datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 3,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy-mm',
+        //maxView: 3,
+        minView: 3
+    });
     $('.datepicker_c').on('click', function(){
         $(this).datepicker('setDate', new Date($(this).val()));
     });
