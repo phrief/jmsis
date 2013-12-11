@@ -8,6 +8,10 @@ a, input[type="checkbox"], input[type="radio"] {
 	cursor: pointer;
 }
 
+form:last-child, table:last-child {
+	margin-bottom: 0;
+}
+
 /* 表单 form */
 textarea {
 	resize: none;
