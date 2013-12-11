@@ -123,7 +123,7 @@
 
 	$form_table.ajaxForm({
 		success: function(data){
-			var resObj = JSON.parse(resTxt),
+			var resObj = JSON.parse(data),
 				msg = resObj['__MESSAGE__'];
 			msg && alert(msg);
             reloadPage();
