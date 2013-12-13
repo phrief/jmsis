@@ -55,15 +55,16 @@ form label.checkbox, form label.radio {
 	color: #FF3333;
 }
 
-table>caption {
+table > caption {
 	font-size: 21px;
 	font-weight: bold;
 	margin: 10px 0;
 	text-align: center;
 }
-table tbody tr:nth-child(odd) td {
+/* collision with datetime-picker */
+/*table tbody tr:nth-child(odd) td {
 	background-color: #f3f3f3;
-}
+}*/
 table .td-sole {
 	text-align: center;
 }

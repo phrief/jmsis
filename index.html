@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+		<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+		<meta HTTP-EQUIV="expires" CONTENT="0">
 		<title> 江门社保基金收支监测预警系统</title>
-		<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
-		<META HTTP-EQUIV="expires" CONTENT="0">
 		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body id="login">
@@ -14,21 +14,28 @@
 				padding: 5px!important;
 				font-size: 16px!important;
 			}
+			#warning {
+				font-size: 140%;
+			}
 		</style>
 		<div id="login-wrapper" class="png_bg">
 			<div id="login-top">
 				<h1>江门社保基金收支监测预警系统</h1>
-				<img id="logo" src="images/logo_.png"/>
+				<img id="logo" src="images/~logo.png"/>
 			</div>
 			<!-- End #logn-top -->
 
-			<div id="login-content" class="hidden">
-				<form id="login-form" action="system/login.jsp" method="post">
+			<div id="login-content">
+				<div id="warning" style="display:none;">
+					<p>你的浏览器不支持该网站，<br/>请下载新版浏览器．</p>
+				</div>
+
+				<form id="login-form" style="display:none;" action="system/login.jsp" method="post">
 					<input type="hidden" name="action" value="Login">
 
 					<div class="notification information png_bg">
 						<div>
-							请输入用户名密码登陆.
+							请输入用户名密码登陆．
 						</div>
 					</div>
 
@@ -59,8 +66,13 @@
 		<script src="js/ajax-form.js"></script>
 		<script src="js/script.js"></script>
 		<script>
+			//　判断浏览器兼容性
+			if (! isCanvasSupported()) {
+				$('#warning').slideDown('slow');
+				throw new Error('browser not supported');
+			}
+
 			// 登录状态判断
-			$('#login-content').hide().removeClass('hidden');
 			$.ajax({
 				url : 'system/login.jsp',
 				success : function(htmlStr) {
@@ -74,7 +86,7 @@
 					}
 					else
 					{
-						$('#login-content').slideDown('slow');
+						$('#login-form').slideDown('slow');
 					}
 				}
 			});
@@ -96,6 +108,11 @@
 					}
 				}
 			});
+
+			function isCanvasSupported(){
+				var elem = document.createElement('canvas');
+				return !!(elem.getContext && elem.getContext('2d'));
+			}
 		</script>
 	</body>
 </html>

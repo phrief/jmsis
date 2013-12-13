@@ -211,8 +211,8 @@
 				if (iconV>Nvalue)Nvalue=iconV;
 				if(iconV>3)
 				{
-					space="<img class='NODEIMG' id='N"+Node.ID+"_img' src='"+icons[iconV]+"' onClick=showchild('"+Node.ID+"',"+iconV+") align=absMiddle>"+
-					"<img class='NODEIMG' id='N"+Node.ID+"_img2' src='"+fcicon+"' onClick=showchild('"+Node.ID+"',"+iconV+") align=absMiddle>"+space;
+					space="<img class='NODEIMG' id='N"+Node.ID+"_img' src='"+icons[iconV]+"'  align=absMiddle>"+
+					"<img class='NODEIMG' id='N"+Node.ID+"_img2' src='"+fcicon+"'  align=absMiddle>"+space;
 				}
 				else
 				{if (i==Level && pnode.Img && pnode.Img!="")
@@ -228,14 +228,12 @@
 					pnode=pnode.parentNode;
 			}
 			Htm+=space+'<input type=checkbox id="C'+Node.ID+'" onclick="checkAllAuth('+Node.ID+')" '+((!Node.firstChildNode && !Node.hasAuth())?'disabled':'')+'>';
-			Htm+='<font id="T'+Node.ID+'" target=main nowrap CLASS="'+((Nvalue>3)?'NODETITLE':'NODETEXT')+'" onclick="'+
-			((Nvalue>3)?('showchild(\''+Node.ID+'\','+Nvalue+')'):('nodeAction(\''+Node.ID+'\')'))+
-			'" align=absMiddle>'+Node.Text+'</font> ';
+			Htm+='<font id="T'+Node.ID+'" target=main nowrap CLASS="'+((Nvalue>3)?'NODETITLE':'NODETEXT')+'" align=absMiddle>'+Node.Text+'</font> ';
 			Htm+=loadAuthHtm(Node.ID);
 			Htm+='<br>\n';
 				if (Node.firstChildNode!=0)
 				{
-					Htm+='<DIV nowrap CLASS="TREECLASS" id="N'+Node.ID+'_CHILD" style="display:none">';
+					Htm+='<DIV nowrap CLASS="TREECLASS" id="N'+Node.ID+'_CHILD" style="display:">';
 					Htm+=getTreeNodeHtml(Node.firstChildNode,Level+1);
 					Htm+="</DIV>";
 				}
