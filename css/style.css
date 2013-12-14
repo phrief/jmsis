@@ -61,10 +61,9 @@ table > caption {
 	margin: 10px 0;
 	text-align: center;
 }
-/* collision with datetime-picker */
-/*table tbody tr:nth-child(odd) td {
+table[data-colspans] tbody tr:nth-child(odd) td {
 	background-color: #f3f3f3;
-}*/
+}
 table .td-sole {
 	text-align: center;
 }
