@@ -68,6 +68,12 @@
 
             var upload_file = function()
             {
+            	
+            	if (typeof settings.params === 'function') {
+            		settings.params = settings.params();
+            	}
+            	
+            	
                 if($element.val() == '') return settings.onCancel.apply($element, [settings.params]);
 
                 // make sure extension is valid
