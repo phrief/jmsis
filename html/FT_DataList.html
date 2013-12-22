@@ -9,6 +9,60 @@
 	}
 </style>
 
+<div class="accordion" id="accordion2">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				<legend>
+					<i class="icon-chevron-down"></i>
+					<i class="icon-chevron-up"></i>
+					导入数据
+				</legend>
+			</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<form id="form-import" class="form-horizontal">
+					<div class="block">
+						<div class="control-group">
+							<label class="control-label">XLS文件</label>
+							<div class="controls">
+								<input name="_XLSFILE" type="file" maxlength="20">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">冲突策略</label>
+							<div class="controls">
+								<label class="radio">
+									<input name="_OVERWRITE" type="radio" value="0" checked="">忽略
+								</label>
+								<label class="radio">
+									<input name="_OVERWRITE" type="radio" value="1">改写
+								</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">数据类型</label>
+							<div class="controls">
+								<label class="radio">
+									<input name="_DTYPE" type="radio" value="0">月数据
+								</label>
+								<label class="radio">
+									<input name="_DTYPE" type="radio" value="1">年数据
+								</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<input type="submit" value="开始导入" class="btn btn-primary">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- 表格 -->
 <form id="form-list" method="post" action="modules/FD_ctl.jsp?action=del&target=FT_Data">
 	<table id="table-list" class="hidden" data-colspans="7">
@@ -63,54 +117,13 @@
 </form>
 <!-- /表格 -->
 
-<!-- 表单 -->
-<form id="form-import" class="form-horizontal">
-	<div class="block">
-		<legend>
-			<i class="icon-check"></i>导入数据
-		</legend>
-		<div class="control-group">
-			<label class="control-label">XLS文件</label>
-			<div class="controls">
-				<input name="_XLSFILE" type="file" maxlength="20">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">冲突策略</label>
-			<div class="controls">
-				<label class="radio">
-					<input name="_OVERWRITE" type="radio" value="0" checked="">忽略
-				</label>
-				<label class="radio">
-					<input name="_OVERWRITE" type="radio" value="1">改写
-				</label>
-
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">数据类型</label>
-			<div class="controls">
-				<label class="radio">
-					<input name="_DTYPE" type="radio" value="0">月数据
-				</label>
-				<label class="radio">
-					<input name="_DTYPE" type="radio" value="1">年数据
-				</label>
-			</div>
-		</div>
-		<div class="control-group">
-			<input type="submit" value="开始导入" class="btn btn-primary">
-		</div>
-	</div>
-</form>
-<!-- /表单-->
-
 <script>
 	var $form_list = $frame.find('#form-list'),
 			$table_list = $form_list.find('#table-list'),
 			$tbody = $table_list.find('tbody'),
 			$pagination = $table_list.find('.pagination'),
 			$form_import = $frame.find('#form-import'),
+			$collapse = $('#collapseOne'),
 			validExts = ['xls'],
 			params = getURLParams(),
 			page = parseInt(params['page']) || 1,
