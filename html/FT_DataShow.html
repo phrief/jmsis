@@ -32,7 +32,7 @@
 		<th class="text-right">其中: 征缴收入</th>
 		<th class="text-right">总支出</th>
 		<th class="text-right">其中: 待遇支出</th>
-		<th class="text-right">当年收支对比</th>
+		<th class="text-right">收支对比</th>
 		<th class="text-right">历年累计结存数</th>
 	</tr>
 	</thead>
@@ -65,10 +65,25 @@
 	var params = getURLParams(),
 		itemID = parseInt(params['ID']),
 		titles = [
-			'一、企业养老保险', '其中:统筹账户', '个人账户',
-				'二、失业保险', '三、职工基本医疗保险',
-				'其中:统筹账户', '个人账户',
-				'四、工伤保险', '五、生育保险', '合计'
+			'一、企业养老保险', 
+			'其中：统筹账户', 
+			'　　　个人账户',
+			'二、失业保险', 
+			'三、职工基本医疗保险',
+			'其中：统筹账户', 
+			'　　　个人账户',
+			'四、工伤保险', 
+			'五、生育保险', 
+			'六、公务员医疗补助',	
+			'七、机关养老保险金',	
+			'八、离休医疗保障金',	
+			'九、城乡居民医保',	
+			'十、城乡居民养老保险',	
+			'其中：统筹账户',
+			'　　　个人账户',
+			'十一、伤残人员医疗保障金',	
+			'其它(仅供历史数据)',
+			'合计'
 		],
 		$table_list = $frame.find('#table-list'),
 		$tbody = $table_list.find('tbody'),

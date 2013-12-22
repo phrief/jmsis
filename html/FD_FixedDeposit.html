@@ -54,7 +54,7 @@
 						<div class="control-group">
 							<label class="control-label">存入时间</label>
 							<div class="controls">
-								<input type="text" name="CRSJ" />
+								<input type="text" name="CRSJ" class="datepicker_c"/>
 							</div>
 						</div>
 						<div class="control-group">
@@ -94,7 +94,7 @@
 </div>
 <!-- /表顶 -->
 
-<form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelNodes">
+<form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelDeposits">
 	<!-- 表格 -->
 	<table id="table-list" data-colspans="7">
 		<caption>
@@ -124,7 +124,7 @@
 					<td>{{-item['CRSJ']}}</td>
 					<td>{{-item['CQ']}}</td>
 					<td>{{-item['DQSJ']}}</td>
-					<td>{{-item['NLL']}}</td>
+					<td>{{-item['NLL']}}%</td>
 				</tr>
 			</script>
 		</tbody>
@@ -155,6 +155,33 @@
 
 	// 新增
 	$form_add.ajaxForm({
+        beforeSend: function () {
+            var yh = $form_add.find('[name="YH"]').val();
+            var crsj = $form_add.find('[name="CRSJ"]').val();
+            var bj = $form_add.find('[name="BJ"]').val();
+            var cq = $form_add.find('[name="CQ"]').val();
+            var nll = $form_add.find('[name="NLL"]').val();
+            if(yh == "") {
+                alert("银行不能为空");
+                return false;
+            }
+            if (crsj == "") {
+                alert("存入时间不能为空");
+                return false;
+            }
+            if(bj == "") {
+                alert("本金不能为空");
+                return false;
+            }
+            if(cq == "") {
+                alert("存期不能为空");
+                return false;
+            }
+            if(nll == "") {
+                alert("年利率不能为空");
+                return false;
+            }
+        },
 		success: function(resObj) {
 			if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
 			var msg = resObj['__MESSAGE__'];
@@ -238,3 +265,24 @@
 	}
 </script>
 
+<script>
+    $(function(){
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm-dd',
+            //maxView: 3,
+            minView: 2
+        });
+    });
+
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>

@@ -42,10 +42,23 @@
                             <div class="controls">
                                 <select name="InsuType">
                                     <option value="0">企业养老保险</option>
+                                    <option value="1">企业养老保险统筹</option>
+                                    <option value="2">企业养老保险个人</option>
                                     <option value="3">失业保险</option>
                                     <option value="4">职工基本医疗保险</option>
+                                    <option value="5">职工基本医疗保险统筹</option>
+                                    <option value="6">职工基本医疗保险个人</option>
                                     <option value="7">工伤保险</option>
                                     <option value="8">生育保险</option>
+                                    <option value="9">公务员医疗补助	</option>
+                                    <option value="10">机关养老保险金</option>
+                                    <option value="11">离休医疗保障金</option>
+                                    <option value="12">城乡居民医保</option>
+                                    <option value="13">城乡居民养老保险</option>
+                                    <option value="14">城乡居民养老保险统筹</option>
+                                    <option value="15">城乡居民养老保险个人</option>
+                                    <option value="16">伤残人员医疗保障金</option>
+                                    <option value="18">社保基金合计</option>
                                 </select>
                             </div>
                         </div>
@@ -69,8 +82,8 @@
                             <div class="controls">
                                 <select name="AREA">
                                     <option value="440799">全市</option>
+                                    <option value="440798">市区</option>
                                     <option value="440700">市直</option>
-                                    <option value="440701">原市直</option>
                                     <option value="440703">蓬江</option>
                                     <option value="440704">江海</option>
                                     <option value="440781">台山</option>
@@ -133,29 +146,19 @@ function makeChart(resObj) {
         //柱状图
         if(charttype == 0) {
             var years = resObj['YEARS'];
-            var income = resObj['INCOME'];
-            var payout = resObj['PAYOUT'];
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
             var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
             var division = resObj['DIVISION'];
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
-            var incomeArr = new Array();
-            var payoutArr = new Array();
+            var title = resObj['TITLE'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+            var data1Arr = new Array();
+            var data2Arr = new Array();
             for(var i=0; i < years.length; i++) {
-                incomeArr.push(parseInt(income[i]));
-                payoutArr.push(parseInt(payout[i]));
+                data1Arr.push(parseInt(data1[i]));
+                data2Arr.push(parseInt(data2[i]));
             }
-            var name1,name2;
-            if(type == '总收入/总支出年度环比分析图') {
-                name1 = '总收入';
-                name2 = '总支出';
-            }
-            if(type == '征缴收入/待遇支出年度环比分析图') {
-                name1 = '征缴收入';
-                name2 = '待遇支出';
-            }
-
             years = makeAdapt(years);
 
             $('#container').highcharts({
@@ -163,7 +166,7 @@ function makeChart(resObj) {
                     type: 'column'
                 },
                 title: {
-                    text: area + kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -183,14 +186,21 @@ function makeChart(resObj) {
                         text: '单位(' + division + ')'
                     }
                 },
+ 				tooltip: {
+					shared: true
+				},
                 series: [{
                     name: name1,
-                    data: incomeArr
-
+                    data: data1Arr,
+					tooltip: {
+                        valueSuffix: division
+                    }
                 }, {
                     name: name2,
-                    data: payoutArr
-
+                    data: data2Arr,
+					tooltip: {
+                        valueSuffix: division
+                    }
                 }]
             });
         }
@@ -198,27 +208,18 @@ function makeChart(resObj) {
         //折线图
         if(charttype == 1) {
             var years = resObj['YEARS'];
-            var income = resObj['INCOME'];
-            var payout = resObj['PAYOUT'];
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
             var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
             var division = resObj['DIVISION'];
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
-            var incomeArr = new Array();
-            var payoutArr = new Array();
+            var title = resObj['TITLE'];
+            var data1Arr = new Array();
+            var data2Arr = new Array();
             for(var i=0; i < years.length; i++) {
-                incomeArr.push(parseInt(income[i]));
-                payoutArr.push(parseInt(payout[i]));
-            }
-            var name1,name2;
-            if(type == '总收入/总支出环比增幅百分比分析图') {
-                name1 = '总收入环比百分率';
-                name2 = '总支出环比百分率';
-            }
-            if(type == '征缴收入/待遇支出环比增幅百分比分析图') {
-                name1 = '征缴收入环比百分率';
-                name2 = '待遇支出环比百分率';
+                data1Arr.push(parseInt(data1[i]));
+                data2Arr.push(parseInt(data2[i]));
             }
 
             years = makeAdapt(years);
@@ -228,7 +229,7 @@ function makeChart(resObj) {
                     type: 'line'
                 },
                 title: {
-                    text: area + kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -248,14 +249,21 @@ function makeChart(resObj) {
                         text: '单位(' + division + ')'
                     }
                 },
+				tooltip: {
+					shared: true
+				},
                 series: [{
                     name: name1,
-                    data: incomeArr
-
+                    data: data1Arr,
+					tooltip: {
+                        valueSuffix: division
+                    }
                 }, {
                     name: name2,
-                    data: payoutArr
-
+                    data: data2Arr,
+					tooltip: {
+                        valueSuffix: division
+                    }
                 }]
             });
         }
@@ -263,19 +271,19 @@ function makeChart(resObj) {
         //折线柱状图
         if(charttype == 2) {
             var years = resObj['YEARS'];
-            var balance = resObj['BALANCE'];
-            var okmonths = resObj['OKMONTHS'];
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
             var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
             var division1 = resObj['DIVISION1'];
             var division2 = resObj['DIVISION2'];
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
-            var balanceArr = new Array();
-            var okmonthsArr = new Array();
+            var title = resObj['TITLE'];
+            var data1Arr = new Array();
+            var data2Arr = new Array();
             for(var i=0; i < years.length; i++) {
-                balanceArr.push(parseInt(balance[i]));
-                okmonthsArr.push(parseInt(okmonths[i]));
+                data1Arr.push(parseInt(data1[i]));
+                data2Arr.push(parseInt(data2[i]));
             }
 
             years = makeAdapt(years);
@@ -284,7 +292,7 @@ function makeChart(resObj) {
                 chart: {
                 },
                 title: {
-                    text: area + kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -302,7 +310,8 @@ function makeChart(resObj) {
                     title: {
                         text: '单位(' + division1 + ')'
                     }
-                }, {
+                }, 
+                {
                     title: {
                         text:  '单位(' + division2 + ')'
                     },
@@ -312,21 +321,22 @@ function makeChart(resObj) {
                     shared: true
                 },
                 series: [{
-                    name: '历年累计结余',
+                    name: name2,
                     color: '#4572A7',
                     type: 'column',
                     yAxis: 1,
-                    data: okmonthsArr,
-                    tooltip: {
-                        valueSuffix: division1
-                    }
-                }, {
-                    name: '可支付月数',
-                    color: '#89A54E',
-                    type: 'line',
-                    data: balanceArr,
+                    data: data2,
                     tooltip: {
                         valueSuffix: division2
+                    }
+                }, {
+                    name: name1,
+                    color: '#89A54E',
+                    type: 'line',
+                    yAxis: 0,
+                    data: data1,
+                    tooltip: {
+                        valueSuffix: division1
                     }
                 }]
             });
@@ -336,15 +346,13 @@ function makeChart(resObj) {
         if(charttype == 3) {
             var years = resObj['YEARS'];
             var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
+            var title = resObj['TITLE'];
             var division = resObj['DIVISION'];
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
-            var dataset = resObj['DATASET'];
-            var datasetArr = new Array();
-            alert(years.length);
+            var data1 = resObj['DATA1'];
+            var name1 = resObj['NAME1'];
+            var data1Arr = new Array();
             for(var i=0; i < years.length; i++) {
-                datasetArr.push(parseInt(dataset[i]));
+                data1Arr.push(parseInt(data1[i]));
             }
 
             years = makeAdapt(years);
@@ -354,7 +362,7 @@ function makeChart(resObj) {
                     type: 'line'
                 },
                 title: {
-                    text: area + kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -374,9 +382,11 @@ function makeChart(resObj) {
                     }
                 },
                 series: [{
-                    name: '累计结余环比百分率',
-                    data: datasetArr
-
+                    name: name1,
+                    data: data1Arr,
+                    tooltip: {
+                        valueSuffix: division
+                    }
                 }]
             });
         }

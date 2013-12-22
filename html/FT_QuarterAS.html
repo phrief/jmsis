@@ -34,7 +34,7 @@
                                         <input type="radio" name="FXJD" value="1">二季度
                                     </label>
                                     <label class="radio">
-                                        <input type="radio" name="FXJD" value="2">二季度
+                                        <input type="radio" name="FXJD" value="2">三季度
                                     </label>
                                     <label class="radio">
                                         <input type="radio" name="FXJD" value="3">四季度
@@ -48,10 +48,23 @@
                             <div class="controls">
                                 <select name="InsuType">
                                     <option value="0">企业养老保险</option>
+                                    <option value="1">企业养老保险统筹</option>
+                                    <option value="2">企业养老保险个人</option>
                                     <option value="3">失业保险</option>
                                     <option value="4">职工基本医疗保险</option>
+                                    <option value="5">职工基本医疗保险统筹</option>
+                                    <option value="6">职工基本医疗保险个人</option>
                                     <option value="7">工伤保险</option>
                                     <option value="8">生育保险</option>
+                                    <option value="9">公务员医疗补助	</option>
+                                    <option value="10">机关养老保险金</option>
+                                    <option value="11">离休医疗保障金</option>
+                                    <option value="12">城乡居民医保</option>
+                                    <option value="13">城乡居民养老保险</option>
+                                    <option value="14">城乡居民养老保险统筹</option>
+                                    <option value="15">城乡居民养老保险个人</option>
+                                    <option value="16">伤残人员医疗保障金</option>
+                                    <option value="18">社保基金合计</option>
                                 </select>
                             </div>
                         </div>
@@ -81,10 +94,10 @@
                                     <input type="checkbox" name="AREABOX[]" value="440799">全市
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440700">市直
+                                    <input type="checkbox" name="AREABOX[]" value="440798">市区
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440701">市直
+                                    <input type="checkbox" name="AREABOX[]" value="440700">市直
                                 </label>
                                 <label class="checkbox">
                                     <input type="checkbox" name="AREABOX[]" value="440703">蓬江
@@ -132,50 +145,36 @@
 function makeChart(resObj) {
     if(resObj) {
         var charttype = parseInt(resObj['CHARTTYPE']);
-        var fxjd = resObj['FXJD'];
         var period = parseInt(resObj['PERIOD']);
 
         //柱状图
         if(charttype == 0) {
+            //$('#container_').css('display','none');
+            //$('#container').css('height','400px');
             var areas = resObj['AREAS'];
-            var last = resObj['LAST'];
-            var current = resObj['CURRENT'];
-            var period = resObj['PERIOD'];
+
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
 
             var division = resObj['DIVISION'];
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
+            //var kind = resObj['KIND'];
 
-            var lastArr = new Array();
-            var currentArr = new Array();
+            var data1Arr = new Array();
+            var data2Arr = new Array();
             for(var i=0; i < areas.length; i++) {
-                lastArr.push(parseInt(last[i]));
-                currentArr.push(parseInt(current[i]));
+                data1Arr.push(parseInt(data1[i]));
+                data2Arr.push(parseInt(data2[i]));
             }
-            var name1,name2;
-            if(type == '总收入同季度同比分析图') {
-                name1 = period + fxjd + '总收入';
-                name2 = (period-1) + fxjd + '总收入';
-            }
-            if(type == '征缴收入同季度同比分析图') {
-                name1 = period + fxjd + '征缴收入';
-                name2 = (period-1) + fxjd + '征缴收入';
-            }
-            if(type == '总支出同季度同比分析图') {
-                name1 = period + fxjd + '总支出';
-                name2 = (period-1) + fxjd + '总支出';
-            }
-            if(type == '待遇支出同季度同比分析图') {
-                name1 = period + fxjd + '征缴支出';
-                name2 = (period-1) + fxjd + '征缴支出';
-            }
+            var title = resObj['TITLE'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
 
             $('#container').highcharts({
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -189,53 +188,47 @@ function makeChart(resObj) {
                         text: '单位(' + division + ')'
                     }
                 },
+                tooltip: {
+                    shared: true
+                },
                 series: [{
                     name: name1,
-                    data: currentArr
-
+                    data: data1Arr,
+                    tooltip: {
+                        valueSuffix: division
+                    }
                 }, {
                     name: name2,
-                    data: lastArr
-
+                    data: data2Arr,
+                    tooltip: {
+                        valueSuffix: division
+                    }
                 }]
             });
         }
 
         //单折线图
         if(charttype == 1) {
+            //$('#container_').css('display','none');
+            //$('#container').css('height','400px');
             var areas = resObj['AREAS'];
-            var income = resObj['INCOME'];
+
             var division = resObj['DIVISION'];
+            var name1 = resObj['NAME1'];
+            var data1 = resObj['DATA1'];
+            var title = resObj['TITLE'];
 
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
-
-            var incomeArr = new Array();
+            var data1Arr = new Array();
             for(var i=0; i < areas.length; i++) {
-                incomeArr.push(parseInt(income[i]));
+                data1Arr.push(parseInt(data1[i]));
             }
-            var name;
-            if(type == '总收入同季度同比增幅百分比分析图') {
-                name = period + fxjd + '总收入同比增幅百分比';
-            }
-            if(type == '征缴收入同季度同比增幅百分比分析图') {
-                name = period + fxjd + '征缴收入同比增幅百分比';
-            }
-            if(type == '总支出同季度同比增幅百分比分析图') {
-                name = period + fxjd + '总支出同比增幅百分比';
-            }
-            if(type == '待遇支出同季度同比增幅百分比分析图') {
-                name = period + fxjd + '征缴支出同比增幅百分比';
-            }
-            if(type == '历季度累计结余同比增幅百分比分析图') {
-                name = period + fxjd + '累计结存同比增幅百分比';
-            }
+
             $('#container').highcharts({
                 chart: {
                     type: 'line'
                 },
                 title: {
-                    text: kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -249,49 +242,54 @@ function makeChart(resObj) {
                     }
                 },
                 series: [{
-                    name: name,
-                    data: incomeArr
-
+                    name: name1,
+                    data: data1Arr,
+                    tooltip: {
+                        valueSuffix: division
+                    }
                 }]
             });
         }
         //双柱状图
         if(charttype == 2) {
-            $('#container').css('height','200px');
-            $('#container_').css('height','200px');
+            //$('#container').css('height','200px');
+            //$('#container_').css('display','');
+            //$('#container_').css('height','200px');
             var areas = resObj['AREAS'];
-            var balance = resObj['BALANCE'];
-            var okmonths = resObj['OKMONTHS'];
-            var balance_p = resObj['BALANCE_P'];
-            var okmonths_p = resObj['OKMONTHS_P'];
-            var division = resObj['DIVISION'];
+            var division1 = resObj['DIVISION1'];
+            var division2 = resObj['DIVISION2'];
 
-            var type = resObj['TYPE'];
-            var kind = resObj['KIND'];
+            var title = resObj['TITLE'];
 
-            var name1,name2,name3,name4;
-            name1 = period + fxjd + '累计结余';
-            name2 = (period-1) + fxjd + '累计结余';
-            name3 = period + fxjd + '累计结余可支付月数';
-            name4 = (period-1) + fxjd + '累计结余可支付月数';
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+            var name3 = resObj['NAME3'];
+            var name4 = resObj['NAME4'];
 
-            var balanceArr = new Array();
-            var okmonthsArr = new Array();
-            var balance_pArr = new Array();
-            var okmonths_pArr = new Array();
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
+            var data3 = resObj['DATA3'];
+            var data4 = resObj['DATA4'];
+
+            var data1Arr = new Array();
+            var data2Arr = new Array();
+            var data3Arr = new Array();
+            var data4Arr = new Array();
+
+
             for(var i=0; i < areas.length; i++) {
-                balanceArr.push(parseInt(balance[i]));
-                okmonthsArr.push(parseInt(okmonths[i]));
-                balance_pArr.push(parseInt(balance_p[i]));
-                okmonths_pArr.push(parseInt(okmonths_p[i]));
+                data1Arr.push(parseInt(data1[i]));
+                data2Arr.push(parseInt(data2[i]));
+                data3Arr.push(parseInt(data3[i]));
+                data4Arr.push(parseInt(data4[i]));
             }
             //出两张图
             $('#container').highcharts({
                 chart: {
-                    height: 200
+                    height: 400
                 },
                 title: {
-                    text: kind + ':' +type,
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -302,23 +300,56 @@ function makeChart(resObj) {
                 }],
                 yAxis: [{
                     title: {
-                        text: '累计余额(' + division + ')'
+                        text: '累计余额(' + division1 + ')'
                     }
+                },{
+                    title: {
+                        text: '可用月数(' + division2 + ')'
+                    },
+                    opposite: true
                 }],
-                series: [{
-                    name: name1,
-                    color: '#4572A7',
+                tooltip: {
+                    shared: true
+                },
+                series: [ {
+                    name: name3,
+                    //color: '#4572A7',
                     type: 'column',
-                    //yAxis: 1,
-                    data: balanceArr
+                    yAxis: 1,
+                    data: data3Arr,
+                    tooltip: {
+                        valueSuffix: division2
+                    }
+                }, {
+                    name: name4,
+                    //color: '#89A54E',
+                    type: 'column',
+                    yAxis: 1,
+                    data: data4Arr,
+                    tooltip: {
+                        valueSuffix: division2
+                    }
+                }, {
+                    name: name1,
+                    //color: '#4572A7',
+                    type: 'line',
+                    yAxis: 0,
+                    data: data1Arr,
+                    tooltip: {
+                        valueSuffix: division1
+                    }
                 }, {
                     name: name2,
-                    color: '#89A54E',
-                    type: 'column',
-                    data: balance_pArr
+                    //color: '#89A54E',
+                    type: 'line',
+                    yAxis: 0,
+                    data: data2Arr,
+                    tooltip: {
+                        valueSuffix: division1
+                    }
                 }]
             });
-
+            /*
             $('#container_').highcharts({
                 chart: {
                     height: 200
@@ -335,7 +366,7 @@ function makeChart(resObj) {
                 }],
                 yAxis: [{
                     title: {
-                        text: '可支付月数'
+                        text: division2
                     }
                 }],
                 series: [{
@@ -343,14 +374,15 @@ function makeChart(resObj) {
                     color: '#4572A7',
                     type: 'column',
                     //yAxis: 1,
-                    data: okmonthsArr
+                    data: data3Arr
                 }, {
                     name: name4,
                     color: '#89A54E',
                     type: 'column',
-                    data: okmonths_pArr
+                    data: data4Arr
                 }]
             });
+            */
         }
     } else {
         alert('no data');
@@ -390,6 +422,17 @@ var testData = '{"CHARTTYPE":"2","AREAS":["市直","蓬江","江海","台山"],"
             var fxnf = $form.find('[name="FXNF"]').val();
             if (fxnf == "") {
                 alert("分析时间不能为空");
+                return false;
+            }
+            isblank = true;
+            var areas = $form.find('[name="AREABOX[]"]');
+            for(var i=0; i < areas.length; i++) {
+                if(areas[i].checked) {
+                    isblank = false;
+                }
+            }
+            if(isblank) {
+                alert("地区不能为空");
                 return false;
             }
         },

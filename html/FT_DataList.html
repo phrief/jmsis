@@ -34,21 +34,10 @@
 							<label class="control-label">冲突策略</label>
 							<div class="controls">
 								<label class="radio">
-									<input name="_OVERWRITE" type="radio" value="0" checked="">忽略
+									<input name="_OVERWRITE" type="radio" value="0" checked>忽略
 								</label>
 								<label class="radio">
 									<input name="_OVERWRITE" type="radio" value="1">改写
-								</label>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">数据类型</label>
-							<div class="controls">
-								<label class="radio">
-									<input name="_DTYPE" type="radio" value="0">月数据
-								</label>
-								<label class="radio">
-									<input name="_DTYPE" type="radio" value="1">年数据
 								</label>
 							</div>
 						</div>
@@ -72,7 +61,7 @@
 		<thead>
 			<tr>
 				<th>
-					<input type="checkbox" data-name="DelNodes" class="check-all" />
+					<input type="checkbox" data-name="DelNodes[]" class="check-all" />
 				</th>
 				<th>所属月份</th>
 				<th>所属区域</th>
@@ -132,8 +121,11 @@
 	$form_import.on('submit', function(event) {
 		event.preventDefault();  // 禁止默认转页行为
 	}).find('[name="_XLSFILE"]').ajaxfileupload({
+		params: function(){
+			return $form_import.serializeJSON();
+		},
 		submit_button: $form_import.find('[type="submit"]'),
-		'action': 'modules/FD_ctl.jsp?action=import&target=FT_Data',
+		action: 'modules/FD_ctl.jsp?action=import&target=FT_Data',
 		valid_extensions: validExts,
 		onCancel: function() {
 			notify('请选择文件');
