@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 
 <style>
-	#table th:nth-child(4), 
+	#table th:nth-child(4),
 	#table td:nth-child(4) {
 		padding-left: 30px;
 	}
@@ -18,10 +18,14 @@
 		padding: 5px;
 	}
 
-	#form [type="text"] {
+	#form .cell, #form .title {
 		width: 94%;
 		padding: 2px 3px;
 		margin-bottom: 0;
+		text-align: right;
+	}
+	form .cell.modified {
+		color: green;
 	}
 </style>
 
@@ -49,7 +53,12 @@
 		</script>
 		<tbody>
 			<script type="text/html" id="tmpl-input">
-				<input type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}" />
+				{{ if (isCell) { }}
+				{{ value = f(value) }}
+					<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}" />
+				{{ } else { }}
+					<input class="title" type="text" value="{{-value}}" readonly />
+				{{ } }}
 			</script>
 			<tr>
 				<td>一、基本养老保险费收入</td><td></td><td></td>
@@ -143,13 +152,12 @@
 	});
 	$form.find('#btn-params').attr('href', 'html/FD_Budget/1_Params.html?ID=' + budgetID);
 
-	
-	
+
+
 	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
 	}, function(data){
 		var testData = {"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","TVALUES":{"myHashMap":{"C8":"0.00","C7":"0.00","C9":"0.00","C3":"0.00","C6":"0.00","B11":"0.00","CURYEAR":"2013","E6":"0.00","E7":"0.00","B10":"0.00","E8":"0.00","E9":"0.00","B13":"0.00","B14":"0.00","E2":"3,412,735,501.05","E1":"2013年执行数","E3":"0.00","C1":"2013年预算数","C2":"3,504,377,705.22","F11":"0.00","B3":"0.00","B2":"3,504,377,705.22","F10":"0.00","B9":"0.00","B8":"0.00","B7":"0.00","B6":"0.00","F8":"0.00","F9":"0.00","F6":"0.00","C10":"0.00","F7":"0.00","C11":"0.00","C13":"0.00","F13":"0.00","C14":"0.00","F14":"0.00","F1":"2013年预算数","E11":"0.00","E10":"0.00","E13":"0.00","F3":"0.00","F2":"3,412,735,501.05","E14":"0.00","B1":"2013年执行数"}},"__LOGINED__":true,"__CURRENTUSER__":"admin", "__ISTEST__": true}
-
 		var resObj = readResObj(data, testData);
 		showTable(resObj);
 	});
@@ -167,7 +175,7 @@
 					var c = parseInt(mat[1].charCodeAt(0) - 65),
 						r = parseInt(mat[2] - 1);
 					memo[r] = memo[r] || [];
-					memo[r][c] = { name: key, value: val };
+					memo[r][c] = { name: key, value: val, isCell: r > 0 };
 				}
 				return memo;
 			}, []),
@@ -186,33 +194,99 @@
 			});
 		});
 
-		// disable stat inputs
-		$(_.values(_.pick($trows, [0, 7, 10, 13]))).children().each(function(i, td){
-			$(td).find('input')
-				.addClass('stat').attr('readonly', true);
-		});
-		$trows.find().children().each(function(i, td){
-			$(td).find('input').attr('readonly', true);
+		// focus & blur
+		$form.delegate('.cell:not(.stat)', 'focus', function(){
+			var val = $this.val(), plain = uf(val),
+				_val = String(plain.toFixed(2));
+			$this.val(_val);
+		}).delegate('.cell:not(.stat)', 'blur', function(){
+			var $this = $(this), val = $this.val(), plain = uf(val),
+				_val = f(plain);
+			$this.val(_val);
+			if (_val !== $this.attr('placeholder')) {
+				$this.addClass('modified');
+			} else {
+				$this.removeClass('modified');
+			}
 		});
 
-		// count stat
-		var $trs = $tbody.find('tr');
-		$trs.find('input').on('input', function(){
-			var $input = $(this),
-				iCol = $input.parent().index();
-			$trs.each(function(iRow, tr){
-				var $cell = $(tr).children().eq(iCol).find('input');
-				if (! $cell.is('.stat')) return;
-				var total = _.reduce($trs.slice(0, iRow), function(memo, tr){
-					var $item = $(tr).children().eq(iCol).find('input:not(.stat)'),
-						val = $item.val() || '';
-					return memo + Number(val.replace(/[, ]/g, '')) || 0;
-				}, 0);
-				// TODO: format the total str
-				$cell.val(total.toFixed(2));
+		// stat cells
+		var stats = {
+			'B8': function(){
+				return g('B2') + g('B3') + g('B4') + g('B6') + g('B7');
+			},
+			'B11': function(){
+				return g('B8') + g('B9') + g('B10');
+			},
+			'B14': function(){
+				return g('B11') + g('B13');
+			},
+			'C8': function(){
+				return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
+			},
+			'C11': function(){
+				return g('C8') + g('C9') + g('C10');
+			},
+			'C14': function(){
+				return g('C11') + g('C13');
+			},
+			'E8': function(){
+				return g('E2') + g('E3') + g('E4') + g('E6') + g('E7');
+			},
+			'E11': function(){
+				return g('E8') + g('E9') + g('E10');
+			},
+			'E12': function(){
+				return g('B11') - g('E11');
+			},
+			'E13': function(){
+				return g('C13');
+			},
+			'E14': function(){
+				return g('E13') + g('E11');
+			},
+			'F8': function(){
+				return g('F2') + g('F3') + g('F4') + g('F6') + g('F7');
+			},
+			'F11': function(){
+				return g('F8') + g('F9') + g('F10');
+			},
+			'F12': function(){
+				return g('C11') - g('F11');
+			},
+			'F13': function(){
+				return g('F12') + g('E13');
+			},
+			'F14': function(){
+				return g('F13') + g('F11');
+			}
+		}
+		_.each(_.keys(stats), function(key){
+			gc(key).attr('readonly', true)
+				.addClass('stat');
+		});
+		$form.on('input', function(){
+			_.each(stats, function(fn, key){
+				s(key, fn());
 			});
 		});
-		
+
 		$table.removeClass('hidden');
+	}
+
+	function gc(key) {
+		return $form.find('[name="'+ key +'"]');
+	}
+	function g(key){
+		return uf(gc(key).val());
+	}
+	function s(key, value){
+		gc(key).val(f(value));
+	}
+	function f(num){
+		return numeral(num).format('0,0.00');
+	}
+	function uf(str){
+		return numeral().unformat(str);
 	}
 </script>

@@ -224,6 +224,7 @@
 			success: function(data){
 				var testData = {'ID': 123}
 				var resObj = readResObj(data, testData);
+				if (resObj['__ERROR__']) return;
 				loadPage('html/FD_Budget/1_Edit.html?ID=' + resObj['ID']);
 			}
 		});
