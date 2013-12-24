@@ -196,7 +196,7 @@
 
 		// focus & blur
 		$form.delegate('.cell:not(.stat)', 'focus', function(){
-			var val = $this.val(), plain = uf(val),
+			var $this = $(this), val = $this.val(), plain = uf(val),
 				_val = String(plain.toFixed(2));
 			$this.val(_val);
 		}).delegate('.cell:not(.stat)', 'blur', function(){
@@ -221,15 +221,6 @@
 			'B14': function(){
 				return g('B11') + g('B13');
 			},
-			'C8': function(){
-				return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
-			},
-			'C11': function(){
-				return g('C8') + g('C9') + g('C10');
-			},
-			'C14': function(){
-				return g('C11') + g('C13');
-			},
 			'E8': function(){
 				return g('E2') + g('E3') + g('E4') + g('E6') + g('E7');
 			},
@@ -240,10 +231,22 @@
 				return g('B11') - g('E11');
 			},
 			'E13': function(){
-				return g('C13');
+				return g('E12')+g('B13');
 			},
 			'E14': function(){
-				return g('E13') + g('E11');
+				return g('E11') + g('E13');
+			},
+			'C8': function(){
+				return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
+			},
+			'C11': function(){
+				return g('C8') + g('C9') + g('C10');
+			},
+			'C13': function(){
+				return g('E13');
+			},
+			'C14': function(){
+				return g('C11') + g('C13');
 			},
 			'F8': function(){
 				return g('F2') + g('F3') + g('F4') + g('F6') + g('F7');
@@ -255,7 +258,7 @@
 				return g('C11') - g('F11');
 			},
 			'F13': function(){
-				return g('F12') + g('E13');
+				return g('F12') + g('C13');
 			},
 			'F14': function(){
 				return g('F13') + g('F11');
