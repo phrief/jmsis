@@ -1,7 +1,5 @@
 
-/.idea
+.idea
 
-/.sublime-workspace
-/_.sublime-workspace
-/.sublime-project
-/_.sublime-project
+*.sublime-workspace
+*.sublime-project

@@ -43,6 +43,7 @@
 						</div>
 						<div class="control-group">
 							<input type="submit" value="开始导入" class="btn btn-primary">
+              <a class="btn external" href="xls/template.xls">下载模版</a>
 						</div>
 					</div>
 				</form>
@@ -140,13 +141,13 @@
 				json = RegExp.$1;
 				data = JSON.parse(json);
 			}
-			var resObj = readResObj(data);
+			readResObj(data);
 			reloadPage();
 		}
 	});
 	$form_list.ajaxForm({
 		success: function(data) {
-			var resObj = readResObj(data);
+			readResObj(data);
 			reloadPage();
 		}
 	});
