@@ -1,8 +1,4 @@
-<!--
-2013-11-28 11:39 "deal with stat inputs" update by fritz 
--->
-
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 
 <style>
 	#table th:nth-child(4),
@@ -24,6 +20,7 @@
 		margin-bottom: 0;
 		text-align: right;
 	}
+
 	form .cell.modified {
 		color: green;
 	}
@@ -36,96 +33,148 @@
 				<i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
 			</caption>
 			<thead>
-				<tr>
-					<th>社预02表</th>
-					<th colspan="4">区域: 江门市</th>
-					<th class="text-right">单位: 元</th>
-				</tr>
-				<tr>
-					<th>项目</th>
-					<th></th>
-					<th></th>
-					<th>项目</th>
-					<th></th>
-					<th></th>
-				</tr>
+			<tr>
+				<th>社预02表</th>
+				<th colspan="4">区域: 江门市</th>
+				<th class="text-right">单位: 元</th>
+			</tr>
+			<tr>
+				<th>项目</th>
+				<th></th>
+				<th></th>
+				<th>项目</th>
+				<th></th>
+				<th></th>
+			</tr>
 			</thead>
 		</script>
 		<tbody>
-			<script type="text/html" id="tmpl-input">
-				{{ if (isCell) { }}
-				{{ value = f(value) }}
-					<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}" />
-				{{ } else { }}
-					<input class="title" type="text" value="{{-value}}" readonly />
-				{{ } }}
-			</script>
-			<tr>
-				<td>一、基本养老保险费收入</td><td></td><td></td>
-				<td>一、基本养老金支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>二、利息收入</td><td></td><td></td>
-				<td>二、医疗补助金支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>三、财政补贴收入</td><td></td><td></td>
-				<td>三、丧葬抚恤补助支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>其中: 本级财政补助</td><td></td><td></td>
-				<td></td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>四、其他收入</td><td></td><td></td>
-				<td>四、其他支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>五、转移收入</td><td></td><td></td>
-				<td>五、转移支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>六、本年收入小计</td><td></td><td></td>
-				<td>六、本年支出小计</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>七、上级补助收入</td><td></td><td></td>
-				<td>七、补助下级支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>八、下级上解收入</td><td></td><td></td>
-				<td>八、上解上级支出</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>九、本年收入合计</td><td></td><td></td>
-				<td>九、本年支出合计</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td></td><td></td><td></td>
-				<td>十、本年收支结余</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>十、上年结余</td><td></td><td></td>
-				<td>十一、年末滚存结余</td><td></td><td></td>
-			</tr>
-			<tr>
-				<td>总计</td><td></td><td></td>
-				<td>总计</td><td></td><td></td>
-			</tr>
+		<script type="text/html" id="tmpl-input">
+			{{ if (isCell) { }}
+			{{ value = f(value) }}
+			<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}"/>
+			{{ } else { }}
+			<input class="title" type="text" value="{{-value}}" readonly/>
+			{{ } }}
+		</script>
+		<tr>
+			<td>一、基本养老保险费收入</td>
+			<td></td>
+			<td></td>
+			<td>一、基本养老金支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>二、利息收入</td>
+			<td></td>
+			<td></td>
+			<td>二、医疗补助金支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>三、财政补贴收入</td>
+			<td></td>
+			<td></td>
+			<td>三、丧葬抚恤补助支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>其中: 本级财政补助</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>四、其他收入</td>
+			<td></td>
+			<td></td>
+			<td>四、其他支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>五、转移收入</td>
+			<td></td>
+			<td></td>
+			<td>五、转移支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>六、本年收入小计</td>
+			<td></td>
+			<td></td>
+			<td>六、本年支出小计</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>七、上级补助收入</td>
+			<td></td>
+			<td></td>
+			<td>七、补助下级支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>八、下级上解收入</td>
+			<td></td>
+			<td></td>
+			<td>八、上解上级支出</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>九、本年收入合计</td>
+			<td></td>
+			<td></td>
+			<td>九、本年支出合计</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>十、本年收支结余</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>十、上年结余</td>
+			<td></td>
+			<td></td>
+			<td>十一、年末滚存结余</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>总计</td>
+			<td></td>
+			<td></td>
+			<td>总计</td>
+			<td></td>
+			<td></td>
+		</tr>
 		</tbody>
 		<tfoot>
-			<tr>
-				<td colspan="6">
-					<div class="bulk-actions align-left">
-						<input type="hidden" name="ID" />
-						<input type="submit" class="btn btn-primary" value="保存修改"
-							onclick="return confirm('确定要保存所做的修改?')" />
-						<input type="button" id="btn-reset" value="重置" class="btn" />
-						<button class="btn" id="btn-params">返回参数设置</button>
-					</div>
-					<div class="pagination"></div>
-				</td>
-			</tr>
+		<tr>
+			<td colspan="6">
+				<div class="bulk-actions align-left">
+					<input type="hidden" name="ID"/>
+					<input type="submit" class="btn btn-primary" value="保存修改"
+								 onclick="return confirm('确定要保存所做的修改?')"/>
+					<input type="button" id="btn-reset" value="重置" class="btn"/>
+					<button class="btn" id="btn-params">返回参数设置</button>
+				</div>
+				<div class="pagination"></div>
+			</td>
+		</tr>
 		</tfoot>
 	</table>
 </form>
@@ -139,13 +188,13 @@
 
 	$form.find('[name="ID"]').val(budgetID);
 	$form.ajaxForm({
-		success: function(data) {
+		success: function (data) {
 			var testData = {'__MESSAGE__': '保存成功'}
 			var resObj = readResObj(data, testData);
 			loadPage('html/FD_Budget.html');
 		}
 	});
-	$form.find('#btn-reset').on('click', function() {
+	$form.find('#btn-reset').on('click', function () {
 		if (confirm('当前所有修改都将撤销 是否确定重置表单?')) {
 			$form[0].reset();
 		}
@@ -153,23 +202,22 @@
 	$form.find('#btn-params').attr('href', 'html/FD_Budget/1_Params.html?ID=' + budgetID);
 
 
-
 	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
-	}, function(data){
-		var testData = {"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","TVALUES":{"myHashMap":{"C8":"0.00","C7":"0.00","C9":"0.00","C3":"0.00","C6":"0.00","B11":"0.00","CURYEAR":"2013","E6":"0.00","E7":"0.00","B10":"0.00","E8":"0.00","E9":"0.00","B13":"0.00","B14":"0.00","E2":"3,412,735,501.05","E1":"2013年执行数","E3":"0.00","C1":"2013年预算数","C2":"3,504,377,705.22","F11":"0.00","B3":"0.00","B2":"3,504,377,705.22","F10":"0.00","B9":"0.00","B8":"0.00","B7":"0.00","B6":"0.00","F8":"0.00","F9":"0.00","F6":"0.00","C10":"0.00","F7":"0.00","C11":"0.00","C13":"0.00","F13":"0.00","C14":"0.00","F14":"0.00","F1":"2013年预算数","E11":"0.00","E10":"0.00","E13":"0.00","F3":"0.00","F2":"3,412,735,501.05","E14":"0.00","B1":"2013年执行数"}},"__LOGINED__":true,"__CURRENTUSER__":"admin", "__ISTEST__": true}
+	}, function (data) {
+		var testData = {"__MESSAGE__": "", "__ERROR__": false, "__NEXTACTION__": "", "TVALUES": {"myHashMap": {"C8": "0.00", "C7": "0.00", "C9": "0.00", "C3": "0.00", "C6": "0.00", "B11": "0.00", "CURYEAR": "2013", "E6": "0.00", "E7": "0.00", "B10": "0.00", "E8": "0.00", "E9": "0.00", "B13": "0.00", "B14": "0.00", "E2": "3,412,735,501.05", "E1": "2013年执行数", "E3": "0.00", "C1": "2013年预算数", "C2": "3,504,377,705.22", "F11": "0.00", "B3": "0.00", "B2": "3,504,377,705.22", "F10": "0.00", "B9": "0.00", "B8": "0.00", "B7": "0.00", "B6": "0.00", "F8": "0.00", "F9": "0.00", "F6": "0.00", "C10": "0.00", "F7": "0.00", "C11": "0.00", "C13": "0.00", "F13": "0.00", "C14": "0.00", "F14": "0.00", "F1": "2013年预算数", "E11": "0.00", "E10": "0.00", "E13": "0.00", "F3": "0.00", "F2": "3,412,735,501.05", "E14": "0.00", "B1": "2013年执行数"}}, "__LOGINED__": true, "__CURRENTUSER__": "admin", "__ISTEST__": true}
 		var resObj = readResObj(data, testData);
 		showTable(resObj);
 	});
 
-	function showTable(resObj){
+	function showTable(resObj) {
 		$table.addClass('hidden');
 		if (resObj['__ISTEST__']) {
 			$table.find('#test').text('(测试数据)');
 		}
 		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
 			tValues = resObj['TVALUES']['myHashMap'],
-			matrix = _.reduce(tValues, function(memo, val, key){
+			matrix = _.reduce(tValues, function (memo, val, key) {
 				var mat = key.match(/^(\w)(\d+)$/);
 				if (mat) {
 					var c = parseInt(mat[1].charCodeAt(0) - 65),
@@ -185,9 +233,9 @@
 			year1: year, year2: year + 1
 		}));
 		var $trows = $table.find('thead > tr:last, tbody > tr');
-		_.each(matrix, function(row, i){
+		_.each(matrix, function (row, i) {
 			var $trow = $trows.eq(i);
-			_.each(row, function(span, j){
+			_.each(row, function (span, j) {
 				if (_.isUndefined(span)) return;
 				var inputHtml = _.template(inputTmpl, span);
 				$trow.children().eq(j).html(inputHtml);
@@ -195,81 +243,81 @@
 		});
 
 		// focus & blur
-		$form.delegate('.cell:not(.stat)', 'focus', function(){
+		$form.delegate('.cell:not(.stat)', 'focus',function () {
 			var $this = $(this), val = $this.val(), plain = uf(val),
 				_val = String(plain.toFixed(2));
 			$this.val(_val);
-		}).delegate('.cell:not(.stat)', 'blur', function(){
-			var $this = $(this), val = $this.val(), plain = uf(val),
-				_val = f(plain);
-			$this.val(_val);
-			if (_val !== $this.attr('placeholder')) {
-				$this.addClass('modified');
-			} else {
-				$this.removeClass('modified');
-			}
-		});
+		}).delegate('.cell:not(.stat)', 'blur', function () {
+				var $this = $(this), val = $this.val(), plain = uf(val),
+					_val = f(plain);
+				$this.val(_val);
+				if (_val !== $this.attr('placeholder')) {
+					$this.addClass('modified');
+				} else {
+					$this.removeClass('modified');
+				}
+			});
 
 		// stat cells
 		var stats = {
-			'B8': function(){
+			'B8': function () {
 				return g('B2') + g('B3') + g('B4') + g('B6') + g('B7');
 			},
-			'B11': function(){
+			'B11': function () {
 				return g('B8') + g('B9') + g('B10');
 			},
-			'B14': function(){
+			'B14': function () {
 				return g('B11') + g('B13');
 			},
-			'E8': function(){
+			'E8': function () {
 				return g('E2') + g('E3') + g('E4') + g('E6') + g('E7');
 			},
-			'E11': function(){
+			'E11': function () {
 				return g('E8') + g('E9') + g('E10');
 			},
-			'E12': function(){
+			'E12': function () {
 				return g('B11') - g('E11');
 			},
-			'E13': function(){
-				return g('E12')+g('B13');
+			'E13': function () {
+				return g('E12') + g('B13');
 			},
-			'E14': function(){
+			'E14': function () {
 				return g('E11') + g('E13');
 			},
-			'C8': function(){
+			'C8': function () {
 				return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
 			},
-			'C11': function(){
+			'C11': function () {
 				return g('C8') + g('C9') + g('C10');
 			},
-			'C13': function(){
+			'C13': function () {
 				return g('E13');
 			},
-			'C14': function(){
+			'C14': function () {
 				return g('C11') + g('C13');
 			},
-			'F8': function(){
+			'F8': function () {
 				return g('F2') + g('F3') + g('F4') + g('F6') + g('F7');
 			},
-			'F11': function(){
+			'F11': function () {
 				return g('F8') + g('F9') + g('F10');
 			},
-			'F12': function(){
+			'F12': function () {
 				return g('C11') - g('F11');
 			},
-			'F13': function(){
+			'F13': function () {
 				return g('F12') + g('C13');
 			},
-			'F14': function(){
+			'F14': function () {
 				return g('F13') + g('F11');
 			}
 		}
-		_.each(_.keys(stats), function(key){
+		_.each(_.keys(stats), function (key) {
 			gc(key).attr('readonly', true)
 				.addClass('stat');
 		});
-		$form.on('input', function(){
-			_.each(stats, function(fn, key){
+		$form.on('input', function () {
+			_.each(stats, function (fn, key) {
 				s(key, fn());
 			});
 		});
@@ -278,18 +326,18 @@
 	}
 
 	function gc(key) {
-		return $form.find('[name="'+ key +'"]');
+		return $form.find('[name="' + key + '"]');
 	}
-	function g(key){
+	function g(key) {
 		return uf(gc(key).val());
 	}
-	function s(key, value){
+	function s(key, value) {
 		gc(key).val(f(value));
 	}
-	function f(num){
+	function f(num) {
 		return numeral(num).format('0,0.00');
 	}
-	function uf(str){
+	function uf(str) {
 		return numeral().unformat(str);
 	}
 </script>

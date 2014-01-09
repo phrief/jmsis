@@ -21,7 +21,7 @@ function show_date(v,formattype)
 //fileupload
 function ajaxFileUpload(fid,bid,lid)
 {
-	//alert(bid);
+	//notify(bid);
 	if(!$('#'+ fid).val()){
 		return false;
 	}
@@ -47,11 +47,11 @@ function ajaxFileUpload(fid,bid,lid)
 				{
 					if(data.error != '')
 					{
-						//alert(data.error);
+						//notify(data.error);
 						$("#"+lid).html(data.error);
 					}else
 					{
-						//alert(data.msg);
+						//notify(data.msg);
 						$("#"+lid).html(data.msg);
 						$('#'+ bid).val(data.file);
 					}
@@ -59,7 +59,7 @@ function ajaxFileUpload(fid,bid,lid)
 			},
 			error: function (data, status, e)
 			{
-				//alert(e);
+				//notify(e);
 				$("#"+lid).html(data.error);
 			}
 		}

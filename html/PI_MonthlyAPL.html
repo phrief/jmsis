@@ -1,11 +1,4 @@
-
-<meta charset="UTF-8">
-
-<style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
-</style>
+<meta charset="UTF-8"/>
 
 <style>
     #table-list th {
@@ -177,7 +170,7 @@
         success: function(resObj) {
             if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
             var msg = resObj['__MESSAGE__'];
-            msg && alert(msg);
+            msg && notify(msg);
             // 表格数据
             getPage(1);
             $("#collapseOne").collapse('hide');
@@ -188,7 +181,7 @@
         success: function(resObj) {
             if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
             var msg = resObj['__MESSAGE__'];
-            msg && alert(msg);
+            msg && notify(msg);
             // 表格数据
             getPage(1);
         }

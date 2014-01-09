@@ -109,7 +109,7 @@
             var resObj = JSON.parse(data);
             if(resObj['__MESSAGE__'])
             {
-                alert(resObj['__MESSAGE__']);
+                notify(resObj['__MESSAGE__']);
             }
             if(!resObj['__ERROR__'])
             {

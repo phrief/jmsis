@@ -50,8 +50,10 @@ function readResObj(data, testData) {
 	return resObj;
 }
 // 通知消息
+var _alert = alert;
+alert = notify;
 function notify(msg) {
-	alert(msg);
+	_alert(msg);
 }
 
 // 获取url参数
@@ -78,6 +80,9 @@ function loadPage(href, success) {
 	//console.log('正在加载子页面 ' + href);
 	$.ajax({
 		url: href,
+		error: function () {
+			notify('子页面 ' + href + ' 加载失败!');
+		},
 		success: function (data) {
 			try {
 				var obj = $.parseJSON(data);
@@ -86,7 +91,7 @@ function loadPage(href, success) {
 					return;
 				}
 				if (obj['__ERROR__']) {	// 后台汇报载入页面错误
-					alert(obj['__MESSAGE__']);
+					notify(obj['__MESSAGE__']);
 					return;
 				}
 			} catch (err) {
@@ -117,9 +122,6 @@ function loadPage(href, success) {
 				startMenu(nIdMenu, nIdTab);
 			}
 			success && success();
-		},
-		error: function () {
-			alert('子页面 ' + href + ' 加载失败!');
 		}
 	});
 }

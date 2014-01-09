@@ -232,7 +232,7 @@ function makeChart(htmlStr) {
 			});
 		}
 	} else {
-		alert('no data');
+		notify('no data');
 	}
 }
 </script>
@@ -264,7 +264,7 @@ function makeChart(htmlStr) {
         },
         success : function(htmlStr) {
             makeChart(htmlStr);
-           // alert('success');
+           // notify('success');
             console.log(htmlStr);
         }
     });

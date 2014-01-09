@@ -240,7 +240,7 @@
 				}
 				var resObj = readResObj(data, testData),
 					msg = resObj['__MESSAGE__'];
-				msg && alert(msg);
+				msg && notify(msg);
 				loadPage('html/FD_Budget/1_Edit.html?ID=' + budgetID);
 			}
 		});

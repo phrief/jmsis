@@ -162,30 +162,30 @@
             var cq = $form_add.find('[name="CQ"]').val();
             var nll = $form_add.find('[name="NLL"]').val();
             if(yh == "") {
-                alert("银行不能为空");
+                notify("银行不能为空");
                 return false;
             }
             if (crsj == "") {
-                alert("存入时间不能为空");
+                notify("存入时间不能为空");
                 return false;
             }
             if(bj == "") {
-                alert("本金不能为空");
+                notify("本金不能为空");
                 return false;
             }
             if(cq == "") {
-                alert("存期不能为空");
+                notify("存期不能为空");
                 return false;
             }
             if(nll == "") {
-                alert("年利率不能为空");
+                notify("年利率不能为空");
                 return false;
             }
         },
 		success: function(resObj) {
 			if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
 			var msg = resObj['__MESSAGE__'];
-			msg && alert(msg);
+			msg && notify(msg);
 			// 表格数据
 			getPage(1);
 			$("#collapseOne").collapse('hide');
@@ -196,7 +196,7 @@
 		success: function(data){
 			var resObj = JSON.parse(data),
 				msg = resObj['__MESSAGE__'];
-			msg && alert(msg);
+			msg && notify(msg);
 			reloadPage();
 		}
 	});

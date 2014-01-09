@@ -199,7 +199,7 @@
             var ksyf = $form.find('[name="KSYF"]').val();
             var jsyf = $form.find('[name="JSYF"]').val();
             if(ksyf == "" || jsyf == "") {
-                alert("开始月份和结束月份均不能为空");
+                notify("开始月份和结束月份均不能为空");
                 return false;
             }
         },

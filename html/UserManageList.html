@@ -123,7 +123,7 @@
 		success: function(resTxt) {
 			var resObj = JSON.parse(resTxt),
 				msg = resObj['__MESSAGE__'];
-			msg && alert(msg);
+			msg && notify(msg);
             reloadPage();
 		}
 	});

@@ -223,7 +223,7 @@ function makeChart(htmlStr) {
 			var kind = resObj['KIND'];
 			var dataset = resObj['DATASET'];
 			var datasetArr = new Array();
-            alert(years.length);
+            notify(years.length);
 			for(var i=0; i < years.length; i++) {
 				datasetArr.push(parseInt(dataset[i]));
 			}
@@ -262,7 +262,7 @@ function makeChart(htmlStr) {
 			});
 		}
 	} else {
-		alert('no data');
+		notify('no data');
 	}
 }
 </script>
@@ -292,7 +292,7 @@ function makeChart(htmlStr) {
         },
         success : function(htmlStr) {
 			//makeChart(htmlStr);
-            //alert('success');
+            //notify('success');
             makeChart(htmlStr);
         }
     });

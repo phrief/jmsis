@@ -94,7 +94,7 @@
 			var resObj = JSON.parse(resTxt),
 				msg = resObj['__MESSAGE__'];
 			if (msg) {
-				alert(msg);
+				notify(msg);
 			}
 			loadPage('html/UserManageList.html');
 		}
