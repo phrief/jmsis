@@ -1,4 +1,3 @@
-
 @import url("lib/reset.css");
 @import url("lib/invalid.css");
 @import url("lib/calendar-green.css");
@@ -6,3 +5,41 @@
 @import url("../plugin/bootstrap/css/bootstrap.min.css");
 @import url("zcn.css");
 @import url("style.css");
+
+svg > text:last-child {
+	display: none;
+}
+
+.content-box-header {
+	margin-bottom: -1px;
+}
+
+.block {
+	border-radius: 6px;
+	background-color: #F9F9F9;
+	border: solid 16px #F9F9F9;
+}
+
+.accordion-toggle .icon-chevron-down {
+	display: none;
+}
+
+.accordion-toggle .icon-chevron-up {
+	display: inline-block;
+}
+
+.accordion-toggle.collapsed .icon-chevron-down {
+	display: inline-block;
+}
+
+.accordion-toggle.collapsed .icon-chevron-up {
+	display: none;
+}
+
+#profile-links > span {
+	color: #aaa;
+}
+
+#test {
+	color: #FF3333;
+}

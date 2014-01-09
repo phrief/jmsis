@@ -1,9 +1,8 @@
-
 _.templateSettings = {
 	interpolate: /\{\{=(.+?)\}\}/g,
 	evaluate: /\{\{(.+?)\}\}/g,
 	escape: /\{\{\-(.+?)\}\}/g
-}
+};
 
 // 全局变量
 var global = {},
@@ -18,7 +17,7 @@ $.ajaxSetup({
 });
 
 // hash改变时自动加载子页面
-$(window).on('hashchange', function() {
+$(window).on('hashchange', function () {
 	var href = location.hash.substr(1);
 	if (href && href !== hrefPage) {
 		loadPage(href);
@@ -34,7 +33,7 @@ function readResObj(data, testData) {
 			data = JSON.parse(data);
 		}
 		resObj = data;
-	} catch(err) {
+	} catch (err) {
 		if (typeof testData === 'string') {
 			testData = JSON.parse(testData);
 		}
@@ -59,9 +58,9 @@ function notify(msg) {
 function getURLParams(hash) {
 	var pat = /([^?=&#]*)=([^?=&#]+)/g, params = {};
 	decodeURIComponent(hash || location.hash)
-		.replace(pat, function(a, b, c){
+		.replace(pat, function (a, b, c) {
 			if (b in params) {  // 已有该键
-				if (! _.isArray(params[b])) params[b] = [params[b]];	// 数组化
+				if (!_.isArray(params[b])) params[b] = [params[b]];	// 数组化
 				params[b].push(c);
 			} else {
 				params[b] = c;
@@ -75,14 +74,14 @@ function reloadPage(success) {
 	loadPage(hrefPage, success);
 }
 // ajax加载子页面
-function loadPage(href, success){
+function loadPage(href, success) {
 	//console.log('正在加载子页面 ' + href);
 	$.ajax({
 		url: href,
-		success: function(data){
+		success: function (data) {
 			try {
 				var obj = $.parseJSON(data);
-				if (! obj['__LOGINED__']) {	// 若未登录
+				if (!obj['__LOGINED__']) {	// 若未登录
 					location.href = '.';
 					return;
 				}
@@ -90,17 +89,15 @@ function loadPage(href, success){
 					alert(obj['__MESSAGE__']);
 					return;
 				}
-			} catch(err) {}
+			} catch (err) {
+			}
 
 			location.hash = hrefPage = href;
 			$(window).scrollTop(0);
 
-			// 移除对话框
-			//$body.children('[role="dialog"]').remove();
-
 			$frame.html(data);
 
-			
+
 			var item = _.findWhere(global.allItems, {
 				'nHref': href
 			});
@@ -121,9 +118,8 @@ function loadPage(href, success){
 			}
 			success && success();
 		},
-		error: function(){
-			alert('子页面 '+ href +' 加载失败!');
-			//history.back();
+		error: function () {
+			alert('子页面 ' + href + ' 加载失败!');
 		}
 	});
 }

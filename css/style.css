@@ -1,9 +1,10 @@
+@import url("form.css");
+@import url("table.css");
+
 body {
 	line-height: 1 !important;
 }
-.hidden {
-	display: none;
-}
+
 a, input[type="checkbox"], input[type="radio"] {
 	cursor: pointer;
 }
@@ -12,104 +13,19 @@ form:last-child, table:last-child {
 	margin-bottom: 0;
 }
 
-/* 表单 form */
-textarea {
-	resize: none;
-	width: 360px !important;
-	height: 180px;
-}
-.form-horizontal .control-label {
-	width: 190px !important;
-}
-.form-horizontal .controls {
-	margin-left: 210px !important;
-}
-legend {
-	font-weight: bold;
-	margin-bottom: 0;
-	border-bottom: none;
-}
-form legend {
-	margin-bottom: 10px;
-	border-bottom: 1px solid #e5e5e5;
-}
-fieldset legend {
-	font-weight: normal;
-	font-size: 19px;
-	margin-bottom: 10px;
-	border-bottom: 1px dashed #e5e5e5;
-}
-form label {
-	cursor: pointer;
-}
-form label.checkbox, form label.radio {
-	display: inline-block;
-	margin-right: 28px;
-}
-
-
-#logo {
-	margin-left: 10px !important;
-}
-#test {
-	color: #FF3333;
-}
-
-table > caption {
-	font-size: 21px;
-	font-weight: bold;
-	margin: 10px 0;
-	text-align: center;
-}
-table[data-colspans] tbody tr:nth-child(odd) td {
-	background-color: #f3f3f3;
-}
-table .td-sole {
-	text-align: center;
-}
-table th, table td {
-	word-break: break-all;
-}
-
-.content-box-header {
-	margin-bottom: -1px;
-}
-#profile-links > span {
-	color: #aaa;
-}
-
-.block {
-	border-radius: 6px;
-	background-color: #F9F9F9;
-	border: solid 16px #F9F9F9;
-}
-
-legend>i, caption>i {
+legend > i, caption > i {
 	margin-top: 7px !important;
 	margin-right: 7px !important;
 }
 
-.accordion-toggle .icon-chevron-down {
-	display: none;
-}
-.accordion-toggle .icon-chevron-up {
-	display: inline-block;
-}
-.accordion-toggle.collapsed .icon-chevron-down {
-	display: inline-block;
-}
-.accordion-toggle.collapsed .icon-chevron-up {
+.hidden {
 	display: none;
 }
 
 .text-center {
 	text-align: center;
 }
+
 .text-right {
 	text-align: right;
-}
-
-/* 去除 highcharts.com LOGO */
-svg > text:last-child {
-	display: none;
 }

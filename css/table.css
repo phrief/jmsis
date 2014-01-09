@@ -1,0 +1,18 @@
+table > caption {
+	font-size: 21px;
+	font-weight: bold;
+	margin: 10px 0;
+	text-align: center;
+}
+
+table[data-colspans] tbody tr:nth-child(odd) td {
+	background-color: #f3f3f3;
+}
+
+table .td-sole {
+	text-align: center;
+}
+
+table th, table td {
+	word-break: break-all;
+}

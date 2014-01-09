@@ -1,444 +1,464 @@
-
 <meta charset="UTF-8">
+
 <style>
-    #radios {
-      margin-top: 8px;
-    }
+  #radios {
+    margin-top: 16px;
+  }
 </style>
+
 <div class="accordion" id="accordion2">
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                <legend>
-                    <i class="icon-chevron-down"></i>
-                    <i class="icon-chevron-up"></i>基金科季度度分析设置
-                </legend>
-            </a>
-        </div>
-        <div id="collapseOne" class="accordion-body collapse">
-            <div class="accordion-inner">
-                <form class="form-horizontal" method="get" action="modules/FD_ctl.jsp?action=chart&target=QuarterAnalyze">
-                    <div class="block">
-                        <div class="control-group">
-                            <label class="control-label">分析时间</label>
-                            <div class="controls">
-                                <input type="text" class="datepicker_c" name="FXNF" max-length="4">
-                                <div id="radios">
-                                    <label class="radio">
-                                        <input type="radio" name="FXJD" value="0" checked>一季度
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="FXJD" value="1">二季度
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="FXJD" value="2">三季度
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="FXJD" value="3">四季度
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">分析险种</label>
-                            <div class="controls">
-                                <select name="InsuType">
-                                    <option value="0">企业养老保险</option>
-                                    <option value="1">企业养老保险统筹</option>
-                                    <option value="2">企业养老保险个人</option>
-                                    <option value="3">失业保险</option>
-                                    <option value="4">职工基本医疗保险</option>
-                                    <option value="5">职工基本医疗保险统筹</option>
-                                    <option value="6">职工基本医疗保险个人</option>
-                                    <option value="7">工伤保险</option>
-                                    <option value="8">生育保险</option>
-                                    <option value="9">公务员医疗补助	</option>
-                                    <option value="10">机关养老保险金</option>
-                                    <option value="11">离休医疗保障金</option>
-                                    <option value="12">城乡居民医保</option>
-                                    <option value="13">城乡居民养老保险</option>
-                                    <option value="14">城乡居民养老保险统筹</option>
-                                    <option value="15">城乡居民养老保险个人</option>
-                                    <option value="16">伤残人员医疗保障金</option>
-                                    <option value="18">社保基金合计</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">分析内容</label>
-                            <div class="controls">
-                                <select name="StatType">
-                                    <option value="0">总收入同季度同比</option>
-                                    <option value="1">征缴收入同季度同比</option>
-                                    <option value="2">总支出同季度同比</option>
-                                    <option value="3">待遇支出同季度同比</option>
-                                    <option value="4">总收入同季度同比增幅百分比</option>
-                                    <option value="5">征缴收入同季度同比增幅百分比</option>
-                                    <option value="6">总支出同季度同比增幅百分比</option>
-                                    <option value="7">待遇支出同季度同比增幅百分比</option>
-                                    <option value="8">历季度累计结余季度同比</option>
-                                    <option value="9">历季度累计结余同比增幅百分比</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">对比区域</label>
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440799">全市
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440798">市区
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440700">市直
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440703">蓬江
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440704">江海
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440705">新会
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440781">台山
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440783">开平
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440784">鹤山
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440785">恩平
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <input type="submit" class="btn btn-primary" value="开始分析">
-                            <input type="reset" class="btn" value="重置">
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-        </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+         href="#collapseOne">
+        <legend>
+          <i class="icon-chevron-down"></i>
+          <i class="icon-chevron-up"></i>基金科季度度分析设置
+        </legend>
+      </a>
     </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <form class="form-horizontal" method="get" action="modules/FD_ctl.jsp?action=chart&target=QuarterAnalyze">
+          <div class="block">
+            <div class="control-group">
+              <label class="control-label">分析时间</label>
+
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="FXNF" max-length="4">
+
+                <div id="radios">
+                  <label class="radio">
+                    <input type="radio" name="FXJD" value="0" checked>一季度
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="FXJD" value="1">二季度
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="FXJD" value="2">三季度
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="FXJD" value="3">四季度
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">分析险种</label>
+
+              <div class="controls">
+                <select name="InsuType">
+                  <option value="0">企业养老保险</option>
+                  <option value="1">企业养老保险统筹</option>
+                  <option value="2">企业养老保险个人</option>
+                  <option value="3">失业保险</option>
+                  <option value="4">职工基本医疗保险</option>
+                  <option value="5">职工基本医疗保险统筹</option>
+                  <option value="6">职工基本医疗保险个人</option>
+                  <option value="7">工伤保险</option>
+                  <option value="8">生育保险</option>
+                  <option value="9">公务员医疗补助</option>
+                  <option value="10">机关养老保险金</option>
+                  <option value="11">离休医疗保障金</option>
+                  <option value="12">城乡居民医保</option>
+                  <option value="13">城乡居民养老保险</option>
+                  <option value="14">城乡居民养老保险统筹</option>
+                  <option value="15">城乡居民养老保险个人</option>
+                  <option value="16">伤残人员医疗保障金</option>
+                  <option value="18">社保基金合计</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">分析内容</label>
+
+              <div class="controls">
+                <select name="StatType">
+                  <option value="0">总收入同季度同比</option>
+                  <option value="1">征缴收入同季度同比</option>
+                  <option value="2">总支出同季度同比</option>
+                  <option value="3">待遇支出同季度同比</option>
+                  <option value="4">总收入同季度同比增幅百分比</option>
+                  <option value="5">征缴收入同季度同比增幅百分比</option>
+                  <option value="6">总支出同季度同比增幅百分比</option>
+                  <option value="7">待遇支出同季度同比增幅百分比</option>
+                  <option value="8">历季度累计结余季度同比</option>
+                  <option value="9">历季度累计结余同比增幅百分比</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">对比区域</label>
+
+              <div class="controls">
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440799">全市
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440798">市区
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440700">市直
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440704">江海
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440705">新会
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440781">台山
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440783">开平
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="AREABOX[]" value="440785">恩平
+                </label>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <input type="submit" class="btn btn-primary" value="开始分析">
+              <input type="reset" class="btn" value="重置">
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!--<div id="container_" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
 
-<div class="block">
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div id="container_" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-</div>
 <script>
 function makeChart(resObj) {
-    if(resObj) {
-        var charttype = parseInt(resObj['CHARTTYPE']);
-        var period = parseInt(resObj['PERIOD']);
+  if (resObj) {
+    var charttype = parseInt(resObj['CHARTTYPE']);
+    var period = parseInt(resObj['PERIOD']);
 
-        //柱状图
-        if(charttype == 0) {
-            //$('#container_').css('display','none');
-            //$('#container').css('height','400px');
-            var areas = resObj['AREAS'];
+    //柱状图
+    if (charttype == 0) {
+      //$('#container_').css('display','none');
+      //$('#container').css('height','400px');
+      var areas = resObj['AREAS'];
 
-            var data1 = resObj['DATA1'];
-            var data2 = resObj['DATA2'];
+      var data1 = resObj['DATA1'];
+      var data2 = resObj['DATA2'];
 
-            var division = resObj['DIVISION'];
-            //var kind = resObj['KIND'];
+      var division = resObj['DIVISION'];
+      //var kind = resObj['KIND'];
 
-            var data1Arr = new Array();
-            var data2Arr = new Array();
-            for(var i=0; i < areas.length; i++) {
-                data1Arr.push(parseInt(data1[i]));
-                data2Arr.push(parseInt(data2[i]));
+      var data1Arr = [];
+      var data2Arr = [];
+      for (var i = 0; i < areas.length; i++) {
+        data1Arr.push(parseInt(data1[i]));
+        data2Arr.push(parseInt(data2[i]));
+      }
+      var title = resObj['TITLE'];
+      var name1 = resObj['NAME1'];
+      var name2 = resObj['NAME2'];
+
+      $('#container').highcharts({
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: title,
+          style: {
+            fontFamily: '微软雅黑'
+          }
+        },
+        xAxis: {
+          categories: areas
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: '单位(' + division + ')'
+          }
+        },
+        tooltip: {
+          shared: true
+        },
+        series: [
+          {
+            name: name1,
+            data: data1Arr,
+            tooltip: {
+              valueSuffix: division
             }
-            var title = resObj['TITLE'];
-            var name1 = resObj['NAME1'];
-            var name2 = resObj['NAME2'];
-
-            $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: title,
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-                xAxis: {
-                    categories: areas
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: '单位(' + division + ')'
-                    }
-                },
-                tooltip: {
-                    shared: true
-                },
-                series: [{
-                    name: name1,
-                    data: data1Arr,
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }, {
-                    name: name2,
-                    data: data2Arr,
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }]
-            });
-        }
-
-        //单折线图
-        if(charttype == 1) {
-            //$('#container_').css('display','none');
-            //$('#container').css('height','400px');
-            var areas = resObj['AREAS'];
-
-            var division = resObj['DIVISION'];
-            var name1 = resObj['NAME1'];
-            var data1 = resObj['DATA1'];
-            var title = resObj['TITLE'];
-
-            var data1Arr = new Array();
-            for(var i=0; i < areas.length; i++) {
-                data1Arr.push(parseInt(data1[i]));
+          },
+          {
+            name: name2,
+            data: data2Arr,
+            tooltip: {
+              valueSuffix: division
             }
-
-            $('#container').highcharts({
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: title,
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-                xAxis: {
-                    categories: areas
-                },
-                yAxis: {
-                    title: {
-                        text: '单位(' + division + ')'
-                    }
-                },
-                series: [{
-                    name: name1,
-                    data: data1Arr,
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }]
-            });
-        }
-        //双柱状图
-        if(charttype == 2) {
-            //$('#container').css('height','200px');
-            //$('#container_').css('display','');
-            //$('#container_').css('height','200px');
-            var areas = resObj['AREAS'];
-            var division1 = resObj['DIVISION1'];
-            var division2 = resObj['DIVISION2'];
-
-            var title = resObj['TITLE'];
-
-            var name1 = resObj['NAME1'];
-            var name2 = resObj['NAME2'];
-            var name3 = resObj['NAME3'];
-            var name4 = resObj['NAME4'];
-
-            var data1 = resObj['DATA1'];
-            var data2 = resObj['DATA2'];
-            var data3 = resObj['DATA3'];
-            var data4 = resObj['DATA4'];
-
-            var data1Arr = new Array();
-            var data2Arr = new Array();
-            var data3Arr = new Array();
-            var data4Arr = new Array();
-
-
-            for(var i=0; i < areas.length; i++) {
-                data1Arr.push(parseInt(data1[i]));
-                data2Arr.push(parseInt(data2[i]));
-                data3Arr.push(parseInt(data3[i]));
-                data4Arr.push(parseInt(data4[i]));
-            }
-            //出两张图
-            $('#container').highcharts({
-                chart: {
-                    height: 400
-                },
-                title: {
-                    text: title,
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-
-                xAxis: [{
-                    categories: areas
-                }],
-                yAxis: [{
-                    title: {
-                        text: '累计余额(' + division1 + ')'
-                    }
-                },{
-                    title: {
-                        text: '可用月数(' + division2 + ')'
-                    },
-                    opposite: true
-                }],
-                tooltip: {
-                    shared: true
-                },
-                series: [ {
-                    name: name3,
-                    //color: '#4572A7',
-                    type: 'column',
-                    yAxis: 1,
-                    data: data3Arr,
-                    tooltip: {
-                        valueSuffix: division2
-                    }
-                }, {
-                    name: name4,
-                    //color: '#89A54E',
-                    type: 'column',
-                    yAxis: 1,
-                    data: data4Arr,
-                    tooltip: {
-                        valueSuffix: division2
-                    }
-                }, {
-                    name: name1,
-                    //color: '#4572A7',
-                    type: 'line',
-                    yAxis: 0,
-                    data: data1Arr,
-                    tooltip: {
-                        valueSuffix: division1
-                    }
-                }, {
-                    name: name2,
-                    //color: '#89A54E',
-                    type: 'line',
-                    yAxis: 0,
-                    data: data2Arr,
-                    tooltip: {
-                        valueSuffix: division1
-                    }
-                }]
-            });
-            /*
-            $('#container_').highcharts({
-                chart: {
-                    height: 200
-                },
-                title: {
-                    text: "",
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-
-                xAxis: [{
-                    categories: areas
-                }],
-                yAxis: [{
-                    title: {
-                        text: division2
-                    }
-                }],
-                series: [{
-                    name: name3,
-                    color: '#4572A7',
-                    type: 'column',
-                    //yAxis: 1,
-                    data: data3Arr
-                }, {
-                    name: name4,
-                    color: '#89A54E',
-                    type: 'column',
-                    data: data4Arr
-                }]
-            });
-            */
-        }
-    } else {
-        alert('no data');
+          }
+        ]
+      });
     }
+
+    //单折线图
+    if (charttype == 1) {
+      //$('#container_').css('display','none');
+      //$('#container').css('height','400px');
+      var areas = resObj['AREAS'];
+
+      var division = resObj['DIVISION'];
+      var name1 = resObj['NAME1'];
+      var data1 = resObj['DATA1'];
+      var title = resObj['TITLE'];
+
+      var data1Arr = [];
+      for (var i = 0; i < areas.length; i++) {
+        data1Arr.push(parseInt(data1[i]));
+      }
+
+      $('#container').highcharts({
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: title,
+          style: {
+            fontFamily: '微软雅黑'
+          }
+        },
+        xAxis: {
+          categories: areas
+        },
+        yAxis: {
+          title: {
+            text: '单位(' + division + ')'
+          }
+        },
+        series: [
+          {
+            name: name1,
+            data: data1Arr,
+            tooltip: {
+              valueSuffix: division
+            }
+          }
+        ]
+      });
+    }
+    //双柱状图
+    if (charttype == 2) {
+      //$('#container').css('height','200px');
+      //$('#container_').css('display','');
+      //$('#container_').css('height','200px');
+      var areas = resObj['AREAS'];
+      var division1 = resObj['DIVISION1'];
+      var division2 = resObj['DIVISION2'];
+
+      var title = resObj['TITLE'];
+
+      var name1 = resObj['NAME1'];
+      var name2 = resObj['NAME2'];
+      var name3 = resObj['NAME3'];
+      var name4 = resObj['NAME4'];
+
+      var data1 = resObj['DATA1'];
+      var data2 = resObj['DATA2'];
+      var data3 = resObj['DATA3'];
+      var data4 = resObj['DATA4'];
+
+      var data1Arr = [];
+      var data2Arr = [];
+      var data3Arr = [];
+      var data4Arr = [];
+
+
+      for (var i = 0; i < areas.length; i++) {
+        data1Arr.push(parseInt(data1[i]));
+        data2Arr.push(parseInt(data2[i]));
+        data3Arr.push(parseInt(data3[i]));
+        data4Arr.push(parseInt(data4[i]));
+      }
+      //出两张图
+      $('#container').highcharts({
+        chart: {
+          height: 400
+        },
+        title: {
+          text: title,
+          style: {
+            fontFamily: '微软雅黑'
+          }
+        },
+
+        xAxis: [
+          {
+            categories: areas
+          }
+        ],
+        yAxis: [
+          {
+            title: {
+              text: '累计余额(' + division1 + ')'
+            }
+          },
+          {
+            title: {
+              text: '可用月数(' + division2 + ')'
+            },
+            opposite: true
+          }
+        ],
+        tooltip: {
+          shared: true
+        },
+        series: [
+          {
+            name: name3,
+            //color: '#4572A7',
+            type: 'column',
+            yAxis: 1,
+            data: data3Arr,
+            tooltip: {
+              valueSuffix: division2
+            }
+          },
+          {
+            name: name4,
+            //color: '#89A54E',
+            type: 'column',
+            yAxis: 1,
+            data: data4Arr,
+            tooltip: {
+              valueSuffix: division2
+            }
+          },
+          {
+            name: name1,
+            //color: '#4572A7',
+            type: 'line',
+            yAxis: 0,
+            data: data1Arr,
+            tooltip: {
+              valueSuffix: division1
+            }
+          },
+          {
+            name: name2,
+            //color: '#89A54E',
+            type: 'line',
+            yAxis: 0,
+            data: data2Arr,
+            tooltip: {
+              valueSuffix: division1
+            }
+          }
+        ]
+      });
+      /*
+       $('#container_').highcharts({
+       chart: {
+       height: 200
+       },
+       title: {
+       text: "",
+       style: {
+       fontFamily: '微软雅黑'
+       }
+       },
+
+       xAxis: [{
+       categories: areas
+       }],
+       yAxis: [{
+       title: {
+       text: division2
+       }
+       }],
+       series: [{
+       name: name3,
+       color: '#4572A7',
+       type: 'column',
+       //yAxis: 1,
+       data: data3Arr
+       }, {
+       name: name4,
+       color: '#89A54E',
+       type: 'column',
+       data: data4Arr
+       }]
+       });
+       */
+    }
+  } else {
+    alert('no data');
+  }
 }
 var testData = '{"CHARTTYPE":"2","AREAS":["市直","蓬江","江海","台山"],"LAST":["1000","1500","1300","1250"],"CURRENT":["600","550","450","700"],"PERIOD":"2012","DIVISION":"万元","TYPE":"总收入同季度同比增幅百分比","KIND":"企业养老保险","BALANCE":["39460","51980","536292","341209","0","57639"],"OKMONTHS":["14","14","129","126","0","127"],"FXJD":"3季度","BALANCE_P":["39460","51980","536292","341209","0","57639"],"OKMONTHS_P":["14","14","129","126","0","127"],"INCOME":["2147483647","2147483647","2147483647","0"]}';
 </script>
 
 <script>
-    $(".collapse").collapse('show');
-    var  $datepicker = $frame.find('.datepicker_c');
-    $('.datepicker_c').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 4,
-        forceParse: 0,
-        showMeridian: 1,
-        format: 'yyyy',
-        initialDate: new Date(),
-        //maxView: 3,
-        minView: 4
-    });
-    $('.datepicker_c').on('click', function(){
-        $(this).datepicker('setDate', new Date($(this).val()));
-    });
+  $(".collapse").collapse('show');
+  var $datepicker = $frame.find('.datepicker_c');
+  $datepicker.datetimepicker({
+    language: 'zh-CN',
+    weekStart: 1,
+    todayBtn: 1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 4,
+    forceParse: 0,
+    showMeridian: 1,
+    format: 'yyyy',
+    initialDate: new Date(),
+    //maxView: 3,
+    minView: 4
+  });
+  $datepicker.on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
 </script>
 
 <script>
-    var $form = $frame.find('form'),
-            $collapse = $('#collapseOne');
+  var $form = $frame.find('form'),
+    $collapse = $('#collapseOne');
 
-    $form.ajaxForm({
-        beforeSend: function () {
-            var fxnf = $form.find('[name="FXNF"]').val();
-            if (fxnf == "") {
-                alert("分析时间不能为空");
-                return false;
-            }
-            isblank = true;
-            var areas = $form.find('[name="AREABOX[]"]');
-            for(var i=0; i < areas.length; i++) {
-                if(areas[i].checked) {
-                    isblank = false;
-                }
-            }
-            if(isblank) {
-                alert("地区不能为空");
-                return false;
-            }
-        },
-        success: function (data) {
-            console.log(data);
-            var resObj = readResObj(data, testData);
-            makeChart(resObj);
-            $(".collapse").collapse('hide');
+  $form.ajaxForm({
+    beforeSend: function () {
+      var fxnf = $form.find('[name="FXNF"]').val();
+      if (fxnf == "") {
+        alert("分析时间不能为空");
+        return false;
+      }
+      isblank = true;
+      var areas = $form.find('[name="AREABOX[]"]');
+      for (var i = 0; i < areas.length; i++) {
+        if (areas[i].checked) {
+          isblank = false;
         }
-    });
+      }
+      if (isblank) {
+        alert("地区不能为空");
+        return false;
+      }
+    },
+    success: function (data) {
+      console.log(data);
+      var resObj = readResObj(data, testData);
+      makeChart(resObj);
+      $(".collapse").collapse('hide');
+    }
+  });
 </script>
 

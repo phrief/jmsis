@@ -1,0 +1,40 @@
+textarea {
+	resize: none;
+	width: 360px !important;
+	height: 180px;
+}
+
+.form-horizontal .control-label {
+	width: 190px !important;
+}
+
+.form-horizontal .controls {
+	margin-left: 210px !important;
+}
+
+legend {
+	font-weight: bold;
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+form legend {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+fieldset legend {
+	font-weight: normal;
+	font-size: 19px;
+	margin-bottom: 10px;
+	border-bottom: 1px dashed #e5e5e5;
+}
+
+form label {
+	cursor: pointer;
+}
+
+form label.checkbox, form label.radio {
+	display: inline-block;
+	margin-right: 28px;
+}
