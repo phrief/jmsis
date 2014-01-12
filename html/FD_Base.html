@@ -18,7 +18,7 @@
         <legend>
           <i class="icon-chevron-down"></i>
           <i class="icon-chevron-up"></i>
-          新建编制
+          新建基础资料
         </legend>
       </a>
     </div>
@@ -27,7 +27,7 @@
         <form id="form-query" class="form-horizontal">
           <div class="block">
             <div class="control-group">
-              <label class="control-label">编制类型</label>
+              <label class="control-label">资料类型</label>
               <div class="controls">
                 <select name="BZLX"></select>
               </div>
@@ -50,7 +50,7 @@
 						</div>
             <div class="control-group">
               <input type="hidden" name="page" value="1">
-              <input type="submit" value="进入编制" class="btn btn-primary">
+              <input type="submit" value="进入编辑" class="btn btn-primary">
               <input type="reset" value="重置" class="btn">
             </div>
           </div>
@@ -63,14 +63,14 @@
 <form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelBudget">
   <table id="table-list" data-colspans="7">
     <caption>
-      <i class="icon-th-list"></i>编制列表<span id="test"></span>
+      <i class="icon-th-list"></i>资料列表<span id="test"></span>
     </caption>
     <thead>
     <tr>
       <th>
         <input type="checkbox" class="check-all" data-name="DelNodes[]">
       </th>
-      <th>编制类型</th>
+      <th>资料类型</th>
 			<th>区域</th>
       <th>年度</th>
       <th>编制人</th>
@@ -90,9 +90,9 @@
         <td>{{-item['BZR']}}</td>
         <td>{{-item['ZT']}}</td>
         <td>
-          <a href="html/FD_Budget/{{-item['BZLX']}}_Detail.html?ID={{-item['ID']}}">查看</a>
+          <a href="html/FD_Base/{{-item['BZLX']}}_Detail.html?ID={{-item['ID']}}">查看</a>
           &nbsp;&nbsp;|&nbsp;&nbsp;
-          <a href="html/FD_Budget/{{-item['BZLX']}}_Edit.html?ID={{-item['ID']}}">修改</a>
+          <a href="html/FD_Base/{{-item['BZLX']}}_Edit.html?ID={{-item['ID']}}">修改</a>
         </td>
       </tr>
     </script>
@@ -131,7 +131,7 @@
   $form_query.on('submit', function (ev) {
     ev.preventDefault();
     var BZLX = $sel_BZLX.val();
-    loadPage('html/FD_Budget/' + BZLX + '_Params.html');
+    loadPage('html/FD_Base/' + BZLX + '_Params.html');
   });
 
   $form_table.ajaxForm({

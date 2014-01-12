@@ -35,7 +35,7 @@
 			<thead>
 			<tr>
 				<th>社预02表</th>
-				<th colspan="4">区域: 江门市</th>
+				<th colspan="4">区域: {{-area}}</th>
 				<th class="text-right">单位: 元</th>
 			</tr>
 			<tr>
@@ -54,7 +54,7 @@
 			{{ value = f(value) }}
 			<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}"/>
 			{{ } else { }}
-			<input class="title" type="text" value="{{-value}}" readonly/>
+			<input class="title" type="text" name="{{-name}}" value="{{-value}}" readonly/>
 			{{ } }}
 		</script>
 		<tr>
@@ -230,7 +230,8 @@
 			$tmplTitles = $table.find('#tmpl-titles'),
 			inputTmpl = $table.find('#tmpl-input').html();
 		$tmplTitles.after(_.template($tmplTitles.html(), {
-			year1: year, year2: year + 1
+			year1: year, year2: year + 1,
+			area: resObj['TVALUES']['myHashMap']['AREA']
 		}));
 		var $trows = $table.find('thead > tr:last, tbody > tr');
 		_.each(matrix, function (row, i) {

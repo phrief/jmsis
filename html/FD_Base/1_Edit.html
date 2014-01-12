@@ -1,15 +1,15 @@
 <meta charset="utf-8"/>
 
 <style>
-	#table th:nth-child(4),
-	#table td:nth-child(4) {
+	#table th:nth-child(5),
+	#table td:nth-child(5) {
 		padding-left: 30px;
 	}
 
-	#table > thead > tr:last-child > th:nth-child(2), #table td:nth-child(2),
 	#table > thead > tr:last-child > th:nth-child(3), #table td:nth-child(3),
-	#table > thead > tr:last-child > th:nth-child(5), #table td:nth-child(5),
-	#table > thead > tr:last-child > th:nth-child(6), #table td:nth-child(6) {
+	#table > thead > tr:last-child > th:nth-child(4), #table td:nth-child(4),
+	#table > thead > tr:last-child > th:nth-child(7), #table td:nth-child(7),
+	#table > thead > tr:last-child > th:nth-child(8), #table td:nth-child(8) {
 		min-width: 115px;
 		padding: 5px;
 	}
@@ -27,22 +27,23 @@
 </style>
 
 <form id="form" method="post" action="modules/FD_ctl.jsp?action=EditBudget">
-	<table id="table" class="hidden" data-colspans="6">
+	<table id="table" class="hidden" data-colspans="8">
 		<script type="text/html" id="tmpl-titles">
 			<caption>
-				<i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
+				<i class="icon-th-list"></i>{{-year2}}年基本养老保险基础资料表<span id="test"></span>
 			</caption>
 			<thead>
 			<tr>
-				<th>社预02表</th>
-				<th colspan="4">区域: 江门市</th>
-				<th class="text-right">单位: 元</th>
+				<th>社预附01表</th>
+				<th colspan="7">区域: {{-area}}</th>
 			</tr>
 			<tr>
 				<th>项目</th>
+				<th>单位</th>
 				<th></th>
 				<th></th>
 				<th>项目</th>
+				<th>单位</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -54,62 +55,77 @@
 			{{ value = f(value) }}
 			<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}"/>
 			{{ } else { }}
-			<input class="title" type="text" value="{{-value}}" readonly/>
+			<input class="title" type="text" name="{{-name}}" value="{{-value}}" readonly/>
 			{{ } }}
 		</script>
 		<tr>
-			<td>一、基本养老保险费收入</td>
+			<td>一、企业职工基本养老保险</td>
+			<td>×</td>
 			<td></td>
 			<td></td>
-			<td>一、基本养老金支出</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>二、利息收入</td>
-			<td></td>
-			<td></td>
-			<td>二、医疗补助金支出</td>
+			<td>　2、实际缴费人数</td>
+			<td>人</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>三、财政补贴收入</td>
+			<td>（一）参保人数</td>
+			<td>人</td>
 			<td></td>
 			<td></td>
-			<td>三、丧葬抚恤补助支出</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>其中: 本级财政补助</td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>　3、缴费基数总额/td>
+			<td>元</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>四、其他收入</td>
+			<td>　1、在职职工</td>
+			<td>人</td>
 			<td></td>
 			<td></td>
-			<td>四、其他支出</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>五、转移收入</td>
-			<td></td>
-			<td></td>
-			<td>五、转移支出</td>
+			<td>（六）统筹地区社会平均工资</td>
+			<td>元/年</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>六、本年收入小计</td>
+			<td>　2、离退休人员</td>
+			<td>人</td>
 			<td></td>
 			<td></td>
-			<td>六、本年支出小计</td>
+			<td>二、城乡居民社会养老保险</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　　（1）离休人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>（一）16-59周岁参保缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　　（2）退休、离职人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>（二）养老金领取人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（二）实际缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>三、城镇居民社会养老保险</td>
+			<td>×</td>
+			<td></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -164,7 +180,7 @@
 		</tbody>
 		<tfoot>
 		<tr>
-			<td colspan="6">
+			<td colspan="8">
 				<div class="bulk-actions align-left">
 					<input type="hidden" name="ID"/>
 					<input type="submit" class="btn btn-primary" value="保存修改"
@@ -205,7 +221,7 @@
 	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
 	}, function (data) {
-		var testData = {"__MESSAGE__": "", "__ERROR__": false, "__NEXTACTION__": "", "TVALUES": {"myHashMap": {"C8": "0.00", "C7": "0.00", "C9": "0.00", "C3": "0.00", "C6": "0.00", "B11": "0.00", "CURYEAR": "2013", "E6": "0.00", "E7": "0.00", "B10": "0.00", "E8": "0.00", "E9": "0.00", "B13": "0.00", "B14": "0.00", "E2": "3,412,735,501.05", "E1": "2013年执行数", "E3": "0.00", "C1": "2013年预算数", "C2": "3,504,377,705.22", "F11": "0.00", "B3": "0.00", "B2": "3,504,377,705.22", "F10": "0.00", "B9": "0.00", "B8": "0.00", "B7": "0.00", "B6": "0.00", "F8": "0.00", "F9": "0.00", "F6": "0.00", "C10": "0.00", "F7": "0.00", "C11": "0.00", "C13": "0.00", "F13": "0.00", "C14": "0.00", "F14": "0.00", "F1": "2013年预算数", "E11": "0.00", "E10": "0.00", "E13": "0.00", "F3": "0.00", "F2": "3,412,735,501.05", "E14": "0.00", "B1": "2013年执行数"}}, "__LOGINED__": true, "__CURRENTUSER__": "admin", "__ISTEST__": true}
+		var testData = {"__MESSAGE__": "", "__ERROR__": false, "__NEXTACTION__": "", "TVALUES": {"myHashMap": {"D8": "0.00", "D7": "0.00", "D9": "0.00", "D3": "0.00", "D6": "0.00", "C11": "0.00", "DURYEAR": "2013", "G6": "0.00", "G7": "0.00", "C10": "0.00", "G8": "0.00", "G9": "0.00", "C13": "0.00", "C14": "0.00", "G2": "3,412,735,501.05", "G1": "2013年执行数", "G3": "0.00", "D1": "2013年预算数", "D2": "3,504,377,705.22", "H11": "0.00", "C3": "0.00", "C2": "3,504,377,705.22", "H10": "0.00", "C9": "0.00", "C8": "0.00", "C7": "0.00", "C6": "0.00", "H8": "0.00", "H9": "0.00", "H6": "0.00", "D10": "0.00", "H7": "0.00", "D11": "0.00", "D13": "0.00", "H13": "0.00", "D14": "0.00", "H14": "0.00", "H1": "2013年预算数", "G11": "0.00", "G10": "0.00", "G13": "0.00", "H3": "0.00", "H2": "3,412,735,501.05", "G14": "0.00", "C1": "2013年执行数"}}
 		var resObj = readResObj(data, testData);
 		showTable(resObj);
 	});
@@ -230,7 +246,8 @@
 			$tmplTitles = $table.find('#tmpl-titles'),
 			inputTmpl = $table.find('#tmpl-input').html();
 		$tmplTitles.after(_.template($tmplTitles.html(), {
-			year1: year, year2: year + 1
+			year1: year, year2: year + 1,
+			area: resObj['TVALUES']['myHashMap']['AREA']
 		}));
 		var $trows = $table.find('thead > tr:last, tbody > tr');
 		_.each(matrix, function (row, i) {

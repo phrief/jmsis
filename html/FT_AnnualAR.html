@@ -21,8 +21,8 @@ function makeChart(htmlStr) {
 			var division = resObj['DIVISION'];
 			var type = resObj['TYPE'];
 			var kind = resObj['KIND'];
-			var incomeArr = new Array();
-			var payoutArr = new Array();
+			var incomeArr = [];
+			var payoutArr = [];
 			for(var i=0; i < years.length; i++) {
 				incomeArr.push(parseInt(income[i]));
 				payoutArr.push(parseInt(payout[i]));
@@ -86,8 +86,8 @@ function makeChart(htmlStr) {
 			var division = resObj['DIVISION'];
 			var type = resObj['TYPE'];
 			var kind = resObj['KIND'];
-			var incomeArr = new Array();
-			var payoutArr = new Array();
+			var incomeArr = [];
+			var payoutArr = [];
 			for(var i=0; i < years.length; i++) {
 				incomeArr.push(parseInt(income[i]));
 				payoutArr.push(parseInt(payout[i]));
@@ -152,8 +152,8 @@ function makeChart(htmlStr) {
             var division2 = resObj['DIVISION2'];
 			var type = resObj['TYPE'];
 			var kind = resObj['KIND'];
-			var balanceArr = new Array();
-			var okmonthsArr = new Array();
+			var balanceArr = [];
+			var okmonthsArr = [];
 			for(var i=0; i < years.length; i++) {
 				balanceArr.push(parseInt(balance[i]));
 				okmonthsArr.push(parseInt(okmonths[i]));
@@ -222,7 +222,7 @@ function makeChart(htmlStr) {
 			var type = resObj['TYPE'];
 			var kind = resObj['KIND'];
 			var dataset = resObj['DATASET'];
-			var datasetArr = new Array();
+			var datasetArr = [];
             notify(years.length);
 			for(var i=0; i < years.length; i++) {
 				datasetArr.push(parseInt(dataset[i]));
@@ -311,7 +311,7 @@ function makeChart(htmlStr) {
         if(years.length > 12) {
             var len = years.length;
             var delta = parseInt(len / 12);
-            var yearsAfter = new Array();
+            var yearsAfter = [];
             for(var i=0; i < len; i++) {
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
