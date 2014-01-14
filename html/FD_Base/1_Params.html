@@ -35,13 +35,80 @@
 <form id="form-1" method="post" action="modules/FD_ctl.jsp">
 	<div class="block">
 		<legend>
-			<i class="icon-check"></i>编制设置 - 企业养老保险
+			<i class="icon-check"></i>基础资料设置 - 企业养老保险
 		</legend>
 
 		<fieldset>
 			<legend>征缴相关参数</legend>
 			<div class="row-fluid">
 				<div class="span4">
+					<div class="control-group">
+						<label>在职增长率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="G1" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label>单位实缴增长率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="G4" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label>其他人员缴费率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Othertrate" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="span4">
+					<div class="control-group">
+						<label>离休增长率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="G2" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label>其他实缴增长率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="G5" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label>其他人员缴费率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="Othertrate" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="span4">
+					<div class="control-group">
+						<label>退休增长率</label>
+						<div class="input">
+							<div class="input-append">
+								<input type="text" name="G3" />
+								<span class="add-on">%</span>
+							</div>
+						</div>
+					</div>
 					<div class="control-group">
 						<label>个人缴费率</label>
 						<div class="input">
@@ -61,152 +128,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>其他人员缴费率</label>
-						<div class="input">
-							<div class="input-append">
-								<input type="text" name="Othertrate" />
-								<span class="add-on">%</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label>用人单位征缴率</label>
-						<div class="input">
-							<div class="input-append">
-								<input type="text" name="Unitcorate" />
-								<span class="add-on">%</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>其他人员征缴率</label>
-						<div class="input">
-							<div class="input-append">
-								<input type="text" name="Othercorate" />
-								<span class="add-on">%</span>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</fieldset>
-		<!--<fieldset>
-			<legend>利息相关参数</legend>
-			<div class="row-fluid">
-				<div class="span4">
-					<div class="control-group">
-						<label>定期存款金额</label>
-						<div class="input">
-							<input type="text" name="Deamount" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label>定期存款年数</label>
-						<div class="input">
-							<input type="text" name="Deyears" />
-						</div>
-					</div>
-				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>定期存款年利率</label>
-						<div class="input">
-							<div class="input-append">
-								<input type="text" name="Deyearpa" />
-								<span class="add-on">%</span>
-							</div>
-						</div>
-					</div>
-					<div class="control-group">
-						<label>当年到期定存额</label>
-						<div class="input">
-							<input type="text" name="Madeamount" />
-						</div>
-					</div>
-				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>活期存款金额</label>
-						<div class="input">
-							<input type="text" name="Dedeamount" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label>活期存款利息</label>
-						<div class="input">
-							<input type="text" name="Dedeaminter" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</fieldset>
-		<fieldset>
-			<legend>其他相关参数</legend>
-			<div class="row-fluid">
-				<div class="span4">
-					<div class="control-group">
-						<label>财政补贴收入</label>
-						<input type="text" name="Fsbincome" />
-					</div>
-					<div class="control-group">
-						<label>其他收入</label>
-						<input type="text" name="Otherincome" />
-					</div>
-					<div class="control-group">
-						<label>转移收入人数</label>
-						<input type="text" name="Traninpl" />
-					</div>
-					<div class="control-group">
-						<label>转移收入金额</label>
-						<input type="text" name="Traninmy" />
-					</div>
-				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>上级补助收入</label>
-						<input type="text" name="Hisub" />
-					</div>
-					<div class="control-group">
-						<label>下级上解收入</label>
-						<input type="text" name="Losub" />
-					</div>
-					<div class="control-group">
-						<label>医疗补助金支出</label>
-						<input type="text" name="Mepay" />
-					</div>
-					<div class="control-group">
-						<label>丧葬抚恤支出</label>
-						<input type="text" name="Aidpay" />
-					</div>
-				</div>
-				<div class="span4">
-					<div class="control-group">
-						<label>转移支出人数</label>
-						<input type="text" name="Tranoutpl" />
-					</div>
-					<div class="control-group">
-						<label>转移支出金额</label>
-						<input type="text" name="Tranoutmy" />
-					</div>
-					<div class="control-group">
-						<label>补助下级指出</label>
-						<input type="text" name="Hipay" />
-					</div>
-					<div class="control-group">
-						<label>上级上解支出</label>
-						<input type="text" name="Lopay" />
-					</div>
-				</div>
-			</div>
-		</fieldset>-->
 
 		<div class="control-group">
 			<input type="hidden" name="BZLX" value="1">
-			<input type="submit" value="生成编制" class="btn btn-primary">
+			<input type="submit" value="生成基础资料" class="btn btn-primary">
 			<input type="button" id="btn-reset" value="重置" class="btn" />
 		</div>
 	</div>
@@ -214,12 +141,14 @@
 
 <script>
 	var budgetID = parseInt(getURLParams()['ID']) || undefined,
-		$form = $frame.find('form');
-
+		$form = $frame.find('form'),
+		area = getURLParams()['AREA'];
+		console.log(area);
 	if (! budgetID) {
 		$form.ajaxForm({
 			data: {
-				action: 'NewBudget'
+				action: 'NewBudget',
+				AREA: area
 			},
 			success: function(data){
 				var testData = {'ID': 123}
@@ -271,4 +200,3 @@
 		}
 	});
 </script>
-

@@ -50,7 +50,7 @@
 						</div>
             <div class="control-group">
               <input type="hidden" name="page" value="1">
-              <input type="submit" value="进入编制" class="btn btn-primary">
+              <input type="submit" value="生成编制" class="btn btn-primary">
               <input type="reset" value="重置" class="btn">
             </div>
           </div>
@@ -115,6 +115,7 @@
   var $form_query = $frame.find('#form-query'),
     $form_table = $frame.find('#form-table'),
     $sel_BZLX = $form_query.find('[name="BZLX"]'),
+    $sel_AREA = $form_query.find('[name="AREA"]');
     $table_list = $form_table.find('#table-list'),
     $tbody = $table_list.find('tbody'),
     $pagination = $table_list.find('.pagination'),
@@ -131,7 +132,8 @@
   $form_query.on('submit', function (ev) {
     ev.preventDefault();
     var BZLX = $sel_BZLX.val();
-    loadPage('html/FD_Budget/' + BZLX + '_Params.html');
+    var AREA = $sel_AREA.val();
+    loadPage('html/FD_Budget/' + BZLX + '_Params.html?AREA=' + AREA);
   });
 
   $form_table.ajaxForm({

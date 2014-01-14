@@ -214,12 +214,14 @@
 
 <script>
 	var budgetID = parseInt(getURLParams()['ID']) || undefined,
-		$form = $frame.find('form');
-
+		$form = $frame.find('form'),
+		area = getURLParams()['AREA'];
+		console.log(area);
 	if (! budgetID) {
 		$form.ajaxForm({
 			data: {
-				action: 'NewBudget'
+				action: 'NewBudget',
+				AREA: area
 			},
 			success: function(data){
 				var testData = {'ID': 123}

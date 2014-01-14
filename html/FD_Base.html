@@ -27,7 +27,7 @@
         <form id="form-query" class="form-horizontal">
           <div class="block">
             <div class="control-group">
-              <label class="control-label">资料类型</label>
+              <label class="control-label">基础资料类型</label>
               <div class="controls">
                 <select name="BZLX"></select>
               </div>
@@ -63,14 +63,14 @@
 <form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelBudget">
   <table id="table-list" data-colspans="7">
     <caption>
-      <i class="icon-th-list"></i>资料列表<span id="test"></span>
+      <i class="icon-th-list"></i>基础资料列表<span id="test"></span>
     </caption>
     <thead>
     <tr>
       <th>
         <input type="checkbox" class="check-all" data-name="DelNodes[]">
       </th>
-      <th>资料类型</th>
+      <th>基础资料类型</th>
 			<th>区域</th>
       <th>年度</th>
       <th>编制人</th>
@@ -146,7 +146,7 @@
   getPage(1);
 
   function getPage(n) {
-    $.get('modules/FD_ctl.jsp?action=Budget', {
+    $.get('modules/FD_ctl.jsp?action=Base', {
       'Page': n
     }, function (data) {
       var testData = (function () {
