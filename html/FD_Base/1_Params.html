@@ -138,14 +138,14 @@
 	if (! budgetID) {
 		$form.ajaxForm({
 			data: {
-				action: 'NewBudget',
+				action: 'NewBase',
 				AREA: area
 			},
 			success: function(data){
 				var testData = {'ID': 123}
 				var resObj = readResObj(data, testData);
 				if (resObj['__ERROR__']) return;
-				loadPage('html/FD_Budget/1_Edit.html?ID=' + resObj['ID']);
+				loadPage('html/FD_Base/1_Edit.html?ID=' + resObj['ID']);
 			}
 		});
 	} else {
@@ -171,7 +171,7 @@
 		}
 	});
 
-	$.get('modules/FD_ctl.jsp?action=InitBudget', {
+	$.get('modules/FD_ctl.jsp?action=InitBase', {
 		ID: budgetID
 	}, function(data){
 		try {

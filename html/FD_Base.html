@@ -60,7 +60,7 @@
   </div>
 </div>
 
-<form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelBudget">
+<form id="form-table" method="post" action="modules/FD_ctl.jsp?action=DelBase">
   <table id="table-list" data-colspans="7">
     <caption>
       <i class="icon-th-list"></i>基础资料列表<span id="test"></span>
@@ -115,6 +115,7 @@
   var $form_query = $frame.find('#form-query'),
     $form_table = $frame.find('#form-table'),
     $sel_BZLX = $form_query.find('[name="BZLX"]'),
+    $sel_AREA = $form_query.find('[name="AREA"]');
     $table_list = $form_table.find('#table-list'),
     $tbody = $table_list.find('tbody'),
     $pagination = $table_list.find('.pagination'),
@@ -131,7 +132,8 @@
   $form_query.on('submit', function (ev) {
     ev.preventDefault();
     var BZLX = $sel_BZLX.val();
-    loadPage('html/FD_Base/' + BZLX + '_Params.html');
+    var AREA = $sel_AREA.val();
+    loadPage('html/FD_Base/' + BZLX + '_Params.html?AREA=' + AREA);
   });
 
   $form_table.ajaxForm({
