@@ -19,6 +19,44 @@
             </div>
         </div>
 
+      <div class="control-group">
+        <label class="control-label">所属区域</label>
+        <div class="controls">
+          <fieldset disabled>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440799">全市
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440700">市直
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440701">原市直
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440704">江海
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440705">新会
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440781">台山
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440783">开平
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="AREABOX[]" value="440785">恩平
+            </label>
+          </fieldset>
+        </div>
+      </div>
+
         <div class="control-group">
             <label class="control-label">权限说明</label>
             <div class="controls">
@@ -76,6 +114,8 @@
 </form>
 
 <script>
+  var $areaboxes = $frame.find('[name="AREABOX[]"]');
+
     $.ajax({
         url : 'modules/UserManage_ctl.jsp',
         type : 'get',
@@ -92,8 +132,15 @@
                 $('#DW').attr('value',pageValue['DW']);
                 $('#BZ').text(pageValue['BZ']);
                 $('#ID').attr('value',pageValue['ID']);
-            }
 
+              var areas = pageValue['QYSY'].split(',');
+              $areaboxes.each(function(i, el) {
+                var $el = $(el);
+                if (_.contains(areas, $el.val())) {
+                  el.checked = true;
+                }
+              });
+            }
         }
     });
 
