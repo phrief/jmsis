@@ -17,6 +17,11 @@ validateUser(init);
 function init(resObj) {
     // 欢迎语
     $('#profile-links>span').text('你好，' + resObj['__CURRENTUSER__']);
+
+	// 是否全市
+	isQuanShi = resObj['ISQUANSHI'];
+	$body.addClass('quanshi');
+
     // 生成菜单
     makeMenu('system/menu.jsp', function() {
         // 首次加载子页面

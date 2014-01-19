@@ -16,147 +16,161 @@
 	}
 </style>
 
-<table id="table" class="hidden" data-colspans="6">
-	<script type="text/html" id="tmpl-titles">
-		<caption>
-			<i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
-		</caption>
-		<thead>
-		<tr>
-			<th>社预02表</th>
-			<th colspan="4">区域: {{-area}}</th>
-			<th class="text-right">单位: 元</th>
-		</tr>
-		<tr>
-			<th>项目</th>
-			<th></th>
-			<th></th>
-			<th>项目</th>
-			<th></th>
-			<th></th>
-		</tr>
-		</thead>
-	</script>
-	<tbody>
-	<tr>
-		<td>一、基本养老保险费收入</td>
-		<td></td>
-		<td></td>
-		<td>一、基本养老金支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>二、利息收入</td>
-		<td></td>
-		<td></td>
-		<td>二、医疗补助金支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>三、财政补贴收入</td>
-		<td></td>
-		<td></td>
-		<td>三、丧葬抚恤补助支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>其中: 本级财政补助</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>四、其他收入</td>
-		<td></td>
-		<td></td>
-		<td>四、其他支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>五、转移收入</td>
-		<td></td>
-		<td></td>
-		<td>五、转移支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>六、本年收入小计</td>
-		<td></td>
-		<td></td>
-		<td>六、本年支出小计</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>七、上级补助收入</td>
-		<td></td>
-		<td></td>
-		<td>七、补助下级支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>八、下级上解收入</td>
-		<td></td>
-		<td></td>
-		<td>八、上解上级支出</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>九、本年收入合计</td>
-		<td></td>
-		<td></td>
-		<td>九、本年支出合计</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>十、本年收支结余</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>十、上年结余</td>
-		<td></td>
-		<td></td>
-		<td>十一、年末滚存结余</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>总计</td>
-		<td></td>
-		<td></td>
-		<td>总计</td>
-		<td></td>
-		<td></td>
-	</tr>
-	</tbody>
-	<tfoot>
-	<tr>
-		<td colspan="6">
-			<div class="bulk-actions align-left">
-				<button class="btn btn-default" href="html/FD_Budget.html">返回列表</button>
-			</div>
-		</td>
-	</tr>
-	</tfoot>
-</table>
+<form method="post" action="modules/FD_ctl.jsp?action=AuditBudget">
+  <table id="table" class="hidden" data-colspans="6">
+    <script type="text/html" id="tmpl-titles">
+      <caption>
+        <i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
+      </caption>
+      <thead>
+      <tr>
+        <th>社预02表</th>
+        <th colspan="4">区域: {{-area}}</th>
+        <th class="text-right">单位: 元</th>
+      </tr>
+      <tr>
+        <th>项目</th>
+        <th></th>
+        <th></th>
+        <th>项目</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+    </script>
+    <tbody>
+    <tr>
+      <td>一、基本养老保险费收入</td>
+      <td></td>
+      <td></td>
+      <td>一、基本养老金支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>二、利息收入</td>
+      <td></td>
+      <td></td>
+      <td>二、医疗补助金支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>三、财政补贴收入</td>
+      <td></td>
+      <td></td>
+      <td>三、丧葬抚恤补助支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>其中: 本级财政补助</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>四、其他收入</td>
+      <td></td>
+      <td></td>
+      <td>四、其他支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>五、转移收入</td>
+      <td></td>
+      <td></td>
+      <td>五、转移支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>六、本年收入小计</td>
+      <td></td>
+      <td></td>
+      <td>六、本年支出小计</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>七、上级补助收入</td>
+      <td></td>
+      <td></td>
+      <td>七、补助下级支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>八、下级上解收入</td>
+      <td></td>
+      <td></td>
+      <td>八、上解上级支出</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>九、本年收入合计</td>
+      <td></td>
+      <td></td>
+      <td>九、本年支出合计</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>十、本年收支结余</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>十、上年结余</td>
+      <td></td>
+      <td></td>
+      <td>十一、年末滚存结余</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>总计</td>
+      <td></td>
+      <td></td>
+      <td>总计</td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6">
+        <div class="bulk-actions align-left">
+          <button class="btn btn-default" href="html/FD_Budget.html">返回列表</button>
+          <input class="btn btn-primary quanshi-only not-audited-only" type="submit" value="确认审核">
+        </div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</form>
 
 <script>
 	var budgetID = parseInt(getURLParams()['ID']),
-		$table = $frame.find('table');
+    $form = $frame.find('form'),
+		$table = $form.find('table');
+
+  $form.ajaxForm({
+    data: {
+      'ID': budgetID
+    },
+    success: function(data) {
+      readResObj(data);
+      reloadPage();
+    }
+  });
 
 	$.get('modules/FD_ctl.jsp?action=Detail', {
 		'ID': budgetID
@@ -169,6 +183,7 @@
 	function showTable(resObj) {
 		$table.addClass('hidden');
 		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
+      isAudited = resObj['TVALUES']['myHashMap']['ISAUDITED'] || false,
 			tValues = resObj['TVALUES']['myHashMap'],
 			matrix = _.reduce(tValues, function (memo, val, key) {
 				var mat = key.match(/^(\w)(\d+)$/);
@@ -181,6 +196,8 @@
 				return memo;
 			}, []),
 			$tmplTitles = $table.find('#tmpl-titles');
+
+    if (!isAudited) $table.addClass('not-audited');
 		$tmplTitles.after(_.template($tmplTitles.html(), {
 			year1: year, year2: year + 1,
 			area: resObj['TVALUES']['myHashMap']['AREA']

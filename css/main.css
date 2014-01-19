@@ -43,3 +43,16 @@ svg > text:last-child {
 #test {
 	color: #FF3333;
 }
+
+.quanshi-only {
+	display: none;
+}
+.quanshi .quanshi-only {
+	display: initial;
+}
+.not-audited-only {
+	display: none;
+}
+.not-audited .not-audited-only {
+	display: initial;
+}

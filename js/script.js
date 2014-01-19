@@ -8,7 +8,8 @@ _.templateSettings = {
 var global = {},
 	$body = $('body'),
 	$frame = $body.find('#main-frame'),
-	hrefPage = location.hash.substr(1);
+	hrefPage = location.hash.substr(1),
+	isQuanShi;
 
 // 默认所有ajax不缓存
 $.ajaxSetup({
@@ -28,25 +29,23 @@ $(window).on('hashchange', function () {
 // 从后台读取数据对象或使用测试数据
 function readResObj(data, testData) {
 	var resObj;
-	try {
-		if (typeof data === 'string') {
-			data = JSON.parse(data);
-		}
-		resObj = data;
-	} catch (err) {
-		if (typeof testData === 'string') {
-			testData = JSON.parse(testData);
-		}
-		resObj = testData;
+	if (typeof testData == 'string') {
+		testData = JSON.parse(testData);
 	}
-	if (typeof resObj !== 'object') {
-		console.error('Error reading resObj', err);
+	if (typeof data == 'string') {
+		try {
+			resObj = JSON.parse(data);
+		} catch (err) {
+			resObj = testData;
+		}
+	}
+	if (typeof resObj != 'object') {
+		console.error('Error reading resObj', resObj);
+		resObj = {};
 	}
 	// 通知消息
 	var msg = resObj['__MESSAGE__'];
-	if (msg) {
-		notify(msg);
-	}
+	if (msg) notify(msg);
 	return resObj;
 }
 // 通知消息
