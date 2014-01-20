@@ -238,8 +238,8 @@
 			}, []),
 			$tmplTitles = $table.find('#tmpl-titles');
 
-    if (!isSubmitted) $btnSubmit.show();
-    if (isSubmitted && !isAudited) $btnAudit.show();
+    if (!isSubmitted) $btnSubmit.removeClass('hidden');
+    if (isSubmitted && !isAudited) $btnAudit.removeClass('hidden');
 		$tmplTitles.after(_.template($tmplTitles.html(), {
 			year1: year, year2: year + 1,
 			area: resObj['TVALUES']['myHashMap']['AREA']
