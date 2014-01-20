@@ -156,6 +156,10 @@
           <input type="hidden" name="action" value="AuditBudget">
           <button id="btn-audit" class="btn btn-primary quanshi-only hidden" type="submit">确认审核</button>
         </form>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="DenyBase">
+          <button id="btn-deny" class="btn btn-danger quanshi-only hidden" type="submit">审核不通过</button>
+        </form>
       </div>
     </td>
   </tr>
@@ -167,7 +171,8 @@
     $table = $frame.find('#table'),
     $forms = $table.find('form'),
     $btnSubmit = $forms.find('#btn-submit'),
-    $btnAudit = $forms.find('#btn-audit');
+    $btnAudit = $forms.find('#btn-audit'),
+    $btnDeny = $forms.find('#btn-deny');
 
   $forms.ajaxForm({
     type: 'post',
@@ -192,8 +197,7 @@
   function showTable(resObj) {
     $table.addClass('hidden');
     var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
-      isSubmitted = resObj['TVALUES']['myHashMap']['ISSUBMITTED'] || false,
-      isAudited = resObj['TVALUES']['myHashMap']['ISAUDITED'] || false,
+      status = resObj['TVALUES']['myHashMap']['STATUS'],
       tValues = resObj['TVALUES']['myHashMap'],
       matrix = _.reduce(tValues, function (memo, val, key) {
         var mat = key.match(/^(\w)(\d+)$/);
@@ -207,8 +211,12 @@
       }, []),
       $tmplTitles = $table.find('#tmpl-titles');
 
-      if (!isSubmitted) $btnSubmit.removeClass('hidden');
-      if (isSubmitted && !isAudited) $btnAudit.removeClass('hidden');
+      if (status == 0) {
+        $btnSubmit.removeClass('hidden');
+      } else if (status == 1) {
+        $btnAudit.removeClass('hidden');
+        $btnDeny.removeClass('hidden');
+      }
         $tmplTitles.after(_.template($tmplTitles.html(), {
           year1: year, year2: year + 1,
           area: resObj['TVALUES']['myHashMap']['AREA']
