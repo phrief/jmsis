@@ -221,8 +221,7 @@
 	$form.find('[name="ID"]').val(baseID);
 	$form.ajaxForm({
 		success: function (data) {
-			var testData = {'__MESSAGE__': '保存成功'}
-			var resObj = readResObj(data, testData);
+			readResObj(data);
 			loadPage('html/FD_Base.html');
 		}
 	});
@@ -240,7 +239,6 @@
 		var resObj = readResObj(data, testData);
 		showTable(resObj);
 	});
-	//showTable(testData);
 
 	function showTable(resObj) {
 		$table.addClass('hidden');

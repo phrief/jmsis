@@ -20,184 +20,193 @@
 	}
 </style>
 
-<form method="post" action="modules/FD_ctl.jsp?action=AuditBase">
-  <table id="table" class="hidden" data-colspans="8">
-    <script type="text/html" id="tmpl-titles">
-      <caption>
-        <i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
-      </caption>
-      <thead>
-      <tr>
-        <th>社预02表</th>
-        <th colspan="7">区域: {{-area}}</th>
-      </tr>
-      <tr>
-        <th>项目</th>
-        <th>单位</th>
-        <th></th>
-        <th></th>
-        <th>项目</th>
-        <th>单位</th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
-    </script>
-    <tbody>
+<table id="table" class="hidden" data-colspans="8">
+  <script type="text/html" id="tmpl-titles">
+    <caption>
+      <i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
+    </caption>
+    <thead>
     <tr>
-      <td>一、企业职工基本养老保险</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-      <td>　2、实际缴费人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
+      <th>社预02表</th>
+      <th colspan="7">区域: {{-area}}</th>
     </tr>
     <tr>
-      <td>（一）参保人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>　3、缴费基数总额</td>
-      <td>元</td>
-      <td></td>
-      <td></td>
+      <th>项目</th>
+      <th>单位</th>
+      <th></th>
+      <th></th>
+      <th>项目</th>
+      <th>单位</th>
+      <th></th>
+      <th></th>
     </tr>
-    <tr>
-      <td>　1、在职职工</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>（六）统筹地区社会平均工资</td>
-      <td>元/年</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　2、离退休人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>二、城乡居民社会养老保险</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　　（1）离休人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>（一）16-59周岁参保缴费人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　　（2）退休、离职人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>（二）养老金领取人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>（二）实际缴费人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>三、城镇居民社会养老保险</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>（三）缴费基数总额</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-      <td>（一）16-59周岁参保缴费人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　1、单位</td>
-      <td>元</td>
-      <td></td>
-      <td></td>
-      <td>（二）养老金领取人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　2、个人</td>
-      <td>元</td>
-      <td></td>
-      <td></td>
-      <td>四、新型农村社会养老保险</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>（四）缴费率</td>
-      <td>%</td>
-      <td></td>
-      <td></td>
-      <td>（一）16-59周岁参保缴费人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>（五）以个人身份参保情况</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-      <td>（二）养老金领取人员</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>　1、参保人数</td>
-      <td>人</td>
-      <td></td>
-      <td></td>
-      <td>×</td>
-      <td>×</td>
-      <td></td>
-      <td></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td colspan="8">
-        <div class="bulk-actions align-left">
-          <button class="btn btn-default" href="html/FD_Base.html">返回列表</button>
-          <input class="btn btn-primary quanshi-only not-audited-only" type="submit" value="确认审核">
-        </div>
-      </td>
-    </tr>
-    </tfoot>
-  </table>
-</form>
+    </thead>
+  </script>
+  <tbody>
+  <tr>
+    <td>一、企业职工基本养老保险</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+    <td>　2、实际缴费人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>（一）参保人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>　3、缴费基数总额</td>
+    <td>元</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　1、在职职工</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>（六）统筹地区社会平均工资</td>
+    <td>元/年</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　2、离退休人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>二、城乡居民社会养老保险</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　　（1）离休人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>（一）16-59周岁参保缴费人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　　（2）退休、离职人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>（二）养老金领取人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>（二）实际缴费人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>三、城镇居民社会养老保险</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>（三）缴费基数总额</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+    <td>（一）16-59周岁参保缴费人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　1、单位</td>
+    <td>元</td>
+    <td></td>
+    <td></td>
+    <td>（二）养老金领取人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　2、个人</td>
+    <td>元</td>
+    <td></td>
+    <td></td>
+    <td>四、新型农村社会养老保险</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>（四）缴费率</td>
+    <td>%</td>
+    <td></td>
+    <td></td>
+    <td>（一）16-59周岁参保缴费人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>（五）以个人身份参保情况</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+    <td>（二）养老金领取人员</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>　1、参保人数</td>
+    <td>人</td>
+    <td></td>
+    <td></td>
+    <td>×</td>
+    <td>×</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="8">
+      <div class="bulk-actions align-left">
+        <button class="btn btn-default" href="html/FD_Base.html">返回列表</button>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="SubmitBase">
+          <button id="btn-submit" class="btn btn-primary hidden" type="submit">提交待审核</button>
+        </form>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="AuditBase">
+          <button id="btn-audit" class="btn btn-primary quanshi-only hidden" type="submit">确认审核</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
 
 <script>
 	var baseID = parseInt(getURLParams()['ID']),
-    $form = $frame.find('form'),
-		$table = $form.find('table');
+		$table = $frame.find('#table'),
+    $forms = $table.find('form'),
+    $btnSubmit = $forms.find('#btn-submit'),
+    $btnAudit = $forms.find('#btn-audit');
 
-  $form.ajaxForm({
+  $forms.ajaxForm({
+    type: 'post',
+    url: 'modules/FD_ctl.jsp',
     data: {
       'ID': baseID
     },
-    success: function(data) {
+    success: function (data) {
       readResObj(data);
       reloadPage();
     }
@@ -214,6 +223,7 @@
 	function showTable(resObj) {
 		$table.addClass('hidden');
 		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
+      isSubmitted = resObj['TVALUES']['myHashMap']['ISSUBMITTED'] || false,
       isAudited = resObj['TVALUES']['myHashMap']['ISAUDITED'] || false,
 			tValues = resObj['TVALUES']['myHashMap'],
 			matrix = _.reduce(tValues, function (memo, val, key) {
@@ -228,7 +238,8 @@
 			}, []),
 			$tmplTitles = $table.find('#tmpl-titles');
 
-    if (!isAudited) $table.addClass('not-audited');
+    if (!isSubmitted) $btnSubmit.show();
+    if (isSubmitted && !isAudited) $btnAudit.show();
 		$tmplTitles.after(_.template($tmplTitles.html(), {
 			year1: year, year2: year + 1,
 			area: resObj['TVALUES']['myHashMap']['AREA']

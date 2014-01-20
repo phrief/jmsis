@@ -29,3 +29,6 @@ legend > i, caption > i {
 .text-right {
 	text-align: right;
 }
+.inline-block {
+	display: inline-block;
+}
