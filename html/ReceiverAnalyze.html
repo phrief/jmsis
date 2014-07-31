@@ -1,0 +1,376 @@
+<meta charset="UTF-8">
+
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=ReceiverAnalyze">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始年份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSNF" id="KSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束年份:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSNF" id="JSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析类型:</label>
+                            <div class="controls">
+                                <select name="TYPE">
+                                    <option value="0">总体概况</option>
+                                    <option value="1">区域分析</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择:</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="hori">
+    <div class="row-fluid">
+        <div class="span4">
+            <div id="_440799"></div>
+            <div id="_440704"></div>
+            <div id="_440783"></div>
+        </div>
+
+        <div class="span4">
+            <div id="_440700"></div>
+            <div id="_440705"></div>
+            <div id="_440784"></div>
+        </div>
+        <div class="span4">
+            <div id="_440703"></div>
+            <div id="_440781"></div>
+            <div id="_440785"></div>
+        </div>
+    </div>
+</div>
+<div id="vert">
+    <div><h3 id="chartname"></h3></div>
+    <div id="VERTICAL" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+<script>
+    function makeChart1(resObj) {
+        if(resObj) {
+            var division = resObj['DIVISION'];
+            var title = resObj['TITLE'];
+            var fiftosix = parseFloat(resObj['FIFTOSIX']);
+            var sixtoseven = parseFloat(resObj['SIXTOSEVEN']);
+            var seventoeight = parseFloat(resObj['SEVENTOEIGHT']);
+            var eighttohund = parseFloat(resObj['EIGHTTOHUND']);
+            var gtype = resObj['TYPE'];
+
+           if (gtype < 0 || gtype > 8) {
+                gtype = 0;
+            }
+            var ids = ["#_440799", "#_440700", "#_440703", "#_440704", "#_440705",
+                "#_440781", "#_440783", "#_440784", "#_440785"];
+
+            var id;
+            id = ids[gtype];
+            $(id).highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    width: 250,
+                    height: 250
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑',
+                        fontSize: '15px'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'+ division
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '人口比重',
+                    data: [
+                        ['50~60岁',   fiftosix],
+                        ['60~70岁',   sixtoseven],
+                        ['70~80岁',   seventoeight],
+                        ['80~100岁',  eighttohund]
+                    ]
+                }]
+
+            });
+
+        }
+    }
+    var testData1 = '{"CHARTTYPE": "0","QUANSHI":{"TYPE":"0","TITLE":"2013-2014年全市年龄比例", "DIVISION":"%","FIFTOSIX":"45.0","SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" }, "SHIZHI":{"TYPE":"1","TITLE":"2013-2014年市直年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8","EIGHTTOHUND":"8.5"}, "PENGJIANG":{"TYPE":"2","TITLE":"2013-2014年蓬江年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" }, "JIANGHAI":{"TYPE":"3","TITLE":"2013-2014年江海年龄比例","DIVISION": "%", "FIFTOSIX":"45.0","SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" }, "TAISHAN":{"TYPE":"4","TITLE":"2013-2014年台山年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5"}, "XINHUI":{"TYPE":"5","TITLE":"2013-2014年新会年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" }, "KAIPING":{"TYPE":"6","TITLE":"2013-2014年开平年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" },"HESHAN":{"TYPE":"7","TITLE":"2013-2014年鹤山年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5" },"ENPING":{"TYPE":"8","TITLE":"2013-2014年恩平年龄比例","DIVISION": "%", "FIFTOSIX":"45.0", "SIXTOSEVEN":"26.8", "SEVENTOEIGHT":"12.8", "EIGHTTOHUND":"8.5"} }';
+</script>
+
+<script>
+    //出图函数
+    function makeChart2(resObj) {
+
+        if (resObj) {
+            var months = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+            var dataset1 = resObj['DATASET1'];   //50-60
+            var dataset2 = resObj['DATASET2'];   //60-70
+            var dataset3 = resObj['DATASET3'];   //70-80
+            var dataset4 = resObj['DATASET4'];   //80-100
+            var period = resObj['PERIOD'];
+            var title = resObj['TITLE'];
+
+            months = makeAdapt(months);
+
+            $('#VERTICAL').highcharts({
+                exporting: false,
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: title,
+                    x: -20,//center
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    x: -20
+                },
+                xAxis: {
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '单位(' + division + ')'
+                    },
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }
+                    ]
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: '50~60岁人数',
+                        data: dataset1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '60~70岁人数',
+                        data: dataset2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '70~80岁人数',
+                        data: dataset3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '80~100岁人数',
+                        data: dataset4,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }
+                ]
+            });
+        }
+    }
+
+    var testData2 = '{"CHARTTYPE":"1","MONTHS": ["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"], "PERIOD": "2012年11月--2013年09月", "TITLE":"养老保险蓬江区在领人员走势图", "DIVISION": "人", "DATASET1": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "DATASET2": [250, 300, 250, 500, 450, 400, 550, 600, 700, 650, 750, 800], "DATASET3": [200, 250, 200, 450, 400, 350, 500, 550, 650, 600, 700, 750], "DATASET4": [100, 150, 100, 350, 300, 250, 400, 450, 550, 500, 600, 650]}';
+</script>
+
+<script>
+    $.ajax({
+        url : 'modules/PI_ctl.jsp?action=ReceiverAnalyze',
+        success : function(data) {
+            console.log(data);
+            var resObj = JSON.parse(data);
+
+            var charttype = resObj['CHARTTYPE'];
+            if (charttype == 0) {
+                $("#hori").css("display", "inline");
+                $("#vert").css("display", "none");
+                var quanshi = resObj['QUANSHI'];
+                var shizhi = resObj['SHIZHI'];
+                var pengjiang = resObj['PENGJIANG'];
+                var jianghai = resObj['JIANGHAI'];
+                var taishan = resObj['TAISHAN'];
+                var xinhui = resObj['XINHUI'];
+                var kaiping = resObj['KAIPING'];
+                var heshan = resObj['HESHAN'];
+                var enping = resObj['ENPING'];
+                makeChart1(quanshi);
+                makeChart1(shizhi);
+                makeChart1(pengjiang);
+                makeChart1(jianghai);
+                makeChart1(taishan);
+                makeChart1(xinhui);
+                makeChart1(kaiping);
+                makeChart1(heshan);
+                makeChart1(enping);
+            }
+            if (charttype == 1) {
+                $("#hori").css("display", "none");
+                $("#vert").css("display", "inline");
+                makeChart2(resObj);
+            }
+
+        }
+    });
+</script>
+
+<script>
+    $(function() {
+        var myDate = new Date();
+        $('[name="KSNF"]').val((parseInt(myDate.getFullYear())- 3));
+        $('[name="JSNF"]').val(myDate.getFullYear());
+
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 4,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy',
+            //maxView: 3,
+            minView: 4
+        });
+
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.ajaxForm({
+        beforeSend: function(){
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if(ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function(data) {
+			console.log(data);
+            var resObj = JSON.parse(data);
+
+            var charttype = resObj['CHARTTYPE'];
+            if (charttype == 0) {
+                $("#hori").css("display", "inline");
+                $("#vert").css("display", "none");
+                var quanshi = resObj['QUANSHI'];
+                var shizhi = resObj['SHIZHI'];
+                var pengjiang = resObj['PENGJIANG'];
+                var jianghai = resObj['JIANGHAI'];
+                var taishan = resObj['TAISHAN'];
+                var xinhui = resObj['XINHUI'];
+                var kaiping = resObj['KAIPING'];
+                var heshan = resObj['HESHAN'];
+                var enping = resObj['ENPING'];
+                makeChart1(quanshi);
+                makeChart1(shizhi);
+                makeChart1(pengjiang);
+                makeChart1(jianghai);
+                makeChart1(taishan);
+                makeChart1(xinhui);
+                makeChart1(kaiping);
+                makeChart1(heshan);
+                makeChart1(enping);
+            }
+            if (charttype == 1) {
+                $("#hori").css("display", "none");
+                $("#vert").css("display", "inline");
+                makeChart2(resObj);
+            }
+
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+

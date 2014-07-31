@@ -1,0 +1,227 @@
+<meta charset="UTF-8">
+
+<style>
+    #radios {
+        margin-top: 16px;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" action="modules/UI_ctl.jsp?action=AdditionAnalyze">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!--<div id="container_" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+
+<script>
+    function makeChart(resObj) {
+        if (resObj) {
+            var period = resObj['PERIOD'];
+            var months = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+
+            var data1 = resObj['DATA1'];    //新增失业人员
+            var data2 = resObj['DATA2'];    //失业死亡人员
+            var data3 = resObj['DATA3'];    //待遇到期人员
+            var data4 = resObj['DATA4'];    //重新就业人员
+
+            var d1 = new Array();
+            var d2 = new Array();
+            var d3 = new Array();
+            var d4 = new Array();
+
+            for (var i = 0; i < months.length; i++) {
+                d1.push(parseInt(data1[i]));
+                d2.push(parseInt(data2[i]));
+                d3.push(parseInt(data3[i]));
+                d4.push(parseInt(data4[i]));
+            }
+            var title = resObj['TITLE'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+            var name3 = resObj['NAME3'];
+            var name4 = resObj['NAME4'];
+
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: {
+                    categories: months
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: name1,
+                        data: d1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: d2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name3,
+                        data: d3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name4,
+                        data: d4,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }
+                ]
+            });
+        }
+    }
+    var testData = '{"TITLE":"全市失业人员增减分析图","PERIOD":"2013年7月--2014年6月","DATA1":[100,50,100,50,100,50,100,50,100,50,100,50],"DATA2":[100,50,100,50,100,50,100,50,100,50,100,50],"DATA3":[100,50,100,50,100,50,100,50,100,50,100,50],"DATA4":[100,50,100,50,100,50,100,50,100,50,100,50],"NAME1":"新增失业人员","NAME2":"失业死亡人员","NAME3":"待遇到期人员","NAME4":"重新就业人员","MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"]}';
+</script>
+
+<script>
+    $(function () {
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+        $('.datepicker_c').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+    });
+
+    $('.datepicker_c').on('click', function () {
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+<script>
+    $.ajax({
+        url: 'modules/UI_ctl.jsp?action=AdditionAnalyze',
+        success: function (data) {
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var fxnf = $form.find('[name="FXNF"]').val();
+            if (fxnf == "") {
+                notify("分析时间不能为空");
+                return false;
+            }
+            isblank = true;
+            var areas = $form.find('[name="AREABOX[]"]');
+            for (var i = 0; i < areas.length; i++) {
+                if (areas[i].checked) {
+                    isblank = false;
+                }
+            }
+            if (isblank) {
+                notify("地区不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>

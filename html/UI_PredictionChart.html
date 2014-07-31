@@ -1,0 +1,333 @@
+<!--
+
+2013-11-27 10:55 查询区域添加”全市“ update by wharry
+
+-->
+<meta charset="UTF-8"/>
+
+<script>
+    var $oldDialogs = $body.children('[role="dialog"]');
+    [].forEach.call($oldDialogs, function (el) {
+        el.parentNode.removeChild(el);
+    })
+</script>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    信息过滤
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=ExpensesPredication">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<div id="pre_redAlert" class="dialog_c" title="警告！">
+    <p>依当前参数预测，<span dataname="redYear"></span>年养老基金余额将跌破红色警戒线，资金不够3个月使用！</p>
+</div>
+<div id="pre_yellowAlert" class="dialog_c" title="警告！">
+    <p>依当前参数预测，<span dataname="yellowYear"></span>年养老基金余额将跌破黄色警戒线，资金不够半年使用！</p>
+</div>
+
+<script>
+    var myDate = new Date();
+    $('[name="KSNF"]').val(myDate.getFullYear() - 3);
+    $('[name="JSNF"]').val(myDate.getFullYear() + 2);
+
+    $('.datepicker_c').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
+    });
+    $('.datepicker_c').on('click', function () {
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+
+
+    $(".dialog_c").dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 500
+        },
+        hide: {
+            effect: "blind",
+            duration: 500
+        },
+        modal: true,
+        buttons: {
+            确定: function () {
+                $(this).dialog("close");
+            }
+        },
+        resizable: false,
+        draggable: false
+    });
+</script>
+
+<script>
+    function makeAdapt(years) {
+        if (years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for (var i = 0; i < len; i++) {
+                if (i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+
+<script>
+    function makeChart(resObj) {
+        if (resObj) {
+            var title = resObj['TITLE'];
+            var years = resObj['YEARS'];
+            var division = resObj['DIVISION'];
+            var income = resObj['INCOME'];
+            var payout = resObj['PAYOUT'];
+            var balance = resObj['BALANCE'];
+            var curbalance = resObj['CURBALANCE'];
+            var yellow = resObj['YELLOW'];
+            var red = resObj['RED'];
+            var period = resObj['PERIOD'];
+            var area = resObj['AREA'];
+            var isYellow = false;
+            var isRed = false;
+            var redYear;
+            var yellowYear;
+
+            var incomeArr = new Array();
+            var payoutArr = new Array();
+            var balanceArr = new Array();
+            var curbalanceArr = new Array();
+            var yellowLine = new Array();
+            var redLine = new Array();
+
+            var mark = 0;
+            var CURYEAR = new Date().getFullYear();
+            for (var j = 0; j < years.length; j++) {
+                if (years[j] == CURYEAR) {
+                    mark = j;
+                }
+            }
+
+            for (var i = 0; i < years.length; i++) {
+                incomeArr.push(parseFloat(income[i]));
+                payoutArr.push(parseFloat(payout[i]));
+                balanceArr.push(parseFloat(balance[i]));
+                curbalanceArr.push(parseFloat(curbalance[i]));
+                yellowLine.push(parseFloat(yellow[i]));
+                redLine.push(parseFloat(red[i]));
+            }
+
+
+            for (var i = mark; i < years.length; i++) {
+                if (balanceArr[i] < redLine[i] && !isRed) {
+                    isRed = true;
+                    isYellow = true;
+                    redYear = years[i];
+                    continue;
+                }
+                if (balanceArr[i] < yellowLine[i] && !isYellow) {
+                    isYellow = true;
+                    yellowYear = years[i];
+                }
+            }
+
+            years = makeAdapt(years);
+
+            $('[dataname="yellowYear"]').text(yellowYear);
+            $('[dataname="redYear"]').text(redYear);
+
+            $('#container').highcharts({
+                exporting: false,
+                chart: {
+
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: {
+                    categories: years
+                },
+                yAxis: [{
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                }],
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: '年收入',
+                        data: incomeArr,
+                        type: 'line',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '年支出',
+                        data: payoutArr,
+                        type: 'line',
+                        color: '#FFB90F',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '余额累计',
+                        data: balanceArr,
+                        type: 'line',
+                        color: '#228B22',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '当年余额',
+                        data: curbalanceArr,
+                        type: 'line',
+                        //yAxis: 1,
+                        color: '#000000',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '黄色警戒区域上限',
+                        data: yellowLine,
+                        type: 'areaspline',
+                        color: '#FFF68F',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '红色警戒区域上限',
+                        data: redLine,
+                        type: 'areaspline',
+                        color: '#FF4500',
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }]
+            });
+        } else {
+            notify('no data');
+        }
+
+        if (isYellow) {
+            if (isRed) $('#pre_redAlert').dialog('open');
+            else $('#pre_yellowAlert').dialog('open');
+        }
+
+    }
+
+    var testData = '{"TITLE":"全市失业基金趋势预测图","INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950"],"CURBALANCE":["500","1050","950","650","850","1050"],"__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2010","2011","2012","2013","2014","2015"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人帐户","__LOGINED__":true,"PERIOD":"2012年10月——2013年9月","DIVISION":"万元","YELLOW":["550","550","550","550","550","550"],"RED":["300","300","300","300","300","300"], "__ISTEST__":true}';
+</script>
+
+<script>
+    $.ajax({
+        url: 'modules/UI_ctl.jsp?action=ExpensesPredication',
+        type: 'post',
+        success: function (data) {
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form');
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSNF"]').val();
+            var jsyf = $form.find('[name="JSNF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>

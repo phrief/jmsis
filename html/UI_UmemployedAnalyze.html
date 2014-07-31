@@ -1,0 +1,334 @@
+<meta charset="UTF-8">
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=UmemployedAnalyze">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析方式</label>
+
+                            <div class="controls">
+                                <select name="FXFS">
+                                    <option value="0">按年龄分析</option>
+                                    <option value="1">按性别分析</option>
+                                    <option value="2">按户口类别分析</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<script>
+    function makeAdapt(years) {
+        if (years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for (var i = 0; i < len; i++) {
+                if (i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+<script>
+    function makeChart(resObj) {
+
+        if (resObj) {
+            var charttype = resObj['CHARTTYPE'];
+
+            if(charttype == 0) {
+                var period = resObj['PERIOD'];
+                var years = resObj['YEARS'];
+
+                var data1 = resObj['DATA1'];    // <20
+                var data2 = resObj['DATA2'];    // [20,30)
+                var data3 = resObj['DATA3'];    // [30,40)
+                var data4 = resObj['DATA4'];    // [40,50)
+                var data5 = resObj['DATA5'];    // [50,55)
+                var data6 = resObj['DATA6'];    // [55,60)
+
+                var name1 = resObj['NAME1'];
+                var name2 = resObj['NAME2'];
+                var name3 = resObj['NAME3'];
+                var name4 = resObj['NAME4'];
+                var name5 = resObj['NAME5'];
+                var name6 = resObj['NAME6'];
+
+                var title = resObj['TITLE'];
+
+                var d1 = new Array();
+                var d2 = new Array();
+                var d3 = new Array();
+                var d4 = new Array();
+                var d5 = new Array();
+                var d6 = new Array();
+
+                for (var i = 0; i < years.length; i++) {
+                    d1.push(parseInt(data1[i]));
+                    d2.push(parseInt(data2[i]));
+                    d3.push(parseInt(data3[i]));
+                    d4.push(parseInt(data4[i]));
+                    d5.push(parseInt(data5[i]));
+                    d6.push(parseInt(data6[i]));
+                }
+
+                years = makeAdapt(years);
+
+                $('#FirmArrearageList').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: title,
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period
+                    },
+                    xAxis: {
+                        categories: years
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: ''
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'percent'
+                        }
+                    },
+                    series: [
+                        {
+                            name: name1,
+                            data: d1
+                        },
+                        {
+                            name: name2,
+                            data: d2
+                        },
+                        {
+                            name: name3,
+                            data: d3
+                        },
+                        {
+                            name: name4,
+                            data: d4
+                        },
+                        {
+                            name: name5,
+                            data: d5
+                        },
+                        {
+                            name: name6,
+                            data: d6
+                        }
+                    ]
+                });
+            }
+
+            if(charttype == 1 || charttype == 2) {
+                var period = resObj['PERIOD'];
+                var years = resObj['YEARS'];
+
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+
+                var name1 = resObj['NAME1'];
+                var name2 = resObj['NAME2'];
+
+                var title = resObj['TITLE'];
+
+                var d1 = new Array();
+                var d2 = new Array();
+
+                for(var i = 0; i < years.length; i++) {
+                    d1.push(parseInt(data1[i]));
+                    d2.push(parseInt(data2[i]));
+                }
+                years = makeAdapt(years);
+
+                $('#FirmArrearageList').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: title,
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period
+                    },
+                    xAxis: {
+                        categories: years
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: ''
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'percent'
+                        }
+                    },
+                    series: [
+                        {
+                            name: name1,
+                            data: d1
+                        },
+                        {
+                            name: name2,
+                            data: d2
+                        }
+                    ]
+                });
+            }
+        }
+    }
+
+
+    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"小于20岁","NAME2":"20岁~30岁","NAME3":"30岁~40岁","NAME4":"40岁~50岁","NAME5":"50岁~55岁","NAME6":"55岁~60岁","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
+    //var testData = '{"CHARTTYPE":"1","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"男性","NAME2":"女性","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
+    //var testData = '{"CHARTTYPE":"1","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"农业户口","NAME2":"非农业户口","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
+</script>
+
+
+<script>
+    $.ajax({
+        url: 'modules/UI_ctl.jsp?action=UmemployedAnalyze',
+        success: function (data) {
+            console.log(data);
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    var myDate = new Date();
+    $('[name="KSNF"]').val(myDate.getFullYear() - 3);
+    $('[name="JSNF"]').val(myDate.getFullYear() + 2);
+
+    $('.datepicker_c').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
+    });
+    $('.datepicker_c').on('click', function () {
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+
+

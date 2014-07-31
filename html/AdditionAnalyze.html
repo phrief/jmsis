@@ -1,0 +1,240 @@
+<meta charset="UTF-8">
+
+<style>
+    #radios {
+        margin-top: 16px;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=AdditionAnalyze">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">时间类型:</label>
+                            <div class="controls">
+                                <select name="SJLX" id="SJLX">
+                                    <option value="month">按月份</option>
+                                    <option value="year">按年份</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">开始时间:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSSJ" id="KSSJ"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束时间:</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSSJ" id="JSSJ"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择:</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Addition" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+<script>
+    //出图函数
+    function makeChart(resObj) {
+
+        if (resObj) {
+            var months = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+            var dataset = resObj['DATASET'];
+            var period = resObj['PERIOD'];
+            var name = resObj['NAME'];
+            var title = resObj['TITLE'];
+            months = makeAdapt(months);
+            console.log(dataset);
+            $('#Addition').highcharts({
+                exporting: false,
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: title,
+                    x: -20,//center
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period,
+                    x: -20
+                },
+                xAxis: {
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: '单位(' + division + ')'
+                    },
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }
+                    ]
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: name,
+                        data: dataset,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }]
+            });
+        }
+    }
+
+    var testData = '{"TITLE": "养老保险新增人员走势图", "MONTHS": ["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"], "DATASET": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "NAME": "新增人员", "DIVISION": "人", "PERIOD": "2012年11月--2013年09月"}';
+</script>
+<script>
+    $(function() {
+        var opt_month = {
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        };
+        var opt_year = {
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 4,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy',
+            //maxView: 3,
+            minView: 4
+        };
+
+
+        var myDate = new Date();
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSSJ"]').val(now.toJSON().slice(0, 7));
+        $('.datepicker_c').datetimepicker(opt_month);
+        $('#SJLX').change(function () {
+            var t_type =  $('#SJLX').val();
+            if(t_type == 'year') {
+                $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 4));
+                $('[name="JSSJ"]').val(now.toJSON().slice(0, 4));
+                $('.datepicker_c').datetimepicker('remove');
+                $('.datepicker_c').datetimepicker(opt_year);
+            }
+            if(t_type == 'month') {
+                $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 7));
+                $('[name="JSSJ"]').val(now.toJSON().slice(0, 7));
+                $('.datepicker_c').datetimepicker('remove');
+                $('.datepicker_c').datetimepicker(opt_month);
+            }
+        });
+    });
+</script>
+
+<script>
+    $.ajax({
+        url : 'modules/PI_ctl.jsp?action=AdditionAnalyze',
+        success : function(data) {
+			console.log(data);
+            var resObj = JSON.parse(data);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSSJ"]').val();
+            var jsyf = $form.find('[name="JSSJ"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
