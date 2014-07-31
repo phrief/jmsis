@@ -93,17 +93,13 @@
     function makeChart(resObj) {
 
         if(resObj) {
-            var division = resObj['DIVISION'];
             var months = resObj['MONTHS'];
 
             var srrs = resObj['SRRS'];
             var zcrs = resObj['ZCRS'];
-            var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
 
             var SRRS = new Array();
             var ZCRS = new Array();
-            var charttype = '养老保险基金监测';
 
             var name1 = resObj['NAME1'];    //缴费人数
             var name2 = resObj['NAME2'];    //养老人数
@@ -111,7 +107,6 @@
             var title = resObj['TITLE'];
 
             for(var i=0; i < months.length; i++) {
-                //DataSet.push(parseInt(dataset[i]));
                 SRRS.push(parseInt(srrs[i]));
                 ZCRS.push(parseInt(zcrs[i]));
             }
@@ -158,7 +153,7 @@
     }
 
 
-    var testData = '{"DATASET":["0.00","0.00","0.00","192.11","99000.00","∞","0.00","0.00","0.00","0.00","0.00","0.00"],"AREA":"市区直属","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"百分比(%)"}';
+    var testData = '{"SRRS":["752678","755539","758412","761596","764907","852534","791635","786411","786800","777756","0","0"],"AREA":"全市","MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市养老抚养比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年7月——2014年6月","DIVISION":"人数","NAME2":"养老人数","NAME1":"缴费人数","ZCRS":["218470","223370","226744","229704","231443","234013","235985","238198","241901","241233","0","0"]}';
 </script>
 
 
@@ -175,9 +170,10 @@
 
 <script>
     $(function() {
-        var myDate = new Date();
-        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
 
         $('.datepicker_c').datetimepicker({
             language:  'zh-CN',

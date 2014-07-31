@@ -1,5 +1,10 @@
 <meta charset="UTF-8">
 
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 
 <div class="accordion" id="accordion2">
     <div class="accordion-group">
@@ -14,30 +19,33 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=DependencyRatio">
+                <form class="form-horizontal" action="modules/PI_ctl.jsp?action=FundautoMonitor">
                     <div class="block">
                         <div class="control-group">
-                            <label class="control-label">开始月份:</label>
+                            <label class="control-label">开始月份</label>
+
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="KSYF" id="KSYF"/>
+                                <input type="text" class="datepicker_c" name="KSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">结束月份:</label>
+                            <label class="control-label">结束月份</label>
+
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="JSYF" id="JSYF"/>
+                                <input type="text" class="datepicker_c" name="JSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">区域选择:</label>
+                            <label class="control-label">区域选择</label>
+
                             <div class="controls">
                                 <select name="AREA">
-                                    <option value="%">全市</option>
+                                    <option value="440799">全市</option>
                                     <option value="440700">市直</option>
                                     <option value="440703">蓬江</option>
                                     <option value="440704">江海</option>
-                                    <option value="440705">新会</option>
                                     <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
                                     <option value="440783">开平</option>
                                     <option value="440784">鹤山</option>
                                     <option value="440785">恩平</option>
@@ -56,15 +64,8 @@
 </div>
 
 
-
-<div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-
-
-
-
-
-
+<div><h3 id="chartname"></h3></div>
+<div id="VERTICAL" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <script>
     function makeAdapt(years) {
@@ -84,95 +85,118 @@
         }
     }
 </script>
+
 <script>
+    //出图函数
     function makeChart(resObj) {
 
-        if(resObj) {
-            var division = resObj['DIVISION'];
+        if (resObj) {
             var months = resObj['MONTHS'];
-
-            var srrs = resObj['SRRS'];
-            var zcrs = resObj['ZCRS'];
+            var division = resObj['DIVISION'];
+            var dataset1 = resObj['DATASET1'];   //50-60
+            var dataset2 = resObj['DATASET2'];   //60-70
+            var dataset3 = resObj['DATASET3'];   //70-80
+            var dataset4 = resObj['DATASET4'];   //80-100
             var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
-
-            var SRRS = new Array();
-            var ZCRS = new Array();
-            var charttype = '养老保险基金监测';
-
-            var name1 = resObj['NAME1'];    //缴费人数
-            var name2 = resObj['NAME2'];    //养老人数
-
             var title = resObj['TITLE'];
-
-            for(var i=0; i < months.length; i++) {
-                //DataSet.push(parseInt(dataset[i]));
-               SRRS.push(parseInt(srrs[i]));
-               ZCRS.push(parseInt(zcrs[i]));
-            }
 
             months = makeAdapt(months);
 
-            $('#FirmArrearageList').highcharts({
+            $('#VERTICAL').highcharts({
+                exporting: false,
                 chart: {
-                    type: 'column'
+                    type: 'line'
                 },
                 title: {
                     text: title,
+                    x: -20,//center
                     style: {
                         fontFamily: '微软雅黑'
                     }
                 },
+                subtitle: {
+                    text: period,
+                    x: -20
+                },
                 xAxis: {
-                    categories: months
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
                 },
                 yAxis: {
-                    min: 0,
                     title: {
-                        text: ''
-                    }
+                        text: '单位(' + division + ')'
+                    },
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }
+                    ]
                 },
                 tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
                     shared: true
                 },
-                plotOptions: {
-                    column: {
-                        stacking: 'percent'
+                series: [
+                    {
+                        name: '50~60岁人数',
+                        data: dataset1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '60~70岁人数',
+                        data: dataset2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '70~80岁人数',
+                        data: dataset3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: '80~100岁人数',
+                        data: dataset4,
+                        tooltip: {
+                            valueSuffix: division
+                        }
                     }
-                },
-                series: [{
-                    name: name1,
-                    data: SRRS
-                }, {
-                    name: name2,
-                    data: ZCRS
-                }]
+                ]
             });
         }
     }
 
-
-    var testData = '{"DATASET":["0.00","0.00","0.00","192.11","99000.00","∞","0.00","0.00","0.00","0.00","0.00","0.00"],"AREA":"市区直属","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"百分比(%)"}';
+    var testData = '{"MONTHS": ["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"], "PERIOD": "2012年11月--2013年09月", "TITLE":"养老保险蓬江区在领人员走势图", "DIVISION": "人", "DATASET1": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "DATASET2": [250, 300, 250, 500, 450, 400, 550, 600, 700, 650, 750, 800], "DATASET3": [200, 250, 200, 450, 400, 350, 500, 550, 650, 600, 700, 750], "DATASET4": [100, 150, 100, 350, 300, 250, 400, 450, 550, 500, 600, 650]}';
 </script>
-
 
 <script>
     $.ajax({
-        url : 'modules/PI_ctl.jsp?action=DependencyRatio',
-        success : function(data) {
-            console.log(data);
-            var resObj = readResObj(data, testData);
+        url: 'modules/PI_ctl.jsp?action=ReceiverAnalyze',
+        success: function (data) {
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });
 </script>
 
 <script>
-    $(function() {
-        var myDate = new Date();
-        $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-        $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+    $(function(){
+        /*var myDate = new Date();
+         $('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
+         $('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());*/
+
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
 
         $('.datepicker_c').datetimepicker({
             language:  'zh-CN',
@@ -187,23 +211,28 @@
             //maxView: 3,
             minView: 3
         });
+    });
 
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
     });
 </script>
 
+
 <script>
-    var $form = $frame.find('form');
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
 
     $form.ajaxForm({
-        beforeSend: function(){
+        beforeSend: function () {
             var ksyf = $form.find('[name="KSYF"]').val();
             var jsyf = $form.find('[name="JSYF"]').val();
-            if(ksyf == "" || jsyf == "") {
+            if (ksyf == "" || jsyf == "") {
                 notify("开始月份和结束月份均不能为空");
                 return false;
             }
         },
-        success: function(data) {
+        success: function (data) {
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');

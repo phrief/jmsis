@@ -200,9 +200,10 @@
 
 <script>
 	$(function(){
-		var myDate = new Date();
-		$('[name="KSYF"]').val((parseInt(myDate.getFullYear())- 1) + '-' + myDate.getMonth());
-		$('[name="JSYF"]').val(myDate.getFullYear() + '-' + myDate.getMonth());
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
 
         $('.datepicker_c').datetimepicker({
             language:  'zh-CN',

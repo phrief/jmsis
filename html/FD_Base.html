@@ -138,6 +138,7 @@
 
   $form_table.ajaxForm({
     success: function (data) {
+    console.log(data);
       var resObj = JSON.parse(data),
         msg = resObj['__MESSAGE__'];
       msg && notify(msg);
@@ -151,6 +152,7 @@
     $.get('modules/FD_ctl.jsp?action=Base', {
       'Page': n
     }, function (data) {
+		console.log(data);
       var testData = (function () {
         var fakePageList = [];
         _.times(5, function (i) {
