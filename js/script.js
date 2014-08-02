@@ -8,14 +8,29 @@ _.templateSettings = {
 var global = {},
 	$body = $('body'),
 	$frame = $body.find('#main-frame'),
+	$loading,
 	hrefPage = location.hash.substr(1),
 	isQuanShi;
 
 // 默认所有ajax不缓存
 $.ajaxSetup({
 	cache: false,
-	async: false
+	async: true
 });
+
+// 全局ajax事件loading效果
+$loading = $('<div>')
+.attr('id', 'loading')
+.html([
+	'<div class="overlay"></div>',
+	'<img src="images/loading2.gif">',
+	].join('\n')).prependTo($body)
+$(document).ajaxStart(function(){
+	$loading.show()
+})
+$(document).ajaxStop(function(){
+	$loading.hide()
+})
 
 // hash改变时自动加载子页面
 $(window).on('hashchange', function () {
