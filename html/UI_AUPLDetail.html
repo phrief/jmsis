@@ -25,7 +25,7 @@
   <tr>
     <td colspan="3">
       <div class="bulk-actions align-left">
-        <a class="btn btn-default" href="html/PI_MonthlyAPL.html">返回列表</a>
+        <a class="btn btn-default" href="html/UI_MonthlyAPL.html">返回列表</a>
       </div>
       <div class="pagination"></div>
     </td>
@@ -44,7 +44,7 @@
   getPage(1);
 
   function getPage(n) {
-    $.get('modules/PI_ctl.jsp?action=TADetail', {
+    $.get('modules/UI_ctl.jsp?action=TADetail', {
       'ID': itemID,
       'page': n
     }, function (resObj) {
