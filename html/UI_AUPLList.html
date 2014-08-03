@@ -1,0 +1,193 @@
+<meta charset="UTF-8">
+
+<style>
+  #table-list th {
+    min-width: 70px;
+  }
+
+  #table-list th:nth-child(8) {
+    min-width: 40px;
+  }
+</style>
+
+<div class="accordion" id="accordion">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle external" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+        <legend>
+          <i class="icon-chevron-down"></i>
+          <i class="icon-chevron-up"></i>
+          检索
+        </legend>
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <form id="form-query" class="form-horizontal" method="post" action="modules/PI_ctl.jsp?action=TreatmentVary">
+          <div class="block">
+            <div class="control-group">
+              <label class="control-label">开始时间</label>
+
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="DateBegin" maxlength="7">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束时间</label>
+
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="DateEnd" maxlength="7">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">区域选择</label>
+
+              <div class="controls">
+                <select name="AREA">
+                  <option value="440799">全市</option>
+                  <option value="440700">市直</option>
+                  <option value="440703">蓬江</option>
+                  <option value="440704">江海</option>
+                  <option value="440705">新会</option>
+                  <option value="440781">台山</option>
+                  <option value="440783">开平</option>
+                  <option value="440784">鹤山</option>
+                  <option value="440785">恩平</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <input type="hidden" name="page" value="1">
+              <input type="submit" value="提交" class="btn btn-primary">
+              <input type="reset" value="重置" class="btn">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table id="table-list" data-colspans="7">
+  <caption>
+    <i class="icon-th-list"></i><span id="area"></span>养老金月支付变化列表
+  </caption>
+  <thead>
+  <tr>
+    <th>统计年月</th>
+    <th class="text-right">当月人数</th>
+    <th class="text-right">上月人数</th>
+    <th class="text-right">人数变化</th>
+    <th class="text-right">当月金额</th>
+    <th class="text-right">上月金额</th>
+    <th class="text-right">金额变化</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <script type="text/html" id="tr-tmpl">
+    <tr>
+      <td>{{-item['STATISTICMONTH']}}</td>
+      <td class="text-right">{{-item['CURRENTPEOPLE']}}</td>
+      <td class="text-right">{{-item['LASTPEOPLE']}}</td>
+      <td class="text-right">{{-item['PEOPLECHAGE']}}</td>
+      <td class="text-right">{{-item['CURRENTMONEY']}}</td>
+      <td class="text-right">{{-item['LASTMONEY']}}</td>
+      <td class="text-right">{{-item['MONEYCHANGE']}}</td>
+    </tr>
+  </script>
+  </tbody>
+
+  <tfoot>
+  <tr>
+    <td colspan="7">
+      <div class="pagination"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<script>
+  var $form_query = $frame.find('#form-query'),
+    $table_list = $('#table-list'),
+    $area = $table_list.find('#area'),
+    $tbody = $table_list.find('tbody'),
+    $pagination = $table_list.find('.pagination'),
+    trTmpl = $tbody.find('#tr-tmpl').html();
+
+  $frame.find('.datepicker_c').datetimepicker({
+    language: 'zh-CN',
+    weekStart: 1,
+    todayBtn: 1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 3,
+    forceParse: 0,
+    showMeridian: 1,
+    format: 'yyyy-mm',
+    //maxView: 3,
+    minView: 3
+  });
+  $('.datepicker_c').on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
+
+  // 检索
+  $form_query.ajaxForm({
+    success: function (data) {
+      var resObj = {};
+      try {
+        resObj = _.isObject(data) ? data : $.parseJSON(data);
+      } catch (err) {
+      }
+      var msg = resObj['__MESSAGE__'];
+      msg && alert(msg);
+      // 表格数据
+      showTable(resObj);
+      $("#collapseOne").collapse('hide');
+    }
+  });
+
+  // 开始的时候自动提交
+  var now = new Date();
+  now.setDate(15); // 确保减去一个月后的月份准确性
+  var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+  $form_query.find('[name="DateBegin"]').val(oneYearAgo.toJSON().slice(0, 7));
+  $form_query.find('[name="DateEnd"]').val(now.toJSON().slice(0, 7));
+  //$form_query.submit();
+  $("#collapseOne").collapse('show');
+
+  function getPage(n) {
+    $form_query.find('[name="page"]').val(n);
+    $form_query.submit();
+  }
+  function showTable(resObj) {
+    $table_list.addClass('hidden');
+    $area.text('(' + resObj['AREANAME'] + ') ');
+    var pageList = resObj['_PageList'];
+    if (!pageList || pageList.length < 1) {
+      $tbody.html([
+        '<tr>',
+        '<td class="text-center" colspan="7">没有记录</td>',
+        '</tr>'
+      ].join(''));
+    } else {
+      var tbodyHtml = _.reduce(pageList, function (memo, item) {
+        var trHtml = _.template(trTmpl, item, {
+          variable: 'item'
+        });
+        return memo + trHtml;
+      }, '');
+      $tbody.html(tbodyHtml);
+      // 分页
+      $pagination.html([
+        '<span><a onclick="getPage(1)">首页</a></span>',
+        '<span><a onclick="getPage(' + Math.max((resObj['_curPage'] - 1), 1) + ')">上一页</a></span>',
+        '<span>当前页' + resObj['_curPage'] + '/' + resObj['_pageCount'] + '</span>',
+        '<span><a onclick="getPage(' + Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) + ')">下一页</a></span>',
+        '<span><a onclick="getPage(' + resObj['_pageCount'] + ')">尾页</a></span>'
+      ].join(''));
+    }
+    $table_list.removeClass('hidden');
+  }
+</script>
