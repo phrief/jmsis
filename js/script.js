@@ -14,6 +14,7 @@ var global = {},
 
 // 默认所有ajax不缓存
 $.ajaxSetup({
+	dataType: 'text',
 	cache: false,
 	async: true
 });
