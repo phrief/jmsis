@@ -38,7 +38,7 @@ function validateUser(onUserValidated) {
                 resObj = null;
             }
         if (! resObj || ! resObj['__LOGINED__']) {
-            window.location.href = '.';
+            link('.');
             return;
         }
         onUserValidated && onUserValidated(resObj);

@@ -14,7 +14,7 @@ $.ajax({
     } catch (err) {
     }
     if (resObj['__LOGINED__']) {
-      location.href = "system/main.jsp";
+      link('system/main.jsp');
     }
     else {
       $('#login-form').slideDown('slow');
@@ -31,7 +31,7 @@ $('#login-form').ajaxForm({
     } catch (err) {
     }
     if (resObj['__LOGINED__']) {
-      location.href = 'system/main.jsp';
+      link('system/main.jsp');
     }
     else {
 			notify(resObj['__MESSAGE__']);

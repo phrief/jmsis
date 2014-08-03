@@ -71,6 +71,11 @@ function notify(msg) {
 	_alert(msg);
 }
 
+// 页面跳转
+function link(url) {
+	locatin.href = url;
+}
+
 // 获取url参数
 function getURLParams(hash) {
 	var pat = /([^?=&#]*)=([^?=&#]+)/g, params = {};
@@ -102,7 +107,7 @@ function loadPage(href, success) {
 			try {
 				var obj = $.parseJSON(data);
 				if (!obj['__LOGINED__']) {	// 若未登录
-					location.href = '.';
+					link('.');
 					return;
 				}
 				if (obj['__ERROR__']) {	// 后台汇报载入页面错误
