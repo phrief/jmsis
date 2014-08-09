@@ -1,7 +1,6 @@
 {
   "name": "jmsis",
   "version": "0.1.0",
-  "description": "Public frontend files of Jiangmen Social Insurance System",
   "private": true,
   "repository": {
     "type": "git",

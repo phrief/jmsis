@@ -35,6 +35,7 @@ $(document).ajaxStop(function(){
 
 // hash改变时自动加载子页面
 $(window).on('hashchange', function () {
+	$loading.hide()
 	var href = location.hash.substr(1);
 	if (href && href !== hrefPage) {
 		loadPage(href);
@@ -73,7 +74,7 @@ function notify(msg) {
 
 // 页面跳转
 function link(url) {
-	locatin.href = url;
+	location.href = url;
 }
 
 // 获取url参数
