@@ -27,15 +27,15 @@ $loading = $('<div>')
 	'<img src="images/loading2.gif">',
 	].join('\n')).prependTo($body)
 $(document).ajaxStart(function(){
-	$loading.show()
+	$loading.stop().show()
 })
 $(document).ajaxStop(function(){
-	$loading.fadeOut()
+	$loading.stop().fadeOut()
 })
 
 // hash改变时自动加载子页面
 $(window).on('hashchange', function () {
-	$loading.fadeOut()
+	//$loading.stop().fadeOut()
 	var href = location.hash.substr(1);
 	if (href && href !== hrefPage) {
 		loadPage(href);
