@@ -9,8 +9,7 @@
 <div class="accordion" id="accordion2">
     <div class="accordion-group">
         <div class="accordion-heading">
-            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
-               href="#collapseOne">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                 <legend>
                     <i class="icon-chevron-down"></i>
                     <i class="icon-chevron-up"></i>
@@ -20,7 +19,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" action="modules/UI_ctl.jsp?action=FundautoMonitor">
+                <form class="form-horizontal" action="modules/GEN_ctl.jsp?action=Payed">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始月份</label>
@@ -38,7 +37,6 @@
                         </div>
                         <div class="control-group">
                             <label class="control-label">区域选择</label>
-
                             <div class="controls">
                                 <select name="AREA">
                                     <option value="440799">全市</option>
@@ -53,15 +51,22 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">账户类型</label>
 
+                        <div class="control-group" id="work_selector">
+                            <label class="control-label">对比险种</label>
                             <div class="controls">
-                                <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
-                                    <option value="2">合并账户</option>
-                                </select>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="PROBOX[]" value="0">养老保险
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="PROBOX[]" value="1">失业保险
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="PROBOX[]" value="2">工伤保险
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="PROBOX[]" value="3">生育保险
+                                </label>
                             </div>
                         </div>
                         <div class="control-group">
@@ -81,12 +86,12 @@
 
 <script>
     function makeAdapt(years) {
-        if (years.length > 12) {
+        if(years.length > 12) {
             var len = years.length;
             var delta = parseInt(len / 12);
             var yearsAfter = new Array();
-            for (var i = 0; i < len; i++) {
-                if (i % delta == 0)
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
                     yearsAfter.push("");
@@ -101,98 +106,76 @@
 <script>
     //出图函数
     function makeChart(resObj) {
+        console.log(resObj);
+        var months = resObj['MONTHS'];
+        var division = resObj['DIVISION'];
+        var period = resObj['PERIOD'];
+        var area = resObj['AREA'];
+        var num = resObj['NUM'];
+        var title = resObj['TITLE'];
 
-        if (resObj) {
-            var months = resObj['MONTHS'];
-            var division = resObj['DIVISION'];
-            var income = resObj['INCOME'];
-            var payout = resObj['PAYOUT'];
-            var balance = resObj['BALANCE'];
-            var period = resObj['PERIOD'];
-            var title = resObj['TITLE'];
-
-            var incomeArr = new Array();
-            var payoutArr = new Array();
-            var balanceArr = new Array();
-
-            for (var i = 0; i < months.length; i++) {
-                incomeArr.push(parseInt(income[i]));
-                payoutArr.push(parseInt(payout[i]));
-                balanceArr.push(parseInt(balance[i]));
-            }
-
-            months = makeAdapt(months);
-
-            $('#MonthlyIAE').highcharts({
-                exporting: false,
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: title,
-                    x: -20,//center
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-                subtitle: {
-                    text: period,
-                    x: -20
-                },
-                xAxis: {
-                    categories: months,
-                    labels: {
-                        rotation: -45
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: '单位(' + division + ')'
-                    },
-                    plotLines: [
-                        {
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
-                        }
-                    ]
-                },
+        var chartArr = new Array();
+        for (var i = 1; i <= num; i++) {
+            var data = resObj['DATA' + i];
+            var name = resObj['NAME' + i];
+            var chartObj = {
+                data: data,
+                name: name,
                 tooltip: {
-                    shared: true
+                    valueSuffix: division
+                }
+            }
+            chartArr.push(chartObj);
+        }
+        months = makeAdapt(months);
+        $('#MonthlyIAE').highcharts({
+            exporting: false,
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: title,
+                x: -20,//center
+                style: {
+                    fontFamily: '微软雅黑'
+                }
+            },
+            subtitle: {
+                text: period,
+                x: -20
+            },
+            xAxis: {
+                categories: months,
+                labels: {
+                    rotation: -45
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '单位(' + division + ')'
                 },
-                series: [
+                plotLines: [
                     {
-                        name: '工伤保险基金收入',
-                        data: incomeArr,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '工伤保险基金支出',
-                        data: payoutArr,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: '工伤保险基金余额',
-                        data: balanceArr,
-                        tooltip: {
-                            valueSuffix: division
-                        }
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
                     }
                 ]
-            });
-        }
+            },
+            tooltip: {
+                shared: true
+            },
+            series: chartArr
+        });
     }
 
-    var testData = '{"INCOME":["1000","1500","1300","1250","1400","1500","1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550","600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950","400","950","850","550","750","950"],"__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"万元","TITLE":"全市工伤保险基金(个人账户)走势图"}';
+    var testData = '{"NUM":4,"TITLE":"蓬江区各项中参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"DATA4":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"养老保险","NAME2":"失业保险","NAME3":"工伤保险","NAME4":"生育保险","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+
 </script>
 
 <script>
     $.ajax({
-        url: 'modules/EI_ctl.jsp?action=FundautoMonitor',
+        url: 'modules/GEN_ctl.jsp?action=Payed',
         success: function (data) {
             //var resObj = readResObj(data, testData);
             var resObj = JSON.parse(testData);
@@ -202,16 +185,16 @@
 </script>
 
 <script>
-    $(function () {
+    $(function(){
         var now = new Date();
         var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
         $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
         $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
 
         $('.datepicker_c').datetimepicker({
-            language: 'zh-CN',
+            language:  'zh-CN',
             weekStart: 1,
-            todayBtn: 1,
+            todayBtn:  1,
             autoclose: 1,
             todayHighlight: 1,
             startView: 3,
@@ -223,7 +206,7 @@
         });
     });
 
-    $('.datepicker_c').on('click', function () {
+    $('.datepicker_c').on('click', function(){
         $(this).datepicker('setDate', new Date($(this).val()));
     });
 </script>
@@ -249,4 +232,3 @@
         }
     });
 </script>
-

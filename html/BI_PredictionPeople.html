@@ -19,7 +19,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" method="get" action="modules/UI_ctl.jsp?action=PreditionPeople">
+                <form class="form-horizontal" method="get" action="modules/BI_ctl.jsp?action=PreditionPeople">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始时间:</label>
@@ -142,7 +142,7 @@
         }
     }
 
-    var testData = '{"TITLE": "全市工伤人口趋势图", "MONTHS": ["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"], "DATASET": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "NAME": "工伤人口数", "DIVISION": "人", "PERIOD": "2013年07月--2014年06月"}';
+    var testData = '{"TITLE": "全市生育人口趋势图", "MONTHS": ["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"], "DATASET": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "NAME": "生育人口数", "DIVISION": "人", "PERIOD": "2013年07月--2014年06月"}';
 </script>
 <script>
     $(function() {
@@ -199,7 +199,7 @@
 
 <script>
     $.ajax({
-        url : 'modules/EI_ctl.jsp?action=PreditionPeople',
+        url : 'modules/BI_ctl.jsp?action=PreditionPeople',
         success : function(data) {
             console.log(data);
             //var resObj = readResObj(data, testData);

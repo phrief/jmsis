@@ -1,0 +1,305 @@
+<meta charset="UTF-8">
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" action="modules/BI_ctl.jsp?action=BearPayedPeople">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析方式</label>
+
+                            <div class="controls">
+                                <select name="FXNR" id="FXNR">
+                                    <option value="0">参保人数分析</option>
+                                    <option value="1">参保-享受人员对比</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">对比区域</label>
+
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440799">全市
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440700">市直
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440704">江海
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440705">新会
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440781">台山
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440783">开平
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440785">恩平
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div><h3 id="chartname"></h3></div>
+<div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+
+<script>
+    //出图函数
+    function makeChart(resObj) {
+        if (resObj) {
+            console.log(resObj);
+            var charttype = resObj['CHARTTYPE'];
+            if (charttype == 0) {
+                var months = resObj['MONTHS'];
+                var division = resObj['DIVISION'];
+                var period = resObj['PERIOD'];
+                var area = resObj['AREA'];
+                var num = resObj['NUM'];
+                var title = resObj['TITLE'];
+
+                var chartArr = new Array();
+                for (var i = 1; i <= num; i++) {
+                    var data = resObj['DATA' + i];
+                    var name = resObj['NAME' + i];
+                    var chartObj = {
+                        data: data,
+                        name: name,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }
+                    chartArr.push(chartObj);
+                }
+                months = makeAdapt(months);
+                $('#MonthlyIAE').highcharts({
+                    exporting: false,
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: title,
+                        x: -20,//center
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period,
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '单位(' + division + ')'
+                        },
+                        plotLines: [
+                            {
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }
+                        ]
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    series: chartArr
+                });
+            }
+            if (charttype == 1) {
+                var period = resObj['PERIOD'];
+                var names = resObj['NAMES'];
+                var division = resObj['DIVISION'];
+                var title = resObj['TITLE'];
+                var name1 = resObj['NAME1'];
+                var name2 = resObj['NAME2'];
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var dataset1 = new Array();
+                var dataset2 = new Array();
+                for (var i = 0; i < data1.length; i++) {
+                    dataset1.push(parseInt(data1[i]));
+                    dataset2.push(parseInt(data2[i]));
+                }
+
+                $('#MonthlyIAE').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: title,
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period
+                    },
+                    xAxis: {
+                        categories: names
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: "单位(" + division + ")"
+                        }
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    series: [{
+                        name: name1,
+                        data: dataset1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },{
+                        name: name2,
+                        data: dataset2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }]
+                });
+            }
+        }
+    }
+
+    //var testData = '{"CHARTTYPE":"0","NUM":3,"TITLE":"各区域生育参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+
+    var testData = '{"CHARTTYPE":"1","NAME1":"参保人数","DATA1":["10","17","14","18","20","15"],"NAME2":"享受待遇人数","DATA2":["10","17","14","18","20","15"],"NAMES":["蓬江区","江海区","新会区","台山市","鹤山市","恩平市"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"各市区女性职工生育参保人数与享受待遇人数对比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年01月——2013年06月","DIVISION":"%"}';
+</script>
+
+<script>
+    $.ajax({
+        url: 'modules/BI_ctl.jsp?action=BearPayedPeople',
+        success: function (data) {
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    $(function(){
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+    });
+
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>

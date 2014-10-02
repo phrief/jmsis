@@ -1,0 +1,273 @@
+<meta charset="UTF-8">
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" action="modules/EI_ctl.jsp?action=Cure">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析内容</label>
+                            <div class="controls">
+                                <select name="FXNR">
+                                    <option value="0">治疗类别支出分析</option>
+                                    <option value="1">就医情况统计</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span6">
+        <div id="pie1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+    <div class="span6">
+        <div id="pie2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+</div>
+
+
+<script>
+    function makeAdapt(years) {
+        if(years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for(var i=0; i < len; i++) {
+                if(i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+
+<script>
+    //出图函数
+    function makeChart(resObj) {
+
+        if (resObj) {
+            console.log(resObj);
+            var charttype = resObj['CHARTTYPE'];
+            if (charttype == 0) {
+                var period1 = resObj['PERIOD1'];
+                var division = resObj['DIVISION'];
+                var title1 = resObj['TITLE1'];
+                var name = resObj['NAME'];
+                var dataset1 = resObj['DATASET1'];
+
+                var title2 = resObj['TITLE2'];
+                var dataset2 = resObj['DATASET2'];
+                var period2 = resObj['PERIOD2'];
+
+                var date1 = resObj['DATE1'];
+                var date2 = resObj['DATE2'];
+                $('#pie1').highcharts({
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: title1,
+                        x: -20,//center
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period1,
+                        x: -20
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}' + division + '</b><br><span>时间</span>: <b>' + date1 + '</b><br/>',
+                        shared: true
+                    },
+                    /*plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: false
+                        }
+                    },*/
+                    series: [{
+                            name: name,
+                            data: dataset1,
+                            tooltip: {
+                                valueSuffix: division
+                            }
+                        }]
+                });
+                $('#pie2').highcharts({
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: title2,
+                        x: -20,//center
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period2,
+                        x: -20
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: false
+                        }
+                    },
+                    series: [{
+                        name: name,
+                        data: dataset1,
+                        size: '80%',
+                        innerSize: '50%',
+                        tooltip: {
+                            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}' + division + '</b><br><span>时间</span>: <b>' + date1 + '</b><br/>',
+                            shared: true
+                        }
+                    },
+                    {
+                        name: name,
+                        data: dataset2,
+                        size: '100%',
+                        innerSize: '80%',
+                        tooltip: {
+                            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}' + division + '</b><br><span>时间</span>: <b>' + date2 + '</b><br/>',
+                            shared: true
+                        }
+                    }]
+                });
+            }
+        }
+    }
+
+    var testData = '{"AREA":"全市","DATASET2":[{"name":"工伤医疗","y":10000},{"name":"伤残补助","y":10000},{"name":"工伤康复","y":10000},{"name":"护理费","y":10000}],"DATE2":"2014年01月--06月","DATASET1":[{"name":"工伤医疗","y":10000},{"name":"伤残补助","y":10000},{"name":"工伤康复","y":10000},{"name":"护理费","y":10000}],"__MESSAGE__":"","DATE1":"2013年01月--06月","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"DIVISION":"万元","PERIOD2":"2014年和2015年3月——9月","CHARTTYPE":0,"PERIOD1":"2014年3月——2014年9月","TITLE2":"全市各项工伤治疗支出对比分析图","TITLE1":"全市各项工伤治疗支出对比分析图","NAME":"工伤治疗支出"}';
+
+</script>
+
+<script>
+    $.ajax({
+        url: 'modules/EI_ctl.jsp?action=Cure',
+        success: function (data) {
+            //var resObj = readResObj(data, testData);
+            var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    $(function(){
+        var now = new Date();
+        var haflYearAgo = new Date(now.getTime() - 6 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(haflYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+    });
+
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+

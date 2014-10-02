@@ -19,7 +19,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" action="modules/EI_ctl.jsp?action=InjuredPeopleInsured">
+                <form class="form-horizontal" action="modules/BI_ctl.jsp?action=BearPayment">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始月份</label>
@@ -36,44 +36,38 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">区域选择</label>
-
-                            <div class="controls">
-                                <select name="AREA">
-                                    <option value="440799">全市</option>
-                                    <option value="440700">市直</option>
-                                    <option value="440703">蓬江</option>
-                                    <option value="440704">江海</option>
-                                    <option value="440781">台山</option>
-                                    <option value="440705">新会</option>
-                                    <option value="440783">开平</option>
-                                    <option value="440784">鹤山</option>
-                                    <option value="440785">恩平</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
                             <label class="control-label">对比区域</label>
 
                             <div class="controls">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440799">化工
+                                    <input type="checkbox" name="AREABOX[]" value="440799">全市
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440798">塑料
+                                    <input type="checkbox" name="AREABOX[]" value="440798">市区
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440700">机械
+                                    <input type="checkbox" name="AREABOX[]" value="440700">市直
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440703">电子
+                                    <input type="checkbox" name="AREABOX[]" value="440703">蓬江
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440704">食品
+                                    <input type="checkbox" name="AREABOX[]" value="440704">江海
                                 </label>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="AREABOX[]" value="440705">建筑
+                                    <input type="checkbox" name="AREABOX[]" value="440705">新会
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440781">台山
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440783">开平
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="AREABOX[]" value="440785">恩平
                                 </label>
                             </div>
                         </div>
@@ -114,81 +108,80 @@
 <script>
     //出图函数
     function makeChart(resObj) {
-
         if (resObj) {
-            var months = resObj['MONTHS'];
-            var division = resObj['DIVISION'];
-            var period = resObj['PERIOD'];
-            var area = resObj['AREA'];
-            var num = resObj['NUM'];
-            var title = resObj['TITLE'];
+            console.log(resObj);
+            var charttype = resObj['CHARTTYPE'];
+            if (charttype == 0) {
+                var months = resObj['MONTHS'];
+                var division = resObj['DIVISION'];
+                var period = resObj['PERIOD'];
+                var area = resObj['AREA'];
+                var num = resObj['NUM'];
+                var title = resObj['TITLE'];
 
-            var chartArr = new Array();
-            for (var i = 1; i <= num; i++) {
-                var data = resObj['data' + i];
-                var name = resObj['name' + i];
-                var chartObj = {
-                    data: data,
-                    name: name,
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }
-                chartArr.push(chartObj);
-            }
-
-
-
-            months = makeAdapt(months);
-
-            $('#MonthlyIAE').highcharts({
-                exporting: false,
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: title,
-                    x: -20,//center
-                    style: {
-                        fontFamily: '微软雅黑'
-                    }
-                },
-                subtitle: {
-                    text: period,
-                    x: -20
-                },
-                xAxis: {
-                    categories: months,
-                    labels: {
-                        rotation: -45
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: '单位(' + division + ')'
-                    },
-                    plotLines: [
-                        {
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
+                var chartArr = new Array();
+                for (var i = 1; i <= num; i++) {
+                    var data = resObj['DATA' + i];
+                    var name = resObj['NAME' + i];
+                    var chartObj = {
+                        data: data,
+                        name: name,
+                        tooltip: {
+                            valueSuffix: division
                         }
-                    ]
-                },
-                tooltip: {
-                    shared: true
-                },
-                series: chartArr
-            });
+                    }
+                    chartArr.push(chartObj);
+                }
+                months = makeAdapt(months);
+                $('#MonthlyIAE').highcharts({
+                    exporting: false,
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: title,
+                        x: -20,//center
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period,
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '单位(' + division + ')'
+                        },
+                        plotLines: [
+                            {
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }
+                        ]
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    series: chartArr
+                });
+            }
         }
     }
 
-    var testData = '{"NUM":3,"TITLE":"全市各行业工伤参保人数对比图","AREA":"全市","data1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"data2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"data3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"name1":"化工","name2":"塑料","name3":"机械","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+    var testData = '{"CHARTTYPE":"0","NUM":3,"TITLE":"各区域生育参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
 </script>
 
 <script>
     $.ajax({
-        url: 'modules/EI_ctl.jsp?action=InjuredPeopleInsured',
+        url: 'modules/BI_ctl.jsp?action=BearPayment',
         success: function (data) {
             //var resObj = readResObj(data, testData);
             var resObj = JSON.parse(testData);
@@ -245,4 +238,3 @@
         }
     });
 </script>
-

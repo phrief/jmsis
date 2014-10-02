@@ -92,7 +92,6 @@
 <script>
     //出图函数
     function makeChart(resObj) {
-
         if (resObj) {
             var months = resObj['MONTHS'];
             var division = resObj['DIVISION'];
@@ -100,8 +99,7 @@
             var period = resObj['PERIOD'];
             var name = resObj['NAME'];
             var title = resObj['TITLE'];
-            months = makeAdapt(months);
-            console.log(dataset);
+            try {months = makeAdapt(months);}catch(e) {}
             $('#Addition').highcharts({
                 exporting: false,
                 chart: {
@@ -211,9 +209,8 @@
     $.ajax({
         url : 'modules/PI_ctl.jsp?action=AdditionAnalyze',
         success : function(data) {
-			console.log(data);
-            var resObj = JSON.parse(data);
-            makeChart(resObj);
+            var resObj = readResObj(data);
+            try {makeChart(resObj);}catch(e){}
         }
     });
 </script>
@@ -232,7 +229,8 @@
             }
         },
         success: function (data) {
-            var resObj = readResObj(data, testData);
+            //var resObj = readResObj(data, testData);
+            var resObj = readResObj(data);
             makeChart(resObj);
             $(".collapse").collapse('hide');
         }

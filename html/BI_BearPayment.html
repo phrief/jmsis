@@ -20,35 +20,33 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=UmemployedAddition">
+                <form class="form-horizontal" method="post" action="modules/BI_ctl.jsp?action=BearPayment">
                     <div class="block">
                         <div class="control-group">
-                            <label class="control-label">开始月份</label>
+                            <label class="control-label">开始年份</label>
 
                             <div class="controls">
                                 <input type="text" class="datepicker_c" name="KSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">结束月份</label>
+                            <label class="control-label">结束年份</label>
 
                             <div class="controls">
                                 <input type="text" class="datepicker_c" name="JSYF"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">分析方式</label>
-
+                            <label class="control-label">分析内容</label>
                             <div class="controls">
-                                <select name="FXFS">
-                                    <option value="0">按年龄分析</option>
-                                    <option value="1">按性别分析</option>
+                                <select name="FXNR">
+                                    <option value="0">生育费用分析</option>
+                                    <option value="1">人均生育费用分析</option>
                                 </select>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">区域选择</label>
-
                             <div class="controls">
                                 <select name="AREA">
                                     <option value="440799">全市</option>
@@ -77,7 +75,11 @@
 
 <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+<script>
+    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"MONTHS":["2013年06月","2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月", "2014年06月", "2014年07月"],"NAME1":"生育津贴","NAME2":"男职工护理津贴","NAME3":"生育医疗费","NAME4":"一次性分娩营养补助费","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市四项生育费用对比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年07月——2014年06月","DIVISION":"人"}';
 
+    //var testData = '{"CHARTTYPE":"1","DATA1":["1000","1500","1300","1250","1400","1500","1000","1500","1300","1250","1400","1500"],"DATA2":["600","550","450","700","650","550","600","550","450","700","650","550"],"DATA3":["400","950","850","550","750","950","400","950","850","550","750","950"],"DATA4":["400","950","850","550","750","950","400","950","850","550","750","950"],"NAME1":"一次性分娩营养补贴费","NAME2":"生育医疗费用","NAME3":"生育津贴","NAME4":"男职工津贴","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"万元","TITLE":"全市生育险人均费用对比分析图"}';
+</script>
 <script>
     function makeAdapt(years) {
         if (years.length > 12) {
@@ -104,22 +106,18 @@
 
             if(charttype == 0) {
                 var period = resObj['PERIOD'];
-                var months = resObj['MONTHS'];
+                var years = resObj['MONTHS'];
                 var division = resObj['DIVISION'];
 
-                var data1 = resObj['DATA1'];    // <20
-                var data2 = resObj['DATA2'];    // [20,30)
-                var data3 = resObj['DATA3'];    // [30,40)
-                var data4 = resObj['DATA4'];    // [40,50)
-                var data5 = resObj['DATA5'];    // [50,55)
-                var data6 = resObj['DATA6'];    // [55,60)
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var data3 = resObj['DATA3'];
+                var data4 = resObj['DATA4'];
 
                 var name1 = resObj['NAME1'];
                 var name2 = resObj['NAME2'];
                 var name3 = resObj['NAME3'];
                 var name4 = resObj['NAME4'];
-                var name5 = resObj['NAME5'];
-                var name6 = resObj['NAME6'];
 
                 var title = resObj['TITLE'];
 
@@ -127,19 +125,14 @@
                 var d2 = new Array();
                 var d3 = new Array();
                 var d4 = new Array();
-                var d5 = new Array();
-                var d6 = new Array();
-
-                for (var i = 0; i < months.length; i++) {
-                    d1.push(parseInt(data1[i]));
-                    d2.push(parseInt(data2[i]));
-                    d3.push(parseInt(data3[i]));
-                    d4.push(parseInt(data4[i]));
-                    d5.push(parseInt(data5[i]));
-                    d6.push(parseInt(data6[i]));
+                for (var i = 0; i < years.length; i++) {
+                    d1.push(parseFloat(data1[i]));
+                    d2.push(parseFloat(data2[i]));
+                    d3.push(parseFloat(data3[i]));
+                    d4.push(parseFloat(data4[i]));
                 }
 
-                months = makeAdapt(months);
+                years = makeAdapt(years);
 
                 $('#FirmArrearageList').highcharts({
                     chart: {
@@ -155,7 +148,7 @@
                         text: period
                     },
                     xAxis: {
-                        categories: months,
+                        categories: years,
                         labels: {
                             rotation: -45
                         }
@@ -163,11 +156,11 @@
                     yAxis: {
                         min: 0,
                         title: {
-                            text: '单位(' + division + ')'
+                            text: "单位(" + division + ")"
                         }
                     },
                     tooltip: {
-                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}' + division + '</b> ({point.percentage:.0f}%)<br/>',
                         shared: true
                     },
                     plotOptions: {
@@ -191,53 +184,52 @@
                         {
                             name: name4,
                             data: d4
-                        },
-                        {
-                            name: name5,
-                            data: d5
-                        },
-                        {
-                            name: name6,
-                            data: d6
                         }
                     ]
                 });
             }
-
-            if(charttype == 1 || charttype == 2) {
-                var period = resObj['PERIOD'];
+            if (charttype == 1) {
                 var months = resObj['MONTHS'];
                 var division = resObj['DIVISION'];
-
-                var data1 = resObj['DATA1'];
-                var data2 = resObj['DATA2'];
-
                 var name1 = resObj['NAME1'];
                 var name2 = resObj['NAME2'];
-
+                var name3 = resObj['NAME3'];
+                var name4 = resObj['NAME4'];
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var data3 = resObj['DATA3'];
+                var data4 = resObj['DATA4'];
+                var period = resObj['PERIOD'];
                 var title = resObj['TITLE'];
 
                 var d1 = new Array();
                 var d2 = new Array();
-
-                for(var i = 0; i < months.length; i++) {
+                var d3 = new Array();
+                var d4 = new Array();
+                for (var i = 0; i < months.length; i++) {
                     d1.push(parseInt(data1[i]));
                     d2.push(parseInt(data2[i]));
+                    d3.push(parseInt(data3[i]));
+                    d4.push(parseInt(data4[i]));
                 }
+
                 months = makeAdapt(months);
 
                 $('#FirmArrearageList').highcharts({
+                    exporting: false,
                     chart: {
-                        type: 'column'
+                        type: 'line'
                     },
                     title: {
                         text: title,
+                        x: -20,//center
                         style: {
                             fontFamily: '微软雅黑'
                         }
                     },
                     subtitle: {
-                        text: period
+                        text: period,
+                        x: -20
                     },
                     xAxis: {
                         categories: months,
@@ -246,28 +238,48 @@
                         }
                     },
                     yAxis: {
-                        min: 0,
                         title: {
                             text: '单位(' + division + ')'
-                        }
+                        },
+                        plotLines: [
+                            {
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }
+                        ]
                     },
                     tooltip: {
-                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
                         shared: true
-                    },
-                    plotOptions: {
-                        column: {
-                            stacking: 'normal'
-                        }
                     },
                     series: [
                         {
                             name: name1,
-                            data: d1
+                            data: d1,
+                            tooltip: {
+                                valueSuffix: division
+                            }
                         },
                         {
                             name: name2,
-                            data: d2
+                            data: d2,
+                            tooltip: {
+                                valueSuffix: division
+                            }
+                        },
+                        {
+                            name: name3,
+                            data: d3,
+                            tooltip: {
+                                valueSuffix: division
+                            }
+                        },
+                        {
+                            name: name4,
+                            data: d4,
+                            tooltip: {
+                                valueSuffix: division
+                            }
                         }
                     ]
                 });
@@ -276,16 +288,14 @@
     }
 
 
-    //var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"],"NAME1":"小于20岁","NAME2":"20岁~30岁","NAME3":"30岁~40岁","NAME4":"40岁~50岁","NAME5":"50岁~55岁","NAME6":"55岁~60岁","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市新增失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年7月——2014年6月","DIVISION":"人数"}';
-    var testData = '{"CHARTTYPE":"1","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"],"NAME1":"男性","NAME2":"女性","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市新增失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年7月——2014年6月","DIVISION":"人数"}';
+
 </script>
 
 
 <script>
     $.ajax({
-        url: 'modules/UI_ctl.jsp?action=UmemployedAddition',
+        url: 'modules/BI_ctl.jsp?action=BearPayment',
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             //var resObj = JSON.parse(testData);
             makeChart(resObj);
@@ -294,7 +304,7 @@
 </script>
 
 <script>
-    $(function() {
+    $(function(){
         var now = new Date();
         var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
         $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
@@ -313,15 +323,16 @@
             //maxView: 3,
             minView: 3
         });
-        $('.datepicker_c').on('click', function(){
-            $(this).datepicker('setDate', new Date($(this).val()));
-        });
+    });
 
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
     });
 </script>
 
 <script>
-    var $form = $frame.find('form');
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
 
     $form.ajaxForm({
         beforeSend: function () {
@@ -333,12 +344,10 @@
             }
         },
         success: function (data) {
-        	console.log(data);
+            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');
         }
     });
 </script>
-
-

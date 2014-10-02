@@ -105,6 +105,7 @@
             if(charttype == 0) {
                 var period = resObj['PERIOD'];
                 var months = resObj['MONTHS'];
+                var division = resObj['DIVISION'];
 
                 var data1 = resObj['DATA1'];    // <20
                 var data2 = resObj['DATA2'];    // [20,30)
@@ -154,12 +155,15 @@
                         text: period
                     },
                     xAxis: {
-                        categories: months
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: ''
+                            text: '单位(' + division + ')'
                         }
                     },
                     tooltip: {
@@ -168,7 +172,7 @@
                     },
                     plotOptions: {
                         column: {
-                            stacking: 'percent'
+                            stacking: 'normal'
                         }
                     },
                     series: [
@@ -203,6 +207,7 @@
             if(charttype == 1 || charttype == 2) {
                 var period = resObj['PERIOD'];
                 var months = resObj['MONTHS'];
+                var division = resObj['DIVISION'];
 
                 var data1 = resObj['DATA1'];
                 var data2 = resObj['DATA2'];
@@ -235,12 +240,15 @@
                         text: period
                     },
                     xAxis: {
-                        categories: months
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: ''
+                            text: '单位(' + division + ')'
                         }
                     },
                     tooltip: {
@@ -249,7 +257,7 @@
                     },
                     plotOptions: {
                         column: {
-                            stacking: 'percent'
+                            stacking: 'normal'
                         }
                     },
                     series: [
@@ -278,8 +286,8 @@
         url: 'modules/UI_ctl.jsp?action=Death',
         success: function (data) {
             console.log(data);
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

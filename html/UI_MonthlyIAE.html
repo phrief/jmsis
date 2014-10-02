@@ -192,10 +192,10 @@
 
 <script>
     $.ajax({
-        url: 'modules/UI_ctl.jsp',
+        url: 'modules/UI_ctl.jsp?action=FundautoMonitor',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

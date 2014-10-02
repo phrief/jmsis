@@ -1,0 +1,324 @@
+<meta charset="utf-8"/>
+
+<style>
+	#table th:nth-child(5),
+	#table td:nth-child(5) {
+		padding-left: 30px;
+	}
+
+	#table > thead > tr:last-child > th:nth-child(2), #table td:nth-child(2),
+	#table > thead > tr:last-child > th:nth-child(6), #table td:nth-child(6) {
+		min-width: 30px;
+	}
+	#table > thead > tr:last-child > th:nth-child(3), #table td:nth-child(3),
+	#table > thead > tr:last-child > th:nth-child(4), #table td:nth-child(4),
+	#table > thead > tr:last-child > th:nth-child(7), #table td:nth-child(7),
+	#table > thead > tr:last-child > th:nth-child(8), #table td:nth-child(8) {
+		min-width: 115px;
+		padding: 5px;
+	}
+
+	#form .cell, #form .title {
+		width: 94%;
+		padding: 2px 3px;
+		margin-bottom: 0;
+		text-align: right;
+	}
+
+	form .cell.modified {
+		color: green;
+	}
+</style>
+
+<form id="form" method="post" action="modules/FD_ctl.jsp?action=EditBase">
+	<table id="table" class="hidden" data-colspans="8">
+		<script type="text/html" id="tmpl-titles">
+			<caption>
+				<i class="icon-th-list"></i>{{-year2}}年基本养老保险基础资料表<span id="test"></span>
+			</caption>
+			<thead>
+			<tr>
+				<th>社预附01表</th>
+				<th colspan="7">区域: {{-area}}</th>
+			</tr>
+			<tr>
+				<th>项目</th>
+				<th>单位</th>
+				<th></th>
+				<th></th>
+				<th>项目</th>
+				<th>单位</th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+		</script>
+		<tbody>
+		<script type="text/html" id="tmpl-input">
+			{{ if (isCell) { }}
+			{{ value = f(value) }}
+			<input class="cell" type="text" name="{{-name}}" value="{{-value}}" placeholder="{{-value}}"/>
+			{{ } else { }}
+			<input class="title" type="text" name="{{-name}}" value="{{-value}}" readonly/>
+			{{ } }}
+		</script>
+		<tr>
+			<td>一、企业职工基本养老保险</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+			<td>　2、实际缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（一）参保人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>　3、缴费基数总额</td>
+			<td>元</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　1、在职职工</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>（六）统筹地区社会平均工资</td>
+			<td>元/年</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　2、离退休人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>二、城乡居民社会养老保险</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　　（1）离休人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>（一）16-59周岁参保缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　　（2）退休、离职人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>（二）养老金领取人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（二）实际缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>三、城镇居民社会养老保险</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（三）缴费基数总额</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+			<td>（一）16-59周岁参保缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　1、单位</td>
+			<td>元</td>
+			<td></td>
+			<td></td>
+			<td>（二）养老金领取人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　2、个人</td>
+			<td>元</td>
+			<td></td>
+			<td></td>
+			<td>四、新型农村社会养老保险</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（四）缴费率</td>
+			<td>%</td>
+			<td></td>
+			<td></td>
+			<td>（一）16-59周岁参保缴费人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>（五）以个人身份参保情况</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+			<td>（二）养老金领取人员</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>　1、参保人数</td>
+			<td>人</td>
+			<td></td>
+			<td></td>
+			<td>×</td>
+			<td>×</td>
+			<td></td>
+			<td></td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<td colspan="8">
+				<div class="bulk-actions align-left">
+					<input type="hidden" name="ID"/>
+					<input type="submit" class="btn btn-primary" value="保存修改"
+								 onclick="return confirm('确定要保存所做的修改?')"/>
+					<input type="button" id="btn-reset" value="重置" class="btn"/>
+					<button class="btn" id="btn-params">返回参数设置</button>
+				</div>
+				<div class="pagination"></div>
+			</td>
+		</tr>
+		</tfoot>
+	</table>
+</form>
+
+
+<script>
+	var baseID = parseInt(getURLParams()['ID']),
+		$table = $frame.find('#table'),
+		$tbody = $table.find('tbody'),
+		$form = $frame.find('#form');
+
+	$form.find('[name="ID"]').val(baseID);
+	$form.ajaxForm({
+		success: function (data) {
+			readResObj(data);
+			loadPage('html/FD_Base.html');
+		}
+	});
+	$form.find('#btn-reset').on('click', function () {
+		if (confirm('当前所有修改都将撤销 是否确定重置表单?')) {
+			$form[0].reset();
+		}
+	});
+  $form.find('#btn-params').attr('href', 'html/FD_Base/1_Params.html?ID=' + baseID);
+
+	var testData = {"__MESSAGE__": "", "__ERROR__": false, "__NEXTACTION__": "", "TVALUES": {"myHashMap": {"AREA": "江海区", "CURYEAR": 2014,"D8": "0.00", "D7": "0.00", "D9": "0.00", "D3": "0.00", "D6": "0.00", "C11": "0.00", "DURYEAR": "2013", "G6": "0.00", "G7": "0.00", "C10": "0.00", "G8": "0.00", "G9": "0.00", "C13": "0.00", "C14": "0.00", "G2": "3,412,735,501.05", "G1": "2014年执行数", "G3": "0.00", "D1": "2015年预算数", "D2": "3,504,377,705.22", "H11": "0.00", "C3": "0.00", "C2": "3,504,377,705.22", "H10": "0.00", "C9": "0.00", "C8": "0.00", "C7": "0.00", "C6": "0.00", "H8": "0.00", "H9": "0.00", "H6": "0.00", "D10": "0.00", "H7": "0.00", "D11": "0.00", "D13": "0.00", "H13": "0.00", "D14": "0.00", "H14": "0.00", "H1": "2015年预算数", "G11": "0.00", "G10": "0.00", "G13": "0.00", "H3": "0.00", "H2": "3,412,735,501.05", "G14": "0.00", "C1": "2014年执行数"}}};
+	$.get('modules/FD_ctl.jsp?action=BaseDetail', {
+		'ID': baseID
+	}, function (data) {
+		var resObj = readResObj(data, testData);
+		showTable(resObj);
+	});
+
+	function showTable(resObj) {
+		$table.addClass('hidden');
+		if (resObj['__ISTEST__']) {
+			$table.find('#test').text('(测试数据)');
+		}
+		var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
+			tValues = resObj['TVALUES']['myHashMap'],
+			matrix = _.reduce(tValues, function (memo, val, key) {
+				var mat = key.match(/^(\w)(\d+)$/);
+				if (mat) {
+					var c = parseInt(mat[1].charCodeAt(0) - 65),
+						r = parseInt(mat[2] - 1);
+					memo[r] = memo[r] || [];
+					memo[r][c] = { name: key, value: val, isCell: r > 0 };
+				}
+				return memo;
+			}, []),
+			$tmplTitles = $table.find('#tmpl-titles'),
+			inputTmpl = $table.find('#tmpl-input').html();
+		$tmplTitles.after(_.template($tmplTitles.html(), {
+			year1: year, year2: year + 1,
+			area: resObj['TVALUES']['myHashMap']['AREA']
+		}));
+		var $trows = $table.find('thead > tr:last, tbody > tr');
+		_.each(matrix, function (row, i) {
+			var $trow = $trows.eq(i);
+			_.each(row, function (span, j) {
+				if (_.isUndefined(span)) return;
+				var inputHtml = _.template(inputTmpl, span);
+				$trow.children().eq(j).html(inputHtml);
+			});
+		});
+
+		// focus & blur
+		$form.delegate('.cell:not(.stat)', 'focus',function () {
+			var $this = $(this), val = $this.val(), plain = uf(val),
+				_val = String(plain.toFixed(2));
+			$this.val(_val);
+		}).delegate('.cell:not(.stat)', 'blur', function () {
+				var $this = $(this), val = $this.val(), plain = uf(val),
+					_val = f(plain);
+				$this.val(_val);
+				if (_val !== $this.attr('placeholder')) {
+					$this.addClass('modified');
+				} else {
+					$this.removeClass('modified');
+				}
+			});
+
+		// stat cells
+		var stats = {
+
+		}
+		_.each(_.keys(stats), function (key) {
+			gc(key).attr('readonly', true)
+				.addClass('stat');
+		});
+		$form.on('input', function () {
+			_.each(stats, function (fn, key) {
+				s(key, fn());
+			});
+		});
+
+		$table.removeClass('hidden');
+	}
+
+	function gc(key) {
+		return $form.find('[name="' + key + '"]');
+	}
+	function g(key) {
+		return uf(gc(key).val());
+	}
+	function s(key, value) {
+		gc(key).val(f(value));
+	}
+	function f(num) {
+		return numeral(num).format('0,0.00');
+	}
+	function uf(str) {
+		return numeral().unformat(str);
+	}
+</script>

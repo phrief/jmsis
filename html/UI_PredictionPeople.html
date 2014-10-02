@@ -202,7 +202,7 @@
         url : 'modules/UI_ctl.jsp?action=PreditionPeople',
         success : function(data) {
             console.log(data);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
             makeChart(resObj);
         }
     });
@@ -222,8 +222,8 @@
             }
         },
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');
         }

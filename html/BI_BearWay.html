@@ -1,0 +1,392 @@
+<meta charset="UTF-8">
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="post" action="modules/BI_ctl.jsp?action=BearWay">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束年份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析方式</label>
+                            <div class="controls">
+                                <select name="FXNR" id="FXNR">
+                                    <option value="0">生育方式分析</option>
+                                    <option value="1">新增/减少人员分析</option>
+                                    <option value="2">一胎/二胎人员分析</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"MONTHS":["2013年06月","2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月", "2014年06月", "2014年07月"],"NAME1":"正常产","NAME2":"剖宫产","NAME3":"助娩产","NAME4":"终止妊娠","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市生育人员生育方式对比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年07月——2014年06月","DIVISION":"人"}';
+
+    //var testData = '{"CHARTTYPE":"1","TITLE":"全市每月新增/减少生育人员对比图","PERIOD":"2013年7月--2014年6月","DATA1":[100,50,100,50,100,50,100,50,100,50,100,50],"DATA2":[100,50,100,50,100,50,100,50,100,50,100,50],"NAME1":"新增","NAME2":"减少","MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"],"DIVISION":"人"}';
+
+    //var testData = '{"CHARTTYPE":"2","TITLE":"蓬江区一胎/二胎生育人数对比分析图","PERIOD":"2013年7月--2014年6月","DATA1":[100,50,100,50,100,50,100,50,100,50,100,50],"DATA2":[100,50,100,50,100,50,100,50,100,50,100,50],"NAME1":"一胎生育人数","NAME2":"二胎生育人数","MONTHS":["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"],"DIVISION":"人"}';
+</script>
+<script>
+    function makeAdapt(years) {
+        if (years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for (var i = 0; i < len; i++) {
+                if (i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push("");
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+<script>
+function makeChart(resObj) {
+
+    if (resObj) {
+        var charttype = resObj['CHARTTYPE'];
+
+        if(charttype == 0) {
+            var period = resObj['PERIOD'];
+            var years = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+
+            var data1 = resObj['DATA1'];
+            var data2 = resObj['DATA2'];
+            var data3 = resObj['DATA3'];
+            var data4 = resObj['DATA4'];
+
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+            var name3 = resObj['NAME3'];
+            var name4 = resObj['NAME4'];
+
+            var title = resObj['TITLE'];
+
+            var d1 = new Array();
+            var d2 = new Array();
+            var d3 = new Array();
+            var d4 = new Array();
+            for (var i = 0; i < years.length; i++) {
+                d1.push(parseInt(data1[i]));
+                d2.push(parseInt(data2[i]));
+                d3.push(parseInt(data3[i]));
+                d4.push(parseInt(data4[i]));
+            }
+
+            years = makeAdapt(years);
+
+            $('#FirmArrearageList').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: {
+                    categories: years,
+                    labels: {
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: "单位(" + division + ")"
+                    }
+                },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                    shared: true
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal'
+                    }
+                },
+                series: [
+                    {
+                        name: name1,
+                        data: d1
+                    },
+                    {
+                        name: name2,
+                        data: d2
+                    },
+                    {
+                        name: name3,
+                        data: d3
+                    },
+                    {
+                        name: name4,
+                        data: d4
+                    }
+                ]
+            });
+        }
+        if (charttype == 1) {
+            var period = resObj['PERIOD'];
+            var months = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+
+            var data1 = resObj['DATA1'];    //新增
+            var data2 = resObj['DATA2'];    //减少
+
+            var d1 = new Array();
+            var d2 = new Array();
+
+            for (var i = 0; i < months.length; i++) {
+                d1.push(parseInt(data1[i]));
+                d2.push(parseInt(data2[i]));
+            }
+            var title = resObj['TITLE'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+
+            months = makeAdapt(months);
+
+            $('#FirmArrearageList').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: {
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: name1,
+                        data: d1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: d2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }
+                ]
+            });
+        }
+        if (charttype == 2) {
+            var period = resObj['PERIOD'];
+            var months = resObj['MONTHS'];
+            var division = resObj['DIVISION'];
+
+            var data1 = resObj['DATA1'];    //新增
+            var data2 = resObj['DATA2'];    //减少
+
+            var d1 = new Array();
+            var d2 = new Array();
+
+            for (var i = 0; i < months.length; i++) {
+                d1.push(parseInt(data1[i]));
+                d2.push(parseInt(data2[i]));
+            }
+            var title = resObj['TITLE'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+
+            $('#FirmArrearageList').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title,
+                    style: {
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                subtitle: {
+                    text: period
+                },
+                xAxis: {
+                    categories: months,
+                    labels: {
+                        rotation: -45
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '单位(' + division + ')'
+                    }
+                },
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: name1,
+                        data: d1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: d2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }
+                ]
+            });
+        }
+    }
+}
+
+
+
+</script>
+
+
+<script>
+    $.ajax({
+        url: 'modules/BI_ctl.jsp?action=BearWay',
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    $(function(){
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+        $('.datepicker_c').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+    });
+
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            console.log(data);
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>

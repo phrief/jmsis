@@ -20,7 +20,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=UmemployedAnalyze">
+                <form class="form-horizontal" method="post" action="modules/EI_ctl.jsp?action=InjuredPeopleLevel">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始年份</label>
@@ -40,9 +40,10 @@
                             <label class="control-label">分析方式</label>
 
                             <div class="controls">
-                                <select name="FXFS">
-                                    <option value="0">按年龄分析</option>
-                                    <option value="1">按性别分析</option>
+                                <select name="FXNR" id="FXNR">
+                                    <option value="0">伤残类别分析</option>
+                                    <option value="1">死亡分析</option>
+                                    <option value="2">职业病发病</option>
                                 </select>
                             </div>
                         </div>
@@ -77,7 +78,11 @@
 
 <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-
+<script>
+    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA7":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA8":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA9":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA10":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"一级伤残","NAME2":"二级伤残","NAME3":"三级伤残","NAME4":"四级伤残","NAME5":"五级伤残","NAME6":"六级伤残","NAME7":"七级伤残","NAME8":"八级伤残","NAME9":"九级伤残","NAME10":"十级伤残","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市化工行业工伤人员伤残级别分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人"}';
+    //var testData = '{"CHARTTYPE":"1","TITLE":"全市各行业工伤死亡人数对比对比图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"一类行业","NAME2":"二类行业","NAME3":"三类行业","__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2001年","2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+    //var testData = '{"CHARTTYPE":"2","TITLE":"全市各行业工伤职业病发生率对比分析图","AREA":"全市","DATA1":[10,12,11.5,14,13.5,12,10,17,14.5,12,9.5,8],"DATA2":[10.5,12.5,12,14.5,14,12.5,10.5,17.5,15,12.5,10,8.5],"DATA3":[11,13,12.5,15,14.5,13,11,18,15,13,10,9],"NAME1":"一类行业","NAME2":"二类行业","NAME3":"三类行业","__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2001年","2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2001年——2012年","DIVISION":"人"}';
+</script>
 <script>
     function makeAdapt(years) {
         if (years.length > 12) {
@@ -107,12 +112,16 @@
                 var years = resObj['YEARS'];
                 var division = resObj['DIVISION'];
 
-                var data1 = resObj['DATA1'];    // <20
-                var data2 = resObj['DATA2'];    // [20,30)
-                var data3 = resObj['DATA3'];    // [30,40)
-                var data4 = resObj['DATA4'];    // [40,50)
-                var data5 = resObj['DATA5'];    // [50,55)
-                var data6 = resObj['DATA6'];    // [55,60)
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var data3 = resObj['DATA3'];
+                var data4 = resObj['DATA4'];
+                var data5 = resObj['DATA5'];
+                var data6 = resObj['DATA6'];
+                var data7 = resObj['DATA7'];
+                var data8 = resObj['DATA8'];
+                var data9 = resObj['DATA9'];
+                var data10 = resObj['DATA10'];
 
                 var name1 = resObj['NAME1'];
                 var name2 = resObj['NAME2'];
@@ -120,6 +129,10 @@
                 var name4 = resObj['NAME4'];
                 var name5 = resObj['NAME5'];
                 var name6 = resObj['NAME6'];
+                var name7 = resObj['NAME7'];
+                var name8 = resObj['NAME8'];
+                var name9 = resObj['NAME9'];
+                var name10 = resObj['NAME10'];
 
                 var title = resObj['TITLE'];
 
@@ -129,6 +142,10 @@
                 var d4 = new Array();
                 var d5 = new Array();
                 var d6 = new Array();
+                var d7 = new Array();
+                var d8 = new Array();
+                var d9 = new Array();
+                var d10 = new Array();
 
                 for (var i = 0; i < years.length; i++) {
                     d1.push(parseInt(data1[i]));
@@ -137,90 +154,12 @@
                     d4.push(parseInt(data4[i]));
                     d5.push(parseInt(data5[i]));
                     d6.push(parseInt(data6[i]));
+                    d7.push(parseInt(data7[i]));
+                    d8.push(parseInt(data8[i]));
+                    d9.push(parseInt(data9[i]));
+                    d10.push(parseInt(data10[i]));
                 }
 
-                years = makeAdapt(years);
-
-                $('#FirmArrearageList').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: title,
-                        style: {
-                            fontFamily: '微软雅黑'
-                        }
-                    },
-                    subtitle: {
-                        text: period
-                    },
-                    xAxis: {
-                        categories: years
-                    },
-                    yAxis: {
-                        min: 0, 
-                        title: {
-                            text: "单位(" + division + ")"
-                        }
-                    },
-                    tooltip: {
-                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                        shared: true
-                    },
-                    plotOptions: {
-                        column: {
-                            stacking: 'normal'
-                        }
-                    },
-                    series: [
-                        {
-                            name: name1,
-                            data: d1
-                        },
-                        {
-                            name: name2,
-                            data: d2
-                        },
-                        {
-                            name: name3,
-                            data: d3
-                        },
-                        {
-                            name: name4,
-                            data: d4
-                        },
-                        {
-                            name: name5,
-                            data: d5
-                        },
-                        {
-                            name: name6,
-                            data: d6
-                        }
-                    ]
-                });
-            }
-
-            if(charttype == 1 || charttype == 2) {
-                var period = resObj['PERIOD'];
-                var years = resObj['YEARS'];
-                var division = resObj['DIVISION'];
-
-                var data1 = resObj['DATA1'];
-                var data2 = resObj['DATA2'];
-
-                var name1 = resObj['NAME1'];
-                var name2 = resObj['NAME2'];
-
-                var title = resObj['TITLE'];
-
-                var d1 = new Array();
-                var d2 = new Array();
-
-                for(var i = 0; i < years.length; i++) {
-                    d1.push(parseInt(data1[i]));
-                    d2.push(parseInt(data2[i]));
-                }
                 years = makeAdapt(years);
 
                 $('#FirmArrearageList').highcharts({
@@ -262,26 +201,190 @@
                         {
                             name: name2,
                             data: d2
+                        },
+                        {
+                            name: name3,
+                            data: d3
+                        },
+                        {
+                            name: name4,
+                            data: d4
+                        },
+                        {
+                            name: name5,
+                            data: d5
+                        },
+                        {
+                            name: name6,
+                            data: d6
+                        },
+                        {
+                            name: name7,
+                            data: d7
+                        },
+                        {
+                            name: name8,
+                            data: d8
+                        },
+                        {
+                            name: name9,
+                            data: d9
+                        },
+                        {
+                            name: name10,
+                            data: d10
                         }
                     ]
+                });
+            }
+
+            if(charttype == 1) {
+                console.log(resObj);
+                var period = resObj['PERIOD'];
+                var years = resObj['YEARS'];
+                var division = resObj['DIVISION'];
+                var title = resObj['TITLE'];
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var data3 = resObj['DATA3'];
+                var name1 = resObj['NAME1'];
+                var name2 = resObj['NAME2'];
+                var name3 = resObj['NAME3'];  
+                years = makeAdapt(years);
+
+                $('#FirmArrearageList').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: title,
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period
+                    },
+                    xAxis: {
+                        categories: years
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: "单位(" + division + ")"
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal'
+                        }
+                    },
+                    series: [{
+                        name: name1,
+                        data: data1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: data2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name3,
+                        data: data3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }]
+                });
+            }
+
+            if (charttype == 2) {
+                var period = resObj['PERIOD'];
+                var years = resObj['YEARS'];
+                var division = resObj['DIVISION'];
+                var title = resObj['TITLE'];
+                var data1 = resObj['DATA1'];
+                var data2 = resObj['DATA2'];
+                var data3 = resObj['DATA3'];
+                var name1 = resObj['NAME1'];
+                var name2 = resObj['NAME2'];
+                var name3 = resObj['NAME3'];
+                years = makeAdapt(years);
+
+                $('#FirmArrearageList').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: title,
+                        style: {
+                            fontFamily: '微软雅黑'
+                        }
+                    },
+                    subtitle: {
+                        text: period
+                    },
+                    xAxis: {
+                        categories: years,
+                        labels: {
+                            rotation: -45
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: "单位(" + division + ")"
+                        }
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    series: [{
+                        name: name1,
+                        data: data1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: data2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name3,
+                        data: data3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    }]
                 });
             }
         }
     }
 
 
-    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"小于20岁","NAME2":"20岁~30岁","NAME3":"30岁~40岁","NAME4":"40岁~50岁","NAME5":"50岁~55岁","NAME6":"55岁~60岁","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
-    //var testData = '{"CHARTTYPE":"1","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"男性","NAME2":"女性","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
-    //var testData = '{"CHARTTYPE":"1","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"农业户口","NAME2":"非农业户口","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业人员分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人数"}';
+
 </script>
 
 
 <script>
     $.ajax({
-        url: 'modules/UI_ctl.jsp?action=UmemployedAnalyze',
+        //url: 'modules/EI_ctl.jsp?action=InjuredPeopleLevel',
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });
@@ -330,5 +433,3 @@
         }
     });
 </script>
-
-

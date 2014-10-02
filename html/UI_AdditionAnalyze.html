@@ -109,9 +109,12 @@
                 subtitle: {
                     text: period
                 },
-                xAxis: {
-                    categories: months
-                },
+                 xAxis: {
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
+                    },
                 yAxis: {
                     min: 0,
                     title: {
@@ -188,37 +191,28 @@
     $.ajax({
         url: 'modules/UI_ctl.jsp?action=AdditionAnalyze',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+        	console.log(data);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });
 </script>
 
 <script>
-    var $form = $frame.find('form'),
-            $collapse = $('#collapseOne');
+    var $form = $frame.find('form');
 
     $form.ajaxForm({
-        beforeSend: function () {
-            var fxnf = $form.find('[name="FXNF"]').val();
-            if (fxnf == "") {
-                notify("分析时间不能为空");
-                return false;
-            }
-            isblank = true;
-            var areas = $form.find('[name="AREABOX[]"]');
-            for (var i = 0; i < areas.length; i++) {
-                if (areas[i].checked) {
-                    isblank = false;
-                }
-            }
-            if (isblank) {
-                notify("地区不能为空");
+        beforeSend: function(){
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if(ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
                 return false;
             }
         },
-        success: function (data) {
+        success: function(data) {
+        	console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');
