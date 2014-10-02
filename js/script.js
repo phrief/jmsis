@@ -30,12 +30,12 @@ $(document).ajaxStart(function(){
 	$loading.show()
 })
 $(document).ajaxStop(function(){
-	$loading.hide()
+	$loading.fadeOut()
 })
 
 // hash改变时自动加载子页面
 $(window).on('hashchange', function () {
-	$loading.hide()
+	$loading.fadeOut()
 	var href = location.hash.substr(1);
 	if (href && href !== hrefPage) {
 		loadPage(href);

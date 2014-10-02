@@ -35,6 +35,8 @@ legend > i, caption > i {
 
 #loading {
   display: none;
+  position: relative;
+  z-index: 9999;
 }
 #loading .overlay {
   position: fixed;
