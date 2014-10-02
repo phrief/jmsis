@@ -37,7 +37,8 @@ function startMenu(nIdMenu, nIdTab){
 	var $nav = $('#main-nav');
 	$nav.find('a.current').removeClass('current');
 	$nav.find('li[data-n-id="'+ nIdMenu +'"] a').addClass('current');
-	$nav.find('a.current').closest('ul').slideDown('fast');
+	$nav.find('ul').stop().slideUp('fast');
+	$nav.find('a.current').closest('ul').stop().slideDown('fast');
 	
 	makeTabs(nIdMenu, nIdTab);
 }
@@ -91,7 +92,7 @@ function makeMenu(href, onLoad){
 		
 		$('body').delegate("#main-nav li a.nav-top-item", 'click', function() {
 			$(this).parent().siblings().find('ul').stop().slideUp('fast'); // Slide up all sub menus except the one clicked
-			$(this).next().stop().slideDown('fast'); // Slide down the clicked sub menu
+			$(this).next('ul').stop().slideDown('fast'); // Slide down the clicked sub menu
 			return false;
 		});
 		$("#main-nav li .nav-top-item").hover(function() {
