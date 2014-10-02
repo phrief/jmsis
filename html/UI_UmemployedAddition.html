@@ -285,7 +285,6 @@
     $.ajax({
         url: 'modules/UI_ctl.jsp?action=UmemployedAddition',
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             //var resObj = JSON.parse(testData);
             makeChart(resObj);
@@ -333,7 +332,6 @@
             }
         },
         success: function (data) {
-        	console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');

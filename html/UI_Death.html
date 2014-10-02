@@ -285,7 +285,6 @@
     $.ajax({
         url: 'modules/UI_ctl.jsp?action=Death',
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             //var resObj = JSON.parse(testData);
             makeChart(resObj);

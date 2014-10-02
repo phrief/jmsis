@@ -161,7 +161,6 @@
     $.ajax({
         url : 'modules/PI_ctl.jsp?action=DependencyRatio',
         success : function(data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
         }

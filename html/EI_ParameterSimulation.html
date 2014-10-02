@@ -195,7 +195,6 @@
 
             var mark = 0;
             var CURYEAR = new Date().getFullYear();
-            console.log(years.length);
             for(var j=0; j < years.length; j++) {
                 if(years[j] == CURYEAR ) {
                     mark = j;
@@ -339,7 +338,6 @@
             }
         },
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');

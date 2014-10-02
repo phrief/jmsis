@@ -280,7 +280,6 @@
     $.ajax({
         url: 'modules/UI_ctl.jsp?action=UmemployedAnalyze',
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
         }

@@ -246,12 +246,6 @@ function makeChart(htmlStr) {
     var stattype = params['StatType'];
     var areabox = params['AREABOX[]'];
 
-    console.log(params);
-    console.log(fxnf);
-    console.log(fxjd);
-    console.log(insutype);
-    console.log(stattype);
-    console.log(areabox);
     $.ajax({
         url : 'modules/FD_ctl.jsp?action=chart&target=QuarterAnalyze',
         type: 'post',
@@ -265,7 +259,6 @@ function makeChart(htmlStr) {
         success : function(htmlStr) {
             makeChart(htmlStr);
            // notify('success');
-            console.log(htmlStr);
         }
     });
 	//var htmlStr = '{"CHARTTYPE":"2","AREAS":["市直","蓬江","江海","台山"],"LAST":["1000","1500","1300","1250"],"CURRENT":["600","550","450","700"],"PERIOD":"2012","DIVISION":"万元","TYPE":"总收入同季度同比增幅百分比","KIND":"企业养老保险","BALANCE":["39460","51980","536292","341209","0","57639"],"OKMONTHS":["14","14","129","126","0","127"],"FXJD":"3季度","BALANCE_P":["39460","51980","536292","341209","0","57639"],"OKMONTHS_P":["14","14","129","126","0","127"],"INCOME":["2147483647","2147483647","2147483647","0"]}';

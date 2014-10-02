@@ -383,7 +383,6 @@ function makeChart(resObj) {
             }
         },
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');

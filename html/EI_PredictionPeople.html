@@ -92,7 +92,6 @@
             var name = resObj['NAME'];
             var title = resObj['TITLE'];
             months = makeAdapt(months);
-            console.log(dataset);
             $('#Addition').highcharts({
                 exporting: false,
                 chart: {
@@ -201,7 +200,6 @@
     $.ajax({
         url : 'modules/EI_ctl.jsp?action=PreditionPeople',
         success : function(data) {
-            console.log(data);
             //var resObj = readResObj(data, testData);
             var resObj = JSON.parse(testData);
             makeChart(resObj);

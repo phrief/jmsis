@@ -246,7 +246,6 @@
     $.ajax({
         url : 'modules/PI_ctl.jsp?action=ReceiverAnalyze',
         success : function(data) {
-            console.log(data);
             var resObj = JSON.parse(data);
 
             var charttype = resObj['CHARTTYPE'];
@@ -318,7 +317,6 @@
             }
         },
         success: function(data) {
-			console.log(data);
             var resObj = JSON.parse(data);
 
             var charttype = resObj['CHARTTYPE'];

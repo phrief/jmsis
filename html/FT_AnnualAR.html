@@ -6,7 +6,6 @@
 </div>
 <script>
 function makeChart(htmlStr) {
-    console.log(htmlStr);
 	var resObj = JSON.parse(htmlStr);
 	if(resObj) {
 		var charttype = parseInt(resObj['CHARTTYPE']);
@@ -274,13 +273,6 @@ function makeChart(htmlStr) {
 	var stattype = params['StatType'];
 	var ksnf = params['KSNF'];
 	var jsnf = params['JSNF'];
-	console.log(params);
-	console.log(area);
-	console.log(insutype);
-	console.log(ksnf);
-	console.log(jsnf);
-
-
 	$.ajax({
         url : 'modules/FD_ctl.jsp?action=chart&target=AnnualAnalyze',
         data : {
@@ -303,7 +295,6 @@ function makeChart(htmlStr) {
 <script>
 	//var htmlStr = '{"CHARTTYPE":"0","YEARS":["2010","2011","2012","2013","2014","2015"],"INCOME":["1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550"],"PERIOD":"2012年10月-2013年10月","AREA":"蓬江","DIVISION":"万元","TYPE":"总收入/总支出年度环比","KIND":"企业养老保险","OKMONTHS":["14","14","129","126","0","127"],"DATASET":["0","31.7","931.7","-36.3","-100","0"],"BALANCE":["39460","51980","536292","341209","0","57639"]}';
 	//makeChart(htmlStr);
-	//console.log(htmlStr);
 </script>
 
 <script>

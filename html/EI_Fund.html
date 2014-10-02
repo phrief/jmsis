@@ -158,7 +158,6 @@ function makeChart(resObj) {
         }
 
         if (charttype == 1) {
-            console.log(resObj);
             var period = resObj['PERIOD'];
             var years = resObj['MONTHS'];
             var division = resObj['DIVISION'];
@@ -272,7 +271,6 @@ function makeChart(resObj) {
             }
         },
         success: function (data) {
-            console.log(data);
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');

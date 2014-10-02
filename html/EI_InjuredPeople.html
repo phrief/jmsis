@@ -326,7 +326,6 @@
         url: 'modules/EI_ctl.jsp?action=InjuredPeople',
         success: function (data) {
             var resObj = readResObj(data, testData);
-            console.log(resObj);
             //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
