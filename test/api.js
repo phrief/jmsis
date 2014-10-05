@@ -24,7 +24,7 @@ app.post('/system/login.jsp', function(req, res){
     }
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -45,7 +45,7 @@ app.get('/modules/UserManage_ctl.jsp', function(req, res){
     json = '{"__MESSAGE__":"","__ERROR__":false,"_PageValue":{"ZWM":"管理员","ID":"2","DW":"五邑大学","QYSY":"440799,440700,440701,440703,440704,440705,440781,440783,440784,440785","YHM":"admin","BZ":"系统管理员"},"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -59,7 +59,7 @@ app.post('/modules/UserManage_ctl.jsp', function(req, res){
     json = '<script>alert("保存成功！")</script>'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -78,7 +78,7 @@ app.post('/modules/main.jsp', function(req, res){
     var json = '{"__MESSAGE__":"","__NEXTACTION__":"","GSBXJJ":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"工伤保险基金","TYPE":1,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"23.5","END":"51.74"},"CXJMJBYL":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"城乡居民基本医疗保险基金","TYPE":5,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"28.2","END":"51.74"},"CZZGYLBXJJ":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"城镇职工医疗保险基金","TYPE":4,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"34.2","END":"51.74"},"__ERROR__":false,"__CURRENTUSER__":"admin","QYYLJJ":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"企业养老保险基金","TYPE":0,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"51.74","END":"51.74"},"__LOGINED__":true,"SYBXJJ1":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"生育保险基金","TYPE":3,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"25.2","END":"51.74"},"SYBXJJ0":{"GREEN2":"51.74","GREEN1":"20.06","TITLE":"失业保险基金","TYPE":2,"YELLOW2":"20.06","YELLOW1":"10.03","DIVISION":"亿","RED2":"10.03","START":"0.00","RED1":"0.00","BALANCE":"18.2","END":"51.74"}}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -107,7 +107,7 @@ app.get('/modules/PI_ctl.jsp', function(req, res){
     json = '{"DATASET":[1962,1914,1953,1780,1744,1990,2395,1617,1585,1768,1764,1642],"MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"养老保险全市新增领取人员走势图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人","NAME":"新增人员"}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -127,7 +127,7 @@ app.post('/modules/PI_ctl.jsp', function(req, res){
     json = '{"AREA":"全市","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"CURBALANCE":["119899.54","143588.21","110841.39","40871.66","139359.41","153671.12"],"__CURRENTUSER__":"admin","INCOME":["389936.88","477246.71","503977.08","441974.29","551997.74","582010.55"],"YEAR":["2011","2012","2013","2014","2015","2016"],"__LOGINED__":true,"PERIOD":"2011年——2016年","PAYOUT":["270037.34","333658.5","393135.69","401102.63","412638.33","428339.43"],"DIVISION":"万元","YELLOW":["135018.67","166829.25","196567.85","200551.31","206319.16","214169.72"],"AMSG":"","RED":["67509.34","83414.63","98283.92","100275.66","103159.58","107084.86"],"BALANCE":["268213.15","411801.36","522642.75","563514.41","702873.82","856544.94"]}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -156,7 +156,7 @@ app.get('/modules/UI_ctl.jsp', function(req, res){
     json = '{"DATASET":[1962,1914,1953,1780,1744,1990,2395,1617,1585,1768,1764,1642],"MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"养老保险全市新增领取人员走势图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人","NAME":"新增人员"}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
@@ -176,7 +176,7 @@ app.post('/modules/UI_ctl.jsp', function(req, res){
     json = '{"AREA":"全市","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"CURBALANCE":["119899.54","143588.21","110841.39","40871.66","139359.41","153671.12"],"__CURRENTUSER__":"admin","INCOME":["389936.88","477246.71","503977.08","441974.29","551997.74","582010.55"],"YEARS":["2011","2012","2013","2014","2015","2016"],"__LOGINED__":true,"PERIOD":"2011年——2016年","PAYOUT":["270037.34","333658.5","393135.69","401102.63","412638.33","428339.43"],"DIVISION":"万元","YELLOW":["135018.67","166829.25","196567.85","200551.31","206319.16","214169.72"],"AMSG":"","RED":["67509.34","83414.63","98283.92","100275.66","103159.58","107084.86"],"BALANCE":["268213.15","411801.36","522642.75","563514.41","702873.82","856544.94"]}'
     res.send(json)
   } else {
-    res.send(400)
+    res.status(400).end()
   }
 })
 
