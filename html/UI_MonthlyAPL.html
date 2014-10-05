@@ -34,7 +34,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form id="form-query" class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=TASearch">
+                <form id="form-query" class="form-horizontal" method="post" action="modules/PI_ctl.jsp?action=TASearch">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">扫描年月</label>
@@ -46,9 +46,9 @@
                             <label class="control-label">扫描方式</label>
                             <div class="controls">
                                 <select name="SearchCondition">
-                                    <option value="0">个人月发放失业金大于</option>
-                                    <option value="1">个人月发放失业金与上月差额大于</option>
-                                    <!-- <option value="2">一次性待遇发放大于</option> -->
+                                    <option value="0">个人月发放养老金大于</option>
+                                    <option value="1">个人月发放养老金与上月差额大于</option>
+                                    <option value="2">一次性待遇发放大于</option>
                                 </select>
                             </div>
                         </div>
@@ -87,25 +87,25 @@
 <!-- /表顶 -->
 
 <!-- 表格 -->
-<form id="form-list" method="post" action="modules/UI_ctl.jsp?action=TADelete">
-  <table id="table-list" data-colspans="6">
-    <caption>
+<form id="form-list" method="post" action="modules/PI_ctl.jsp?action=TADelete">
+    <table id="table-list" data-colspans="6">
+        <caption>
             <i class="icon-th-list"></i>待遇发放异常检索
         </caption>
-    <thead>
-      <tr>
-        <th>
-          <input type="checkbox" class="check-all" data-name="DelNodes[]">
-        </th>
-        <th>扫描时间</th>
-        <th>扫描状态</th>
-        <th class="text-right">记录数</th>
-        <th>扫描项</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-  
-    <tbody>
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" class="check-all" data-name="DelNodes[]">
+                </th>
+                <th>扫描时间</th>
+                <th>扫描状态</th>
+                <th class="text-right">记录数</th>
+                <th>扫描项</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+    
+        <tbody>
             <script type="text/html" id="tr-tmpl">
                 <tr>
                     <td>
@@ -116,25 +116,25 @@
                     <td class="text-right">{{-item['JLS']}}</td>
                     <td>{{-item['SMX']}}</td>
                     <td>
-                        <a href="html/UI_AUPLDetail.html?ID={{-item['ID']}}">详细</a>
+                        <a href="html/PI_AUPLDetail.html?ID={{-item['ID']}}">详细</a>
                     </td>
                 </tr>
             </script>      
         </tbody>
-  
-    <!-- 表底 -->
-    <tfoot>
-      <tr>
-        <td colspan="6">
+    
+        <!-- 表底 -->
+        <tfoot>
+            <tr>
+                <td colspan="6">
                     <div class="bulk-actions align-left">
                         <input type="submit" class="btn btn-danger" value="删除记录" >
                     </div>
                     <div class="pagination"></div>
                 </td>
-      </tr>
-    </tfoot>
-    <!-- /表底 -->
-  </table>
+            </tr>
+        </tfoot>
+        <!-- /表底 -->
+    </table>
 </form>
 <!-- /表格 -->
 
@@ -190,7 +190,7 @@
     getPage(1);
 
     function getPage(n) {
-        $.get('modules/UI_ctl.jsp?action=TreatmentAbnormal', {
+        $.get('modules/PI_ctl.jsp?action=TreatmentAbnormal', {
             'Page': n
         }, function(resObj) {
             if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
