@@ -32,22 +32,22 @@
                 <select name="BZLX"></select>
               </div>
             </div>
-						<div class="control-group">
-							<label class="control-label">区域选择</label>
-							<div class="controls">
-								<select name="AREA">
-									<option value="440799">全市</option>
-									<option value="440700">市直</option>
-									<option value="440703">蓬江</option>
-									<option value="440704">江海</option>
-									<option value="440781">台山</option>
-									<option value="440705">新会</option>
-									<option value="440783">开平</option>
-									<option value="440784">鹤山</option>
-									<option value="440785">恩平</option>
-								</select>
-							</div>
-						</div>
+            <div class="control-group">
+              <label class="control-label">区域选择</label>
+              <div class="controls">
+                <select name="AREA">
+                  <option value="440799">全市</option>
+                  <option value="440700">市直</option>
+                  <option value="440703">蓬江</option>
+                  <option value="440704">江海</option>
+                  <option value="440781">台山</option>
+                  <option value="440705">新会</option>
+                  <option value="440783">开平</option>
+                  <option value="440784">鹤山</option>
+                  <option value="440785">恩平</option>
+                </select>
+              </div>
+            </div>
             <div class="control-group">
               <input type="hidden" name="page" value="1">
               <input type="submit" value="进入编辑" class="btn btn-primary">
@@ -71,7 +71,7 @@
         <input type="checkbox" class="check-all" data-name="DelNodes[]">
       </th>
       <th>基础资料类型</th>
-			<th>区域</th>
+      <th>区域</th>
       <th>年度</th>
       <th>编制人</th>
       <th>状态</th>
@@ -85,7 +85,7 @@
           <input type="checkbox" class="check-all" name="DelNodes[]" value="{{-item['ID']}}"/>
         </td>
         <td>{{-item['title']}}</td>
-				<td>{{-item['AREA']}}</td>
+        <td>{{-item['AREA']}}</td>
         <td>{{-item['ND']}}</td>
         <td>{{-item['BZR']}}</td>
         <td>{{-item['ZT']}}</td>
@@ -154,7 +154,7 @@
     $.get('modules/FD_ctl.jsp?action=Base', {
       'Page': n
     }, function (data) {
-		var testData = (function () {
+      var testData = (function () {
         var fakePageList = [];
         _.times(5, function (i) {
           var item = {

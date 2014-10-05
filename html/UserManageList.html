@@ -15,28 +15,28 @@
 
 
 <form id="form-list" method="post" action="modules/UserManage_ctl.jsp?action=deluser">
-	<!-- 表格 -->
-	<table id="table-list" class="hidden" data-colspans="6">
-		<caption>
-		    <i class="icon-th-list"></i>用户管理列表
-		</caption>
-		<thead>
-			<tr>
-				<th>
-				    <input type="checkbox" data-name="DelNodes[]" class="check-all">
-				</th>
-				<th>用户名</th>
-				<th>中文名</th>
-				<th>权限说明</th>
-				<th>备注</th>
-				<th>操作</th>
-			</tr>
-		</thead>
-		<tbody>
-			<script type="text/html" id="tr-tmpl">
-				<tr>
-        			<td>
-	                     <input type="checkbox" name="DelNodes[]" value="{{-user['ID']}}">
+  <!-- 表格 -->
+  <table id="table-list" class="hidden" data-colspans="6">
+    <caption>
+        <i class="icon-th-list"></i>用户管理列表
+    </caption>
+    <thead>
+      <tr>
+        <th>
+            <input type="checkbox" data-name="DelNodes[]" class="check-all">
+        </th>
+        <th>用户名</th>
+        <th>中文名</th>
+        <th>权限说明</th>
+        <th>备注</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <script type="text/html" id="tr-tmpl">
+        <tr>
+              <td>
+                       <input type="checkbox" name="DelNodes[]" value="{{-user['ID']}}">
                     </td>
                     <td>{{-user['YHM']}}</td>
                     <td>{{-user['ZWM']}}</td>
@@ -48,83 +48,83 @@
                         <a href="modules/AuthEdit.jsp?ID={{-user['ID']}}">权限</a>
                     </td>
                 </tr>
-			</script>
-		</tbody>
+      </script>
+    </tbody>
 
-		<!-- 表底 -->
-		<tfoot>
-			<tr>
-				<td colspan="6">
-					<div class="bulk-actions align-left">
-						<input type="submit" class="btn btn-danger" value="删除记录" onclick="return confirm('删除的信息将无法恢复 是否确认继续?')" />
+    <!-- 表底 -->
+    <tfoot>
+      <tr>
+        <td colspan="6">
+          <div class="bulk-actions align-left">
+            <input type="submit" class="btn btn-danger" value="删除记录" onclick="return confirm('删除的信息将无法恢复 是否确认继续?')" />
                         <a class="btn btn-success" href="html/UserManageAdd.html">添加用户</a>
-					</div>
-					<div class="pagination"></div>
-				</td>
-			</tr>
-		</tfoot>
-		<!-- /表底 -->
-	</table>
-	<!-- /表格 -->
+          </div>
+          <div class="pagination"></div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /表底 -->
+  </table>
+  <!-- /表格 -->
 </form>
 
 <script>
-	var $frame = $('#main-frame'),
+  var $frame = $('#main-frame'),
         $form_list = $frame.find('#form-list'),
         $table_list = $('#table-list'),
-		$tbody = $table_list.find('tbody'),
-		$pagination = $table_list.find('.pagination'),
-		trTmpl = $tbody.find('#tr-tmpl').html();
+    $tbody = $table_list.find('tbody'),
+    $pagination = $table_list.find('.pagination'),
+    trTmpl = $tbody.find('#tr-tmpl').html();
 
-	// 加载用户列表
-	getPage(1);
-	function getPage(nPage) {
-		$.ajax({
-			url: 'modules/UserManage_ctl.jsp?action=listuser',
-			type: 'get',
-			data: {
-				'page': nPage
-			},
-			success: function(data) {
-				var resObj = JSON.parse(data);
-				// 表格数据
-				$table_list.addClass('hidden');
+  // 加载用户列表
+  getPage(1);
+  function getPage(nPage) {
+    $.ajax({
+      url: 'modules/UserManage_ctl.jsp?action=listuser',
+      type: 'get',
+      data: {
+        'page': nPage
+      },
+      success: function(data) {
+        var resObj = JSON.parse(data);
+        // 表格数据
+        $table_list.addClass('hidden');
                 var pageList = resObj['_PageList'];
                 if (! pageList || pageList.length < 1) {
                     $tbody.html([
-                    	'<tr>',
-                    		'<td class="text-center" colspan="6">没有记录</td>',
-                		'</tr>'
-                	].join(''));
+                      '<tr>',
+                        '<td class="text-center" colspan="6">没有记录</td>',
+                    '</tr>'
+                  ].join(''));
                 } else {
                     var tbodyHtml = _.reduce(pageList, function(memo, user) {
-                    	var trHtml = _.template(trTmpl, user, {
-                    		variable: 'user'
-                    	});
-                    	return memo + trHtml;
+                      var trHtml = _.template(trTmpl, user, {
+                        variable: 'user'
+                      });
+                      return memo + trHtml;
                     }, '');
                     $tbody.html(tbodyHtml);
                     // 分页
-					$pagination.html([
-						'<span><a onclick="getPage(1)">首页</a></span>',
-						'<span><a onclick="getPage('+ Math.max((resObj['_curPage'] - 1), 1) +')">上一页</a></span>',
-						'<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
-						'<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
-						'<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
-					].join(''));
+          $pagination.html([
+            '<span><a onclick="getPage(1)">首页</a></span>',
+            '<span><a onclick="getPage('+ Math.max((resObj['_curPage'] - 1), 1) +')">上一页</a></span>',
+            '<span>当前页'+ resObj['_curPage'] +'/'+ resObj['_pageCount'] +'</span>',
+            '<span><a onclick="getPage('+ Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) +')">下一页</a></span>',
+            '<span><a onclick="getPage('+ resObj['_pageCount'] +')">尾页</a></span>'
+          ].join(''));
                 }
                 $table_list.removeClass('hidden');
-			}
-		});
-	}
-	
-	// 删除用户
-	$form_list.ajaxForm({
-		success: function(resTxt) {
-			var resObj = JSON.parse(resTxt),
-				msg = resObj['__MESSAGE__'];
-			msg && notify(msg);
+      }
+    });
+  }
+  
+  // 删除用户
+  $form_list.ajaxForm({
+    success: function(resTxt) {
+      var resObj = JSON.parse(resTxt),
+        msg = resObj['__MESSAGE__'];
+      msg && notify(msg);
             reloadPage();
-		}
-	});
+    }
+  });
 </script>
