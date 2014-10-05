@@ -1,0 +1,238 @@
+<meta charset="utf-8"/>
+
+<style>
+  #table th:nth-child(4),
+  #table td:nth-child(4) {
+    padding-left: 30px;
+  }
+
+  #table > thead > tr:last-child > th:nth-child(2), #table td:nth-child(2),
+  #table > thead > tr:last-child > th:nth-child(3), #table td:nth-child(3),
+  #table > thead > tr:last-child > th:nth-child(5), #table td:nth-child(5),
+  #table > thead > tr:last-child > th:nth-child(6), #table td:nth-child(6) {
+    min-width: 115px;
+    padding: 5px;
+    text-align: right;
+  }
+</style>
+
+<table id="table" class="hidden" data-colspans="6">
+  <script type="text/html" id="tmpl-titles">
+    <caption>
+      <i class="icon-th-list"></i>{{-year2}}年企业职工基本养老保险基金预算表<span id="test"></span>
+    </caption>
+    <thead>
+    <tr>
+      <th>社预02表</th>
+      <th colspan="4">区域: {{-area}}</th>
+      <th class="text-right">单位: 元</th>
+    </tr>
+    <tr>
+      <th>项目</th>
+      <th></th>
+      <th></th>
+      <th>项目</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+  </script>
+  <tbody>
+  <tr>
+    <td>一、基本养老保险费收入</td>
+    <td></td>
+    <td></td>
+    <td>一、基本养老金支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>二、利息收入</td>
+    <td></td>
+    <td></td>
+    <td>二、医疗补助金支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>三、财政补贴收入</td>
+    <td></td>
+    <td></td>
+    <td>三、丧葬抚恤补助支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>其中: 本级财政补助</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>四、其他收入</td>
+    <td></td>
+    <td></td>
+    <td>四、其他支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>五、转移收入</td>
+    <td></td>
+    <td></td>
+    <td>五、转移支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>六、本年收入小计</td>
+    <td></td>
+    <td></td>
+    <td>六、本年支出小计</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>七、上级补助收入</td>
+    <td></td>
+    <td></td>
+    <td>七、补助下级支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>八、下级上解收入</td>
+    <td></td>
+    <td></td>
+    <td>八、上解上级支出</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>九、本年收入合计</td>
+    <td></td>
+    <td></td>
+    <td>九、本年支出合计</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>十、本年收支结余</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>十、上年结余</td>
+    <td></td>
+    <td></td>
+    <td>十一、年末滚存结余</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>总计</td>
+    <td></td>
+    <td></td>
+    <td>总计</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="6">
+      <div class="bulk-actions align-left">
+        <button class="btn btn-default" href="html/FD_Budget.html">返回列表</button>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="SubmitBudget">
+          <button id="btn-submit" class="btn btn-primary hidden" type="submit">提交待审核</button>
+        </form>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="AuditBudget">
+          <button id="btn-audit" class="btn btn-primary quanshi-only hidden" type="submit">确认审核</button>
+        </form>
+        <form class="inline-block">
+          <input type="hidden" name="action" value="DenyBudget">
+          <button id="btn-deny" class="btn btn-danger quanshi-only hidden" type="submit">审核不通过</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<script>
+  var budgetID = parseInt(getURLParams()['ID']),
+    $table = $frame.find('#table'),
+    $forms = $table.find('form'),
+    $btnSubmit = $forms.find('#btn-submit'),
+    $btnAudit = $forms.find('#btn-audit'),
+    $btnDeny = $forms.find('#btn-deny');
+
+  $forms.ajaxForm({
+    type: 'post',
+    url: 'modules/FD_ctl.jsp',
+    data: {
+      'ID': budgetID
+    },
+    success: function (data) {
+      readResObj(data);
+      reloadPage();
+    }
+  });
+
+  $.get('modules/FD_ctl.jsp?action=Detail', {
+    'ID': budgetID
+  }, function (data) {
+    var testData = {"__MESSAGE__": "", "__ERROR__": false, "__NEXTACTION__": "", "TVALUES": {"myHashMap": {"AREA": "江海区", "CURYEAR": 2014, "D8": "0.00", "D7": "0.00", "D9": "0.00", "D3": "0.00", "D6": "0.00", "C11": "0.00", "DURYEAR": "2013", "G6": "0.00", "G7": "0.00", "C10": "0.00", "G8": "0.00", "G9": "0.00", "C13": "0.00", "C14": "0.00", "G2": "3,412,735,501.05", "G1": "2014年执行数", "G3": "0.00", "D1": "2015年预算数", "D2": "3,504,377,705.22", "H11": "0.00", "C3": "0.00", "C2": "3,504,377,705.22", "H10": "0.00", "C9": "0.00", "C8": "0.00", "C7": "0.00", "C6": "0.00", "H8": "0.00", "H9": "0.00", "H6": "0.00", "D10": "0.00", "H7": "0.00", "D11": "0.00", "D13": "0.00", "H13": "0.00", "D14": "0.00", "H14": "0.00", "H1": "2015年预算数", "G11": "0.00", "G10": "0.00", "G13": "0.00", "H3": "0.00", "H2": "3,412,735,501.05", "G14": "0.00", "C1": "2014年执行数"}}};
+    var resObj = readResObj(data, testData);
+    showTable(resObj);
+  });
+
+  function showTable(resObj) {
+    $table.addClass('hidden');
+    var year = parseInt(resObj['TVALUES']['myHashMap']['CURYEAR']),
+      status = resObj['TVALUES']['myHashMap']['STATUS'],
+      tValues = resObj['TVALUES']['myHashMap'],
+      matrix = _.reduce(tValues, function (memo, val, key) {
+        var mat = key.match(/^(\w)(\d+)$/);
+        if (mat) {
+          var c = parseInt(mat[1].charCodeAt(0) - 65),
+            r = parseInt(mat[2] - 1);
+          memo[r] = memo[r] || [];
+          memo[r][c] = val;
+        }
+        return memo;
+      }, []),
+      $tmplTitles = $table.find('#tmpl-titles');
+
+      if (status == 0) {
+        $btnSubmit.removeClass('hidden');
+      } else if (status == 1) {
+        $btnAudit.removeClass('hidden');
+        $btnDeny.removeClass('hidden');
+      }
+        $tmplTitles.after(_.template($tmplTitles.html(), {
+          year1: year, year2: year + 1,
+          area: resObj['TVALUES']['myHashMap']['AREA']
+        }));
+
+    var $trows = $table.find('thead > tr:last, tbody > tr');
+    _.each(matrix, function (row, i) {
+      var $trow = $trows.eq(i);
+      _.each(row, function (val, j) {
+        if (_.isUndefined(val)) return;
+        $trow.children().eq(j).text(val);
+      });
+    });
+    if (resObj['__ISTEST__']) {
+      $table.find('#test').text('(测试数据)');
+    }
+    $table.removeClass('hidden');
+  }
+</script>
