@@ -13,7 +13,6 @@ app.get('/system/login.jsp', function(req, res){
   }
   res.send(obj)
 })
-
 app.post('/system/login.jsp', function(req, res){
   var json
   if (req.param('action') === 'Login') {
@@ -48,7 +47,6 @@ app.get('/modules/UserManage_ctl.jsp', function(req, res){
     res.status(400).end()
   }
 })
-
 app.post('/modules/UserManage_ctl.jsp', function(req, res){
   var json
   var action = req.param('action')
@@ -110,7 +108,6 @@ app.get('/modules/PI_ctl.jsp', function(req, res){
     res.status(400).end()
   }
 })
-
 app.post('/modules/PI_ctl.jsp', function(req, res){
   var json
   var action = req.param('action')
@@ -159,7 +156,6 @@ app.get('/modules/UI_ctl.jsp', function(req, res){
     res.status(400).end()
   }
 })
-
 app.post('/modules/UI_ctl.jsp', function(req, res){
   var json
   var action = req.param('action')
@@ -174,6 +170,142 @@ app.post('/modules/UI_ctl.jsp', function(req, res){
     res.send(json)
   } else if (action === 'PolicySimulation') {
     json = '{"AREA":"全市","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"CURBALANCE":["119899.54","143588.21","110841.39","40871.66","139359.41","153671.12"],"__CURRENTUSER__":"admin","INCOME":["389936.88","477246.71","503977.08","441974.29","551997.74","582010.55"],"YEARS":["2011","2012","2013","2014","2015","2016"],"__LOGINED__":true,"PERIOD":"2011年——2016年","PAYOUT":["270037.34","333658.5","393135.69","401102.63","412638.33","428339.43"],"DIVISION":"万元","YELLOW":["135018.67","166829.25","196567.85","200551.31","206319.16","214169.72"],"AMSG":"","RED":["67509.34","83414.63","98283.92","100275.66","103159.58","107084.86"],"BALANCE":["268213.15","411801.36","522642.75","563514.41","702873.82","856544.94"]}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+
+app.get('/modules/EI_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  if (action === 'DependencyRatio') {
+    json = '{"SRRS":["755539","758412","761596","764907","852534","791635","786411","786800","777756","0","0","0"],"AREA":"全市","MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市养老抚养比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人数","NAME2":"养老人数","NAME1":"缴费人数","ZCRS":["223370","226744","229704","231443","234013","235985","238198","241901","241233","0","0","0"]}'
+    res.send(json)
+  } else if (action === 'FundautoMonitor') {
+    json = '{"AREA":"全市","FUNDDATASET":[{"payout":"31355","income":"22446"},{"payout":"31701","income":"23459"},{"payout":"31736","income":"23970"},{"payout":"32022","income":"37214"},{"payout":"32379","income":"50758"},{"payout":"33691","income":"30748"},{"payout":"33912","income":"24586"},{"payout":"59685","income":"24631"},{"payout":"39217","income":"25444"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"}],"__MESSAGE__":"","__NEXTACTION__":"","FUNDMONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月","2014年08月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"统筹账户","__LOGINED__":true,"PERIOD":"2013年8月——2014年8月","FUNDDIVISION":"万元"}'
+    res.send(json)
+  } else if (action === 'TreatmentAbnormal') {
+    json = '{"_PageList":[{"SMZT":"已完成","ID":"29","JLS":"393","ISAUDITED":"false","SMSJ":"2014-07-20 13:58:44","SMX":"扫描全市2014年04月个人一次性待遇发放大于5000元的参保户。"},{"SMZT":"已完成","ID":"28","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:52:07","SMX":"扫描全市2014年01月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"27","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:48","SMX":"扫描全市2014年02月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"26","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:36","SMX":"扫描全市2014年02月个人月发放养老金大于4000元的参保户。"},{"SMZT":"已完成","ID":"25","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:11","SMX":"扫描全市2014年02月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"24","JLS":"2093","ISAUDITED":"false","SMSJ":"2014-01-04 12:10:29","SMX":"扫描全市2012年01月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"23","JLS":"476","ISAUDITED":"false","SMSJ":"2013-12-30 20:45:50","SMX":"扫描全市2012年02月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"22","JLS":"0","ISAUDITED":"false","SMSJ":"2013-12-25 16:10:24","SMX":"扫描全市2012年07月个人月发放养老金与上月差额大于3000元的参保户。"},{"SMZT":"已完成","ID":"21","JLS":"239","ISAUDITED":"false","SMSJ":"2013-12-23 16:24:19","SMX":"扫描蓬江区2013年03月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"20","JLS":"30","ISAUDITED":"false","SMSJ":"2013-12-18 16:32:12","SMX":"扫描全市2013年01月个人一次性待遇发放大于20000元的参保户。"},{"SMZT":"已完成","ID":"19","JLS":"183","ISAUDITED":"false","SMSJ":"2013-12-18 16:30:56","SMX":"扫描全市2011年02月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"17","JLS":"77","ISAUDITED":"false","SMSJ":"2013-12-12 17:02:52","SMX":"扫描蓬江区2013年01月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"16","JLS":"46","ISAUDITED":"false","SMSJ":"2013-12-12 16:53:47","SMX":"扫描蓬江区2011年02月个人月发放养老金与上月差额大于3000元的参保户。"},{"SMZT":"已完成","ID":"15","JLS":"143","ISAUDITED":"false","SMSJ":"2013-12-12 16:33:41","SMX":"扫描全市2011年01月个人月发放养老金大于5000元的参保户。"}],"_pageCount":1,"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","_curPage":1,"__LOGINED__":true,"_AUTH_DETAIL_":true,"_AUTH_SCAN_":true,"_AUTH_DEL_":true}'
+    res.send(json)
+  } else if (action === 'TASearch') {
+    json = '{"__MESSAGE__":"异常扫描已经成功建立！","__ERROR__":false,"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'TreatmentVary') {
+    json = '{"_PageList":[{"ISAUDITED":"false","CURRENTPEOPLE":"241627","PEOPLECHAGE":"-496","MONEYCHANGE":"-204,021,258.69","CURRENTMONEY":"406,359,982.93","LASTMONEY":"610,381,241.62","LASTPEOPLE":"242123","STATISTICMONTH":"2014-04","SHSJ":"201404","NY":"201404"},{"ISAUDITED":"false","CURRENTPEOPLE":"242123","PEOPLECHAGE":"3542","MONEYCHANGE":"257,964,479.32","CURRENTMONEY":"610,381,241.62","LASTMONEY":"352,416,762.30","LASTPEOPLE":"238581","STATISTICMONTH":"2014-03","SHSJ":"201403","NY":"201403"},{"ISAUDITED":"false","CURRENTPEOPLE":"238581","PEOPLECHAGE":"2074","MONEYCHANGE":"2,706,380.31","CURRENTMONEY":"352,416,762.30","LASTMONEY":"349,710,381.99","LASTPEOPLE":"236507","STATISTICMONTH":"2014-02","SHSJ":"201402","NY":"201402"},{"ISAUDITED":"false","CURRENTPEOPLE":"236507","PEOPLECHAGE":"2172","MONEYCHANGE":"13,276,349.42","CURRENTMONEY":"349,710,381.99","LASTMONEY":"336,434,032.57","LASTPEOPLE":"234335","STATISTICMONTH":"2014-01","SHSJ":"201401","NY":"201401"},{"ISAUDITED":"false","CURRENTPEOPLE":"234335","PEOPLECHAGE":"2769","MONEYCHANGE":"3,786,571.68","CURRENTMONEY":"336,434,032.57","LASTMONEY":"332,647,460.89","LASTPEOPLE":"231566","STATISTICMONTH":"2013-12","SHSJ":"201312","NY":"201312"},{"ISAUDITED":"false","CURRENTPEOPLE":"231566","PEOPLECHAGE":"1614","MONEYCHANGE":"3,084,123.41","CURRENTMONEY":"332,647,460.89","LASTMONEY":"329,563,337.48","LASTPEOPLE":"229952","STATISTICMONTH":"2013-11","SHSJ":"201311","NY":"201311"},{"ISAUDITED":"false","CURRENTPEOPLE":"229952","PEOPLECHAGE":"2889","MONEYCHANGE":"548,031.98","CURRENTMONEY":"329,563,337.48","LASTMONEY":"329,015,305.50","LASTPEOPLE":"227063","STATISTICMONTH":"2013-10","SHSJ":"201310","NY":"201310"},{"ISAUDITED":"false","CURRENTPEOPLE":"227063","PEOPLECHAGE":"3425","MONEYCHANGE":"3,782,287.73","CURRENTMONEY":"329,015,305.50","LASTMONEY":"325,233,017.77","LASTPEOPLE":"223638","STATISTICMONTH":"2013-09","SHSJ":"201309","NY":"201309"},{"ISAUDITED":"false","CURRENTPEOPLE":"223638","PEOPLECHAGE":"4864","MONEYCHANGE":"4,210,937.95","CURRENTMONEY":"325,233,017.77","LASTMONEY":"321,022,079.82","LASTPEOPLE":"218774","STATISTICMONTH":"2013-08","SHSJ":"201308","NY":"201308"}],"_pageCount":1,"__MESSAGE__":"","AREANAME":"全市","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (!action) {
+    json = '{"AREA":"全市","FUNDDATASET":[{"payout":"32523","income":"35234"},{"payout":"32901","income":"36838"},{"payout":"32956","income":"37817"},{"payout":"33264","income":"59815"},{"payout":"33643","income":"79545"},{"payout":"34971","income":"48937"},{"payout":"35241","income":"38809"},{"payout":"61038","income":"38826"},{"payout":"40635","income":"40092"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"}],"__MESSAGE__":"","__NEXTACTION__":"","FUNDMONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"合并账户","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","FUNDDIVISION":"万元"}'
+    res.send(json)
+  } else if (action === 'UmemployedAnalyze') {
+    json = '{"DATASET":[1962,1914,1953,1780,1744,1990,2395,1617,1585,1768,1764,1642],"MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"养老保险全市新增领取人员走势图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人","NAME":"新增人员"}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+app.post('/modules/EI_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  if (action === 'TASearch') {
+    json = '{"__MESSAGE__":"异常扫描已经成功建立！","__ERROR__":false,"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'TreatmentVary') {
+    json = '{"_PageList":[{"ISAUDITED":"false","CURRENTPEOPLE":"241627","PEOPLECHAGE":"-496","MONEYCHANGE":"-204,021,258.69","CURRENTMONEY":"406,359,982.93","LASTMONEY":"610,381,241.62","LASTPEOPLE":"242123","STATISTICMONTH":"2014-04","SHSJ":"201404","NY":"201404"},{"ISAUDITED":"false","CURRENTPEOPLE":"242123","PEOPLECHAGE":"3542","MONEYCHANGE":"257,964,479.32","CURRENTMONEY":"610,381,241.62","LASTMONEY":"352,416,762.30","LASTPEOPLE":"238581","STATISTICMONTH":"2014-03","SHSJ":"201403","NY":"201403"},{"ISAUDITED":"false","CURRENTPEOPLE":"238581","PEOPLECHAGE":"2074","MONEYCHANGE":"2,706,380.31","CURRENTMONEY":"352,416,762.30","LASTMONEY":"349,710,381.99","LASTPEOPLE":"236507","STATISTICMONTH":"2014-02","SHSJ":"201402","NY":"201402"},{"ISAUDITED":"false","CURRENTPEOPLE":"236507","PEOPLECHAGE":"2172","MONEYCHANGE":"13,276,349.42","CURRENTMONEY":"349,710,381.99","LASTMONEY":"336,434,032.57","LASTPEOPLE":"234335","STATISTICMONTH":"2014-01","SHSJ":"201401","NY":"201401"},{"ISAUDITED":"false","CURRENTPEOPLE":"234335","PEOPLECHAGE":"2769","MONEYCHANGE":"3,786,571.68","CURRENTMONEY":"336,434,032.57","LASTMONEY":"332,647,460.89","LASTPEOPLE":"231566","STATISTICMONTH":"2013-12","SHSJ":"201312","NY":"201312"},{"ISAUDITED":"false","CURRENTPEOPLE":"231566","PEOPLECHAGE":"1614","MONEYCHANGE":"3,084,123.41","CURRENTMONEY":"332,647,460.89","LASTMONEY":"329,563,337.48","LASTPEOPLE":"229952","STATISTICMONTH":"2013-11","SHSJ":"201311","NY":"201311"},{"ISAUDITED":"false","CURRENTPEOPLE":"229952","PEOPLECHAGE":"2889","MONEYCHANGE":"548,031.98","CURRENTMONEY":"329,563,337.48","LASTMONEY":"329,015,305.50","LASTPEOPLE":"227063","STATISTICMONTH":"2013-10","SHSJ":"201310","NY":"201310"},{"ISAUDITED":"false","CURRENTPEOPLE":"227063","PEOPLECHAGE":"3425","MONEYCHANGE":"3,782,287.73","CURRENTMONEY":"329,015,305.50","LASTMONEY":"325,233,017.77","LASTPEOPLE":"223638","STATISTICMONTH":"2013-09","SHSJ":"201309","NY":"201309"},{"ISAUDITED":"false","CURRENTPEOPLE":"223638","PEOPLECHAGE":"4864","MONEYCHANGE":"4,210,937.95","CURRENTMONEY":"325,233,017.77","LASTMONEY":"321,022,079.82","LASTPEOPLE":"218774","STATISTICMONTH":"2013-08","SHSJ":"201308","NY":"201308"}],"_pageCount":1,"__MESSAGE__":"","AREANAME":"全市","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (action === 'ExpensesPredication') {
+    json = '{"__MESSAGE__":"","YEARS":["2011年","2012年","2013年","2014年","2015年","2016年"],"__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业基金趋势图","CURBALANCE":[18440.51,17582.24,19921.82,18995.6,21249.42,13321.5],"__CURRENTUSER__":"admin","INCOME":[25399.17,27250.48,29634.43,28613.0,31116.15,23337.11],"__LOGINED__":true,"PERIOD":"2011年-2016年","PAYOUT":[6958.66,9668.24,9712.61,9617.4,9866.73,10015.61],"DIVISION":"万元","YELLOW":[3479.33,4834.12,4856.3,4808.7,4933.36,5007.81],"RED":[1739.67,2417.06,2428.15,2404.35,2466.68,2503.9],"BALANCE":[17624.92,35207.16,55128.98,74124.58,95374.0,108695.49]}'
+    res.send(json)
+  } else if (action === 'PolicySimulation') {
+    json = '{"AREA":"全市","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"CURBALANCE":["119899.54","143588.21","110841.39","40871.66","139359.41","153671.12"],"__CURRENTUSER__":"admin","INCOME":["389936.88","477246.71","503977.08","441974.29","551997.74","582010.55"],"YEARS":["2011","2012","2013","2014","2015","2016"],"__LOGINED__":true,"PERIOD":"2011年——2016年","PAYOUT":["270037.34","333658.5","393135.69","401102.63","412638.33","428339.43"],"DIVISION":"万元","YELLOW":["135018.67","166829.25","196567.85","200551.31","206319.16","214169.72"],"AMSG":"","RED":["67509.34","83414.63","98283.92","100275.66","103159.58","107084.86"],"BALANCE":["268213.15","411801.36","522642.75","563514.41","702873.82","856544.94"]}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+
+app.get('/modules/BI_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  if (action === 'DependencyRatio') {
+    json = '{"SRRS":["755539","758412","761596","764907","852534","791635","786411","786800","777756","0","0","0"],"AREA":"全市","MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市养老抚养比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人数","NAME2":"养老人数","NAME1":"缴费人数","ZCRS":["223370","226744","229704","231443","234013","235985","238198","241901","241233","0","0","0"]}'
+    res.send(json)
+  } else if (action === 'FundautoMonitor') {
+    json = '{"AREA":"全市","FUNDDATASET":[{"payout":"31355","income":"22446"},{"payout":"31701","income":"23459"},{"payout":"31736","income":"23970"},{"payout":"32022","income":"37214"},{"payout":"32379","income":"50758"},{"payout":"33691","income":"30748"},{"payout":"33912","income":"24586"},{"payout":"59685","income":"24631"},{"payout":"39217","income":"25444"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"}],"__MESSAGE__":"","__NEXTACTION__":"","FUNDMONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月","2014年08月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"统筹账户","__LOGINED__":true,"PERIOD":"2013年8月——2014年8月","FUNDDIVISION":"万元"}'
+    res.send(json)
+  } else if (action === 'TreatmentAbnormal') {
+    json = '{"_PageList":[{"SMZT":"已完成","ID":"29","JLS":"393","ISAUDITED":"false","SMSJ":"2014-07-20 13:58:44","SMX":"扫描全市2014年04月个人一次性待遇发放大于5000元的参保户。"},{"SMZT":"已完成","ID":"28","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:52:07","SMX":"扫描全市2014年01月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"27","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:48","SMX":"扫描全市2014年02月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"26","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:36","SMX":"扫描全市2014年02月个人月发放养老金大于4000元的参保户。"},{"SMZT":"已完成","ID":"25","JLS":"0","ISAUDITED":"false","SMSJ":"2014-02-28 15:51:11","SMX":"扫描全市2014年02月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"24","JLS":"2093","ISAUDITED":"false","SMSJ":"2014-01-04 12:10:29","SMX":"扫描全市2012年01月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"23","JLS":"476","ISAUDITED":"false","SMSJ":"2013-12-30 20:45:50","SMX":"扫描全市2012年02月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"22","JLS":"0","ISAUDITED":"false","SMSJ":"2013-12-25 16:10:24","SMX":"扫描全市2012年07月个人月发放养老金与上月差额大于3000元的参保户。"},{"SMZT":"已完成","ID":"21","JLS":"239","ISAUDITED":"false","SMSJ":"2013-12-23 16:24:19","SMX":"扫描蓬江区2013年03月个人月发放养老金大于3000元的参保户。"},{"SMZT":"已完成","ID":"20","JLS":"30","ISAUDITED":"false","SMSJ":"2013-12-18 16:32:12","SMX":"扫描全市2013年01月个人一次性待遇发放大于20000元的参保户。"},{"SMZT":"已完成","ID":"19","JLS":"183","ISAUDITED":"false","SMSJ":"2013-12-18 16:30:56","SMX":"扫描全市2011年02月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"17","JLS":"77","ISAUDITED":"false","SMSJ":"2013-12-12 17:02:52","SMX":"扫描蓬江区2013年01月个人月发放养老金大于5000元的参保户。"},{"SMZT":"已完成","ID":"16","JLS":"46","ISAUDITED":"false","SMSJ":"2013-12-12 16:53:47","SMX":"扫描蓬江区2011年02月个人月发放养老金与上月差额大于3000元的参保户。"},{"SMZT":"已完成","ID":"15","JLS":"143","ISAUDITED":"false","SMSJ":"2013-12-12 16:33:41","SMX":"扫描全市2011年01月个人月发放养老金大于5000元的参保户。"}],"_pageCount":1,"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","_curPage":1,"__LOGINED__":true,"_AUTH_DETAIL_":true,"_AUTH_SCAN_":true,"_AUTH_DEL_":true}'
+    res.send(json)
+  } else if (action === 'TASearch') {
+    json = '{"__MESSAGE__":"异常扫描已经成功建立！","__ERROR__":false,"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'TreatmentVary') {
+    json = '{"_PageList":[{"ISAUDITED":"false","CURRENTPEOPLE":"241627","PEOPLECHAGE":"-496","MONEYCHANGE":"-204,021,258.69","CURRENTMONEY":"406,359,982.93","LASTMONEY":"610,381,241.62","LASTPEOPLE":"242123","STATISTICMONTH":"2014-04","SHSJ":"201404","NY":"201404"},{"ISAUDITED":"false","CURRENTPEOPLE":"242123","PEOPLECHAGE":"3542","MONEYCHANGE":"257,964,479.32","CURRENTMONEY":"610,381,241.62","LASTMONEY":"352,416,762.30","LASTPEOPLE":"238581","STATISTICMONTH":"2014-03","SHSJ":"201403","NY":"201403"},{"ISAUDITED":"false","CURRENTPEOPLE":"238581","PEOPLECHAGE":"2074","MONEYCHANGE":"2,706,380.31","CURRENTMONEY":"352,416,762.30","LASTMONEY":"349,710,381.99","LASTPEOPLE":"236507","STATISTICMONTH":"2014-02","SHSJ":"201402","NY":"201402"},{"ISAUDITED":"false","CURRENTPEOPLE":"236507","PEOPLECHAGE":"2172","MONEYCHANGE":"13,276,349.42","CURRENTMONEY":"349,710,381.99","LASTMONEY":"336,434,032.57","LASTPEOPLE":"234335","STATISTICMONTH":"2014-01","SHSJ":"201401","NY":"201401"},{"ISAUDITED":"false","CURRENTPEOPLE":"234335","PEOPLECHAGE":"2769","MONEYCHANGE":"3,786,571.68","CURRENTMONEY":"336,434,032.57","LASTMONEY":"332,647,460.89","LASTPEOPLE":"231566","STATISTICMONTH":"2013-12","SHSJ":"201312","NY":"201312"},{"ISAUDITED":"false","CURRENTPEOPLE":"231566","PEOPLECHAGE":"1614","MONEYCHANGE":"3,084,123.41","CURRENTMONEY":"332,647,460.89","LASTMONEY":"329,563,337.48","LASTPEOPLE":"229952","STATISTICMONTH":"2013-11","SHSJ":"201311","NY":"201311"},{"ISAUDITED":"false","CURRENTPEOPLE":"229952","PEOPLECHAGE":"2889","MONEYCHANGE":"548,031.98","CURRENTMONEY":"329,563,337.48","LASTMONEY":"329,015,305.50","LASTPEOPLE":"227063","STATISTICMONTH":"2013-10","SHSJ":"201310","NY":"201310"},{"ISAUDITED":"false","CURRENTPEOPLE":"227063","PEOPLECHAGE":"3425","MONEYCHANGE":"3,782,287.73","CURRENTMONEY":"329,015,305.50","LASTMONEY":"325,233,017.77","LASTPEOPLE":"223638","STATISTICMONTH":"2013-09","SHSJ":"201309","NY":"201309"},{"ISAUDITED":"false","CURRENTPEOPLE":"223638","PEOPLECHAGE":"4864","MONEYCHANGE":"4,210,937.95","CURRENTMONEY":"325,233,017.77","LASTMONEY":"321,022,079.82","LASTPEOPLE":"218774","STATISTICMONTH":"2013-08","SHSJ":"201308","NY":"201308"}],"_pageCount":1,"__MESSAGE__":"","AREANAME":"全市","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (!action) {
+    json = '{"AREA":"全市","FUNDDATASET":[{"payout":"32523","income":"35234"},{"payout":"32901","income":"36838"},{"payout":"32956","income":"37817"},{"payout":"33264","income":"59815"},{"payout":"33643","income":"79545"},{"payout":"34971","income":"48937"},{"payout":"35241","income":"38809"},{"payout":"61038","income":"38826"},{"payout":"40635","income":"40092"},{"payout":"0","income":"0"},{"payout":"0","income":"0"},{"payout":"0","income":"0"}],"__MESSAGE__":"","__NEXTACTION__":"","FUNDMONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"合并账户","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","FUNDDIVISION":"万元"}'
+    res.send(json)
+  } else if (action === 'UmemployedAnalyze') {
+    json = '{"DATASET":[1962,1914,1953,1780,1744,1990,2395,1617,1585,1768,1764,1642],"MONTHS":["2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月","2014年07月"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"养老保险全市新增领取人员走势图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年8月——2014年7月","DIVISION":"人","NAME":"新增人员"}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+app.post('/modules/BI_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  if (action === 'TASearch') {
+    json = '{"__MESSAGE__":"异常扫描已经成功建立！","__ERROR__":false,"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'TreatmentVary') {
+    json = '{"_PageList":[{"ISAUDITED":"false","CURRENTPEOPLE":"241627","PEOPLECHAGE":"-496","MONEYCHANGE":"-204,021,258.69","CURRENTMONEY":"406,359,982.93","LASTMONEY":"610,381,241.62","LASTPEOPLE":"242123","STATISTICMONTH":"2014-04","SHSJ":"201404","NY":"201404"},{"ISAUDITED":"false","CURRENTPEOPLE":"242123","PEOPLECHAGE":"3542","MONEYCHANGE":"257,964,479.32","CURRENTMONEY":"610,381,241.62","LASTMONEY":"352,416,762.30","LASTPEOPLE":"238581","STATISTICMONTH":"2014-03","SHSJ":"201403","NY":"201403"},{"ISAUDITED":"false","CURRENTPEOPLE":"238581","PEOPLECHAGE":"2074","MONEYCHANGE":"2,706,380.31","CURRENTMONEY":"352,416,762.30","LASTMONEY":"349,710,381.99","LASTPEOPLE":"236507","STATISTICMONTH":"2014-02","SHSJ":"201402","NY":"201402"},{"ISAUDITED":"false","CURRENTPEOPLE":"236507","PEOPLECHAGE":"2172","MONEYCHANGE":"13,276,349.42","CURRENTMONEY":"349,710,381.99","LASTMONEY":"336,434,032.57","LASTPEOPLE":"234335","STATISTICMONTH":"2014-01","SHSJ":"201401","NY":"201401"},{"ISAUDITED":"false","CURRENTPEOPLE":"234335","PEOPLECHAGE":"2769","MONEYCHANGE":"3,786,571.68","CURRENTMONEY":"336,434,032.57","LASTMONEY":"332,647,460.89","LASTPEOPLE":"231566","STATISTICMONTH":"2013-12","SHSJ":"201312","NY":"201312"},{"ISAUDITED":"false","CURRENTPEOPLE":"231566","PEOPLECHAGE":"1614","MONEYCHANGE":"3,084,123.41","CURRENTMONEY":"332,647,460.89","LASTMONEY":"329,563,337.48","LASTPEOPLE":"229952","STATISTICMONTH":"2013-11","SHSJ":"201311","NY":"201311"},{"ISAUDITED":"false","CURRENTPEOPLE":"229952","PEOPLECHAGE":"2889","MONEYCHANGE":"548,031.98","CURRENTMONEY":"329,563,337.48","LASTMONEY":"329,015,305.50","LASTPEOPLE":"227063","STATISTICMONTH":"2013-10","SHSJ":"201310","NY":"201310"},{"ISAUDITED":"false","CURRENTPEOPLE":"227063","PEOPLECHAGE":"3425","MONEYCHANGE":"3,782,287.73","CURRENTMONEY":"329,015,305.50","LASTMONEY":"325,233,017.77","LASTPEOPLE":"223638","STATISTICMONTH":"2013-09","SHSJ":"201309","NY":"201309"},{"ISAUDITED":"false","CURRENTPEOPLE":"223638","PEOPLECHAGE":"4864","MONEYCHANGE":"4,210,937.95","CURRENTMONEY":"325,233,017.77","LASTMONEY":"321,022,079.82","LASTPEOPLE":"218774","STATISTICMONTH":"2013-08","SHSJ":"201308","NY":"201308"}],"_pageCount":1,"__MESSAGE__":"","AREANAME":"全市","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (action === 'ExpensesPredication') {
+    json = '{"__MESSAGE__":"","YEARS":["2011年","2012年","2013年","2014年","2015年","2016年"],"__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市失业基金趋势图","CURBALANCE":[18440.51,17582.24,19921.82,18995.6,21249.42,13321.5],"__CURRENTUSER__":"admin","INCOME":[25399.17,27250.48,29634.43,28613.0,31116.15,23337.11],"__LOGINED__":true,"PERIOD":"2011年-2016年","PAYOUT":[6958.66,9668.24,9712.61,9617.4,9866.73,10015.61],"DIVISION":"万元","YELLOW":[3479.33,4834.12,4856.3,4808.7,4933.36,5007.81],"RED":[1739.67,2417.06,2428.15,2404.35,2466.68,2503.9],"BALANCE":[17624.92,35207.16,55128.98,74124.58,95374.0,108695.49]}'
+    res.send(json)
+  } else if (action === 'PolicySimulation') {
+    json = '{"AREA":"全市","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"CURBALANCE":["119899.54","143588.21","110841.39","40871.66","139359.41","153671.12"],"__CURRENTUSER__":"admin","INCOME":["389936.88","477246.71","503977.08","441974.29","551997.74","582010.55"],"YEARS":["2011","2012","2013","2014","2015","2016"],"__LOGINED__":true,"PERIOD":"2011年——2016年","PAYOUT":["270037.34","333658.5","393135.69","401102.63","412638.33","428339.43"],"DIVISION":"万元","YELLOW":["135018.67","166829.25","196567.85","200551.31","206319.16","214169.72"],"AMSG":"","RED":["67509.34","83414.63","98283.92","100275.66","103159.58","107084.86"],"BALANCE":["268213.15","411801.36","522642.75","563514.41","702873.82","856544.94"]}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+
+app.get('/modules/FD_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  var target = req.param('target')
+  if (action === 'Base') {
+    json = '{"_PageList":[{"AREA":"全市","BZLX":"1","ID":"93","ISAUDITED":"false","ZT":"编制中","YSLXSM":"企业职工基本养老保险","BZR":"管理员","ND":"2015"},{"AREA":"恩平市","BZLX":"1","ID":"91","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"鹤山市","BZLX":"1","ID":"90","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"开平市","BZLX":"1","ID":"89","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"新会区","BZLX":"1","ID":"88","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"市区直属","BZLX":"1","ID":"87","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"蓬江区","BZLX":"1","ID":"86","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"江门社保局","ND":"2015"},{"AREA":"台山市","BZLX":"1","ID":"85","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"管理员","ND":"2015"},{"AREA":"江海区","BZLX":"1","ID":"84","ISAUDITED":"false","ZT":"审核通过","YSLXSM":"企业职工基本养老保险","BZR":"管理员","ND":"2015"}],"_pageCount":1,"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","_moreaction":"","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (action === 'BaseDetail') {
+    json = '{"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","TVALUES":{"myHashMap":{"C8":"227643.00","C7":"61493.00","C4":"405505.00","C3":"467101.00","C6":"227.00","C5":"61596.00","CURYEAR":"2014","STATUS":0,"G7":"0.00","G4":"21035.62","G3":"743230456.64","G6":"0.00","G2":"35145.00","G1":"2014年执行数","C1":"2014年执行数","D8":"232193.00","AREA":"全市","D7":"62720.00","D6":"221.00","D5":"62819.00","ISAUDITED":false,"D4":"408747.00","D12":"14.33","D11":"12843832559.44","C10":"12116823169.29","D14":"35231.00","C11":"12116823169.29","C12":"14.33","C14":"34955.00","D10":"12843832559.44","H7":"0.00","H6":"0.00","H4":"0","H3":"780391979.47","H2":"35846.00","H1":"2015年预算数","D3":"471566.00","D1":"2015年预算数"}},"__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'InitBase') {
+    json = '{"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","__LOGINED__":true,"PARAMS":{"myHashMap":{"G4":"2.00","G3":"2.00","G5":"2.00","G2":"0.80","G1":"0.80","Indirate":"8.00","Othertrate":"20.00","Unitrate":"15.00"}},"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'Budget') {
+    json = '{"_PageList":[{"AREA":"台山市","BZLX":"1","ID":"29","ISAUDITED":"false","ZT":"编制中","YSLXSM":"企业职工基本养老保险","BZR":"管理员","ND":"2015"},{"AREA":"江海区","BZLX":"1","ID":"28","ISAUDITED":"false","ZT":"编制中","YSLXSM":"企业职工基本养老保险","BZR":"管理员","ND":"2015"}],"_pageCount":1,"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"__CURRENTUSER__":"admin","_moreaction":"","__LOGINED__":true,"_curPage":1}'
+    res.send(json)
+  } else if (action === 'Detail') {
+    json = '{"__MESSAGE__":"","__ERROR__":false,"__NEXTACTION__":"","TVALUES":{"myHashMap":{"C8":"528,681,401.81","C7":"0.00","C9":"0.00","C3":"15,400.00","C6":"0.00","B11":"497,308,513.31","E6":"0.00","CURYEAR":"2014","E7":"0.00","E8":"600,533,182.51","B10":"0.00","STATUS":0,"E9":"0.00","B13":"0.00","B14":"497,308,513.31","E2":"600,533,182.51","E1":"2014年执行数","E3":"0.00","C1":"2015年预算数","C2":"528,666,001.81","F11":"635,732,086.71","B3":"70,194.52","B2":"497,238,318.79","F10":"0.00","AREA":"台山市","B9":"0.00","B8":"497,308,513.31","B7":"0.00","ISAUDITED":false,"B6":"0.00","F8":"635,732,086.71","F9":"0.00","C10":"0.00","F6":"0.00","C11":"528,681,401.81","F7":"0.00","C13":"-103,224,669.20","C14":"425,456,732.61","F13":"-210,275,354.10","F14":"425,456,732.61","F1":"2015年预算数","E11":"600,533,182.51","E10":"0.00","F3":"0.00","E13":"-103,224,669.20","F2":"635,732,086.71","E14":"497,308,513.31","B1":"2014年执行数"}},"__LOGINED__":true,"__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else if (action === 'list' && target === 'FT_Data') {
+    json = '{"_PageList":[{"ID":"192","ZZC":"189276.0","ISAUDITED":"false","LJJY":"1219237.4","SSQY":"全市","ZSR":"256835.0","SSYF":"201212"},{"ID":"193","ZZC":"45582.0","ISAUDITED":"false","LJJY":"244005.0","SSQY":"蓬江","ZSR":"56172.0","SSYF":"201212"},{"ID":"194","ZZC":"13937.0","ISAUDITED":"false","LJJY":"83975.0","SSQY":"江海","ZSR":"20991.0","SSYF":"201212"},{"ID":"195","ZZC":"44566.0","ISAUDITED":"false","LJJY":"249312.0","SSQY":"新会","ZSR":"50673.0","SSYF":"201212"},{"ID":"196","ZZC":"31869.0","ISAUDITED":"false","LJJY":"121416.0","SSQY":"台山","ZSR":"41045.0","SSYF":"201212"},{"ID":"197","ZZC":"23018.0","ISAUDITED":"false","LJJY":"187290.0","SSQY":"开平","ZSR":"31514.0","SSYF":"201212"},{"ID":"198","ZZC":"14389.0","ISAUDITED":"false","LJJY":"66231.0","SSQY":"恩平","ZSR":"18595.0","SSYF":"201212"},{"ID":"199","ZZC":"15392.0","ISAUDITED":"false","LJJY":"207253.4","SSQY":"鹤山","ZSR":"28434.0","SSYF":"201212"},{"ID":"184","ZZC":"244277.0","ISAUDITED":"false","LJJY":"1164687.0","SSQY":"全市","ZSR":"325232.0","SSYF":"201209"},{"ID":"186","ZZC":"25801.0","ISAUDITED":"false","LJJY":"53891.0","SSQY":"江海","ZSR":"30615.0","SSYF":"201209"},{"ID":"187","ZZC":"41068.0","ISAUDITED":"false","LJJY":"243205.0","SSQY":"新会","ZSR":"51306.0","SSYF":"201209"},{"ID":"188","ZZC":"32205.0","ISAUDITED":"false","LJJY":"112245.0","SSQY":"台山","ZSR":"45708.0","SSYF":"201209"},{"ID":"189","ZZC":"25314.0","ISAUDITED":"false","LJJY":"178792.0","SSQY":"开平","ZSR":"31980.0","SSYF":"201209"},{"ID":"190","ZZC":"12167.0","ISAUDITED":"false","LJJY":"62030.0","SSQY":"恩平","ZSR":"19818.0","SSYF":"201209"},{"ID":"191","ZZC":"19319.0","ISAUDITED":"false","LJJY":"207208.0","SSQY":"鹤山","ZSR":"30208.0","SSYF":"201209"}],"_pageCount":8,"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"_moreaction":"","__CURRENTUSER__":"admin","_edit":true,"_curPage":1,"__LOGINED__":true,"_detail":true}'
+    res.send(json)
+  } else if (action === 'detail' && target === 'FT_Data') {
+    json = '{"__MESSAGE__":"","__ERROR__":false,"CNNY":"2012年12月","__NEXTACTION__":"","TVALUES":{"13_1":"4,403.00","13_0":"10,701.00","12_5":"83,284.00","12_4":"4,319.00","12_3":"18,564.00","12_2":"18,564.00","12_1":"22,860.00","12_0":"22,883.00","11_5":"699.00","11_4":"131.00","11_3":"292.00","11_2":"292.00","11_1":"-4.00","11_0":"423.00","10_5":"80,324.00","10_4":"4,094.00","10_3":"13,308.00","10_2":"13,308.00","10_1":"15,089.00","10_0":"17,402.00","9_5":"5,828.00","9_4":"767.00","9_3":"2,462.00","9_2":"2,462.00","9_1":"3,233.00","9_0":"3,229.00","8_5":"17,557.00","8_4":"907.00","8_3":"657.00","8_2":"656.00","8_1":"1,523.00","8_0":"1,563.00","7_5":"38,530.00","7_4":"1,529.00","7_3":"1,804.00","7_2":"2,023.00","7_1":"3,297.00","7_0":"3,552.00","6_5":"3,277.40","6_4":"166.00","6_3":"19,843.00","6_2":"19,843.00","6_1":"20,008.00","6_0":"20,009.00","5_5":"227,171.00","5_4":"-387.00","5_3":"33,121.00","5_2":"33,120.00","5_1":"31,756.00","5_0":"32,733.00","4_5":"230,448.40","4_4":"-221.00","4_3":"52,964.00","4_2":"52,963.00","4_1":"51,764.00","4_0":"52,742.00","3_5":"87,907.00","3_4":"6,957.00","3_3":"1,642.00","3_2":"2,002.00","3_1":"8,830.00","3_0":"8,959.00","2_5":"847,746.00","2_4":"44,919.00","2_3":"4,533.00","2_2":"4,533.00","2_1":"43,562.00","2_0":"49,452.00","1_5":"-220,212.00","1_4":"1,458.00","1_3":"77,834.00","1_2":"84,444.00","1_1":"73,864.00","1_0":"85,902.00","0_5":"627,534.00","0_4":"46,377.00","0_3":"82,367.00","0_2":"88,977.00","0_1":"117,426.00","0_0":"135,354.00","18_5":"1,219,237.40","18_4":"67,559.00","18_3":"182,089.00","18_2":"189,276.00","18_1":"228,448.00","18_0":"256,835.00","17_5":"0.00","17_4":"0.00","17_3":"0.00","17_2":"0.00","17_1":"0.00","17_0":"0.00","16_5":"31.00","16_4":"24.00","16_3":"3.00","16_2":"3.00","16_1":"27.00","16_0":"27.00","15_5":"0.00","15_4":"0.00","15_3":"0.00","15_2":"0.00","15_1":"0.00","15_0":"0.00","14_5":"0.00","14_4":"0.00","14_3":"0.00","14_2":"0.00","14_1":"0.00","14_0":"0.00","13_5":"47,095.00","13_4":"2,675.00","13_3":"8,026.00","13_2":"8,026.00"},"__LOGINED__":true,"SSQY":"全市","__CURRENTUSER__":"admin"}'
+    res.send(json)
+  } else {
+    res.status(400).end()
+  }
+})
+app.post('/modules/FD_ctl.jsp', function(req, res){
+  var json
+  var action = req.param('action')
+  if (action === 'NewBudget') {
+    json = '{"__MESSAGE__":"无法新建2015预算编制,基础数据还没有通过审核","__ERROR__":true,"__NEXTACTION__":"","__LOGINED__":true,"__CURRENTUSER__":"admin"}'
     res.send(json)
   } else {
     res.status(400).end()
