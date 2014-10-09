@@ -1,0 +1,192 @@
+
+<meta charset="utf-8" />
+
+<style>
+  #form-1 label, .input {
+    display: inline-block;
+  }
+  #form-1 label {
+    width: 50%;
+    text-align: right;
+    margin-right: 5px;
+  }
+
+  #form-1 .input {
+    width: 35%;
+    
+  }
+  #form-1 .input-append {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  #form-1 [type="text"] {
+    width: 100%;
+    padding: 2px 3px;
+    margin-bottom: 0;
+  }
+  #form-1 .add-on {
+    padding: 2px 3px;
+    position: relative;
+    margin-left: -22px;
+    z-index: 2;
+  }
+</style>
+
+<form id="form-1" method="post" action="modules/FD_ctl.jsp">
+  <div class="block">
+    <legend>
+      <i class="icon-check"></i>基础资料设置 - 工伤保险
+    </legend>
+
+    <fieldset>
+      <legend>征缴相关参数</legend>
+      <div class="row-fluid">
+        <div class="span4">
+          <div class="control-group">
+            <label>在职增长率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="G1" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label>单位实缴增长率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="G4" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label>其他人员缴费率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="Othertrate" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="control-group">
+            <label>离休增长率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="G2" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label>其他实缴增长率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="G5" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label>单位缴费率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="Unitrate" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <div class="control-group">
+            <label>退休增长率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="G3" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label>个人缴费率</label>
+            <div class="input">
+              <div class="input-append">
+                <input type="text" name="Indirate" />
+                <span class="add-on">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="control-group">
+      <input type="hidden" name="BZLX" value="1">
+      <input type="submit" value="生成基础资料" class="btn btn-primary">
+      <input type="button" id="btn-reset" value="重置" class="btn" />
+    </div>
+  </div>
+</form>
+
+<script>
+  var baseID = parseInt(getURLParams()['ID']) || undefined,
+    $form = $frame.find('form'),
+    area = getURLParams()['AREA'];
+  if (! baseID) {
+    $form.ajaxForm({
+      data: {
+        action: 'NewBase',
+        AREA: area
+      },
+      success: function(data){
+        var testData = {'ID': 123}
+        var resObj = readResObj(data, testData);
+        if (resObj['__ERROR__']) return;
+        loadPage('html/FD_Base/3_Edit.html?ID=' + resObj['ID']);
+      }
+    });
+  } else {
+    $form.ajaxForm({
+      data: {
+        action: 'EditBaseParams',
+        ID: baseID
+      },
+      success: function(data){
+        var testData = {
+          baseID: 123456
+        }
+        var resObj = readResObj(data, testData),
+          msg = resObj['__MESSAGE__'];
+        msg && notify(msg);
+        loadPage('html/FD_Base/3_Edit.html?ID=' + baseID);
+      }
+    });
+  }
+  $form.find('#btn-reset').on('click', function() {
+    if (confirm('当前所有修改都将撤销 是否确定重置表单?')) {
+      $form[0].reset();
+    }
+  });
+
+  $.get('modules/FD_ctl.jsp?action=InitBase', {
+    ID: baseID
+  }, function(data){
+    try {
+      var resObj = $.parseJSON(data),
+        params = resObj['PARAMS']['myHashMap'];
+      _.each(params, function(val, key){
+        $form.find('[name="'+ key +'"]').val(val)
+          .attr('placehodler', val);
+      });
+    } catch(err) {
+      // 测试
+      /* $form.find('[name]').each(function(i, el){
+        var val = _.random(1000, 999999);
+        $(el).val(val).attr('value', val)
+          .attr('placehodler', val);
+      }); */
+    }
+  });
+</script>
