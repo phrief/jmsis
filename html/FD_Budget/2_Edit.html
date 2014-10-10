@@ -34,7 +34,7 @@
       </caption>
       <thead>
       <tr>
-        <th>社预02表</th>
+        <th>社预03表</th>
         <th colspan="4" name="AREA">区域: {{-area}}</th>
         <th class="text-right">单位: 元</th>
       </tr>
@@ -273,56 +273,59 @@
 
     // stat cells
     var stats = {
-      'B8': function () {
-        return g('B2') + g('B3') + g('B4') + g('B6') + g('B7');
+      'B10': function () {
+        return g('B2') + g('B3') + g('B4') + g('B8') + g('B9');
       },
-      'B11': function () {
-        return g('B8') + g('B9') + g('B10');
+      'B13': function () {
+        return g('B10') + g('B11') + g('B12');
       },
-      'B14': function () {
-        return g('B11') + g('B13');
+      'B16': function () {
+        return g('B13') + g('B15');
       },
-      'E8': function () {
-        return g('E2') + g('E3') + g('E4') + g('E6') + g('E7');
-      },
-      'E11': function () {
-        return g('E8') + g('E9') + g('E10');
-      },
-      'E12': function () {
-        return g('B11') - g('E11');
+
+      'E10': function () {
+        return g('B2') + g('B3') + g('B4') + g('B5') + g('B6') + g('B7') + g('B8') + g('B9') + g('B10') + g('B11');
       },
       'E13': function () {
-        return g('E12') + g('B13');
+        return g('E10') + g('E11') + g('E12');
       },
       'E14': function () {
-        return g('E11') + g('E13');
+        return g('B13') - g('E13');
       },
-      'C8': function () {
-        return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
+      'E15': function () {
+        return g('E14') + g('B15');
       },
-      'C11': function () {
-        return g('C8') + g('C9') + g('C10');
+      'E16': function () {
+        return g('E13') + g('E15');
+      },
+
+      'C10': function () {
+        return g('C2') + g('C3') + g('C4') + g('C8') + g('C9');
       },
       'C13': function () {
-        return g('E13');
+        return g('C10') + g('C11') + g('C12');
       },
-      'C14': function () {
-        return g('C11') + g('C13');
+      'C15': function () {
+        return g('E15');
       },
-      'F8': function () {
-        return g('F2') + g('F3') + g('F4') + g('F6') + g('F7');
+      'C16': function () {
+        return g('C13') + g('C15');
       },
-      'F11': function () {
-        return g('F8') + g('F9') + g('F10');
-      },
-      'F12': function () {
-        return g('C11') - g('F11');
+
+      'F10': function () {
+        return g('F2') + g('F3') + g('F4') + g('F8') + g('F9');
       },
       'F13': function () {
-        return g('F12') + g('C13');
+        return g('F10') + g('F11') + g('F12');
       },
       'F14': function () {
-        return g('F13') + g('F11');
+        return g('C13') - g('F13');
+      },
+      'F15': function () {
+        return g('F14') + g('C15');
+      },
+      'F16': function () {
+        return g('F13') + g('F15');
       }
     }
     _.each(_.keys(stats), function (key) {

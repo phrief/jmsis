@@ -82,14 +82,6 @@
       <td></td>
     </tr>
     <tr>
-      <td>其中: 本级财政补助</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
       <td>四、其他收入</td>
       <td></td>
       <td></td>
@@ -257,56 +249,59 @@
 
     // stat cells
     var stats = {
-      'B8': function () {
-        return g('B2') + g('B3') + g('B4') + g('B6') + g('B7');
+      'B7': function () {
+        return g('B2') + g('B3') + g('B4') + g('B5') + g('B6');
       },
-      'B11': function () {
-        return g('B8') + g('B9') + g('B10');
+      'B10': function () {
+        return g('B7') + g('B8') + g('B9');
       },
-      'B14': function () {
-        return g('B11') + g('B13');
+      'B13': function () {
+        return g('B10') + g('B12');
       },
-      'E8': function () {
-        return g('E2') + g('E3') + g('E4') + g('E6') + g('E7');
+
+      'E7': function () {
+        return g('E2') + g('E3') + g('E4') + g('E5') + g('E6');
+      },
+      'E10': function () {
+        return g('E7') + g('E8') + g('E9');
       },
       'E11': function () {
-        return g('E8') + g('E9') + g('E10');
+        return g('B10') - g('E10');
       },
       'E12': function () {
-        return g('B11') - g('E11');
+        return g('E11') + g('B12');
       },
       'E13': function () {
-        return g('E12') + g('B13');
+        return g('E10') + g('E12');
       },
-      'E14': function () {
-        return g('E11') + g('E13');
+
+      'C7': function () {
+        return g('C2') + g('C3') + g('C4') + g('C5') + g('C6');
       },
-      'C8': function () {
-        return g('C2') + g('C3') + g('C4') + g('C6') + g('C7');
+      'C10': function () {
+        return g('C7') + g('C8') + g('C9');
       },
-      'C11': function () {
-        return g('C8') + g('C9') + g('C10');
+      'C12': function () {
+        return g('E12');
       },
       'C13': function () {
-        return g('E13');
+        return g('C10') + g('C12');
       },
-      'C14': function () {
-        return g('C11') + g('C13');
+      
+      'F7': function () {
+        return g('F2') + g('F3') + g('F4') + g('F5') + g('F6');
       },
-      'F8': function () {
-        return g('F2') + g('F3') + g('F4') + g('F6') + g('F7');
+      'F10': function () {
+        return g('F7') + g('F8') + g('F9');
       },
       'F11': function () {
-        return g('F8') + g('F9') + g('F10');
+        return g('C10') - g('F10');
       },
       'F12': function () {
-        return g('C11') - g('F11');
+        return g('F11') + g('C12');
       },
       'F13': function () {
-        return g('F12') + g('C13');
-      },
-      'F14': function () {
-        return g('F13') + g('F11');
+        return g('F10') + g('F12');
       }
     }
     _.each(_.keys(stats), function (key) {
