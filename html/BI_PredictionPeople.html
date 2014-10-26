@@ -22,15 +22,15 @@
                 <form class="form-horizontal" method="get" action="modules/BI_ctl.jsp?action=PreditionPeople">
                     <div class="block">
                         <div class="control-group">
-                            <label class="control-label">开始时间:</label>
+                            <label class="control-label">开始年份:</label>
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="KSSJ" id="KSSJ"/>
+                                <input type="text" class="datepicker_c" name="KSNF" id="KSNF"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">结束时间:</label>
+                            <label class="control-label">结束年份:</label>
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="JSSJ" id="JSSJ"/>
+                                <input type="text" class="datepicker_c" name="JSNF" id="JSNF"/>
                             </div>
                         </div>
                         <div class="control-group">
@@ -72,7 +72,7 @@
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -85,13 +85,13 @@
     function makeChart(resObj) {
 
         if (resObj) {
-            var months = resObj['MONTHS'];
+            var years = resObj['YEARS'];
             var division = resObj['DIVISION'];
             var dataset = resObj['DATASET'];
             var period = resObj['PERIOD'];
             var name = resObj['NAME'];
             var title = resObj['TITLE'];
-            months = makeAdapt(months);
+            months = makeAdapt(years);
             $('#Addition').highcharts({
                 exporting: false,
                 chart: {
@@ -109,7 +109,7 @@
                     x: -20
                 },
                 xAxis: {
-                    categories: months,
+                    categories: years,
                     labels: {
                         rotation: -45
                     }
@@ -141,58 +141,50 @@
         }
     }
 
-    var testData = '{"TITLE": "全市生育人口趋势图", "MONTHS": ["2013年07月","2013年08月","2013年09月","2013年10月","2013年11月","2013年12月","2014年01月","2014年02月","2014年03月","2014年04月","2014年05月","2014年06月"], "DATASET": [150, 200, 150, 400, 350, 300, 450, 500, 600, 550, 650, 700], "NAME": "生育人口数", "DIVISION": "人", "PERIOD": "2013年07月--2014年06月"}';
+    var testData = '{"TITLE": "全市生育人口趋势图", "YEARS": ["2011年","2012年","2013年","2014年","2015年","2016年"], "DATASET": [150, 200, 150, 400, 350, 300], "NAME": "生育人口数", "DIVISION": "人", "PERIOD": "2011年--2016年"}';
 </script>
 <script>
-    $(function() {
-        var opt_month = {
-            language:  'zh-CN',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 3,
-            forceParse: 0,
-            showMeridian: 1,
-            format: 'yyyy-mm',
-            //maxView: 3,
-            minView: 3
-        };
-        var opt_year = {
-            language:  'zh-CN',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 4,
-            forceParse: 0,
-            showMeridian: 1,
-            format: 'yyyy',
-            //maxView: 3,
-            minView: 4
-        };
+    var myDate = new Date();
+    $('[name="KSNF"]').val(myDate.getFullYear() - 3);
+    $('[name="JSNF"]').val(myDate.getFullYear() + 2);
+
+    $('.datepicker_c').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
+    });
+    $('.datepicker_c').on('click', function () {
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
 
 
-        var now = new Date();
-        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
-        $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 7));
-        $('[name="JSSJ"]').val(now.toJSON().slice(0, 7));
-        $('.datepicker_c').datetimepicker(opt_month);
-        $('#SJLX').change(function () {
-            var t_type =  $('#SJLX').val();
-            if(t_type == 'year') {
-                $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 4));
-                $('[name="JSSJ"]').val(now.toJSON().slice(0, 4));
-                $('.datepicker_c').datetimepicker('remove');
-                $('.datepicker_c').datetimepicker(opt_year);
+    $(".dialog_c").dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 500
+        },
+        hide: {
+            effect: "blind",
+            duration: 500
+        },
+        modal: true,
+        buttons: {
+            确定: function () {
+                $(this).dialog("close");
             }
-            if(t_type == 'month') {
-                $('[name="KSSJ"]').val(oneYearAgo.toJSON().slice(0, 7));
-                $('[name="JSSJ"]').val(now.toJSON().slice(0, 7));
-                $('.datepicker_c').datetimepicker('remove');
-                $('.datepicker_c').datetimepicker(opt_month);
-            }
-        });
+        },
+        resizable: false,
+        draggable: false
     });
 </script>
 
@@ -200,8 +192,8 @@
     $.ajax({
         url : 'modules/BI_ctl.jsp?action=PreditionPeople',
         success : function(data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

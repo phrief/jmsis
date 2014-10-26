@@ -254,7 +254,30 @@ function makeChart(resObj) {
             tooltip: {
                 shared: true
             },
-            series: [{
+            series: [ {
+                name: '年收入',
+                data: incomeArr,
+                type: 'line',
+                tooltip: {
+                    valueSuffix: division
+                }
+            }, {
+                name: '年支出',
+                data: payoutArr,
+                color: '#FFB90F',
+                type: 'line',
+                tooltip: {
+                    valueSuffix: division
+                }
+            }, {
+                name: '余额累计',
+                data: balanceArr,
+                type: 'line',
+                color: '#228B22',
+                tooltip: {
+                    valueSuffix: division
+                }
+            },{
                 name: '黄色警戒区域',
                 data: yellowLine,
                 type: 'areaspline',
@@ -267,27 +290,6 @@ function makeChart(resObj) {
                 data: redLine,
                 type: 'areaspline',
                 color: '#FF4500',
-                tooltip: {
-                    valueSuffix: division
-                }
-            }, {
-                name: '年收入',
-                data: incomeArr,
-                type: 'line',
-                tooltip: {
-                    valueSuffix: division
-                }
-            }, {
-                name: '年支出',
-                data: payoutArr,
-                type: 'line',
-                tooltip: {
-                    valueSuffix: division
-                }
-            }, {
-                name: '余额累计',
-                data: balanceArr,
-                type: 'line',
                 tooltip: {
                     valueSuffix: division
                 }
@@ -315,7 +317,7 @@ function makeChart(resObj) {
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {

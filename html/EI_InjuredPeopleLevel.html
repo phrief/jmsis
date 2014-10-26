@@ -93,7 +93,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -380,7 +380,7 @@
 
 <script>
     $.ajax({
-        //url: 'modules/EI_ctl.jsp?action=InjuredPeopleLevel',
+        url: 'modules/EI_ctl.jsp?action=InjuredPeopleLevel',
         success: function (data) {
             var resObj = readResObj(data, testData);
             //var resObj = JSON.parse(testData);

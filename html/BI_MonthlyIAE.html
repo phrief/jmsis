@@ -58,8 +58,6 @@
 
                             <div class="controls">
                                 <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
                                     <option value="2">合并账户</option>
                                 </select>
                             </div>
@@ -89,7 +87,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push('.');
             }
             return yearsAfter;
         } else {
@@ -176,7 +174,7 @@
                         }
                     },
                     {
-                        name: '工伤保险基金余额',
+                        name: '生育保险基金余额',
                         data: balanceArr,
                         tooltip: {
                             valueSuffix: division
@@ -194,8 +192,8 @@
     $.ajax({
         url: 'modules/BI_ctl.jsp?action=FundautoMonitor',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

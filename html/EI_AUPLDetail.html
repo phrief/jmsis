@@ -1,0 +1,83 @@
+<meta charset="UTF-8">
+
+<table id="table-list" data-colspans="3">
+  <caption>
+    <i class="icon-th-list"></i>工伤待遇发放异常检索 - 明细
+  </caption>
+  <thead>
+  <tr>
+    <th>参保号</th>
+    <th>姓名</th>
+    <th>相关信息</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type='text/html' id="tr-tmpl">
+    <tr>
+      <td>{{-item['CBH']}}</td>
+      <td>{{-item['XM']}}</td>
+      <td>{{-item['XGXX']}}</td>
+    </tr>
+  </script>
+  </tbody>
+  <!-- 表底 -->
+  <tfoot>
+  <tr>
+    <td colspan="3">
+      <div class="bulk-actions align-left">
+        <a class="btn btn-default" href="html/EI_MonthlyAPL.html">返回列表</a>
+      </div>
+      <div class="pagination"></div>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+<script>
+  var params = getURLParams(),
+    itemID = params['ID'],
+    $table_list = $frame.find('#table-list'),
+    $tbody = $table_list.find('tbody'),
+    $pagin = $table_list.find('.pagination'),
+    trTmpl = $tbody.find('#tr-tmpl').html();
+
+  getPage(1);
+
+  function getPage(n) {
+    $.get('modules/EI_ctl.jsp?action=TADetail', {
+      'ID': itemID,
+      'Page': n
+    }, function (resObj) {
+      if (!_.isObject(resObj)) resObj = $.parseJSON(resObj);
+      showTable(resObj);
+    });
+  }
+  function showTable(resObj) {
+    $table_list.addClass('hidden');
+    var pageList = resObj['_PageList'];
+    if (!pageList || pageList.length < 1) {
+      $tbody.html([
+        '<tr>',
+        '<td class="td-sole" colspan="3">没有记录</td>',
+        '</tr>'
+      ].join(''));
+    } else {
+      var tbodyHtml = _.reduce(pageList, function (memo, item) {
+        var trHtml = _.template(trTmpl, item, {
+          variable: 'item'
+        });
+        return memo + trHtml;
+      }, '');
+      $tbody.html(tbodyHtml);
+      // 分页
+      $pagin.html([
+        '<span><a onclick="getPage(1)">首页</a></span>',
+        '<span><a onclick="getPage(' + Math.max((resObj['_curPage'] - 1), 1) + ')">上一页</a></span>',
+        '<span>当前页' + resObj['_curPage'] + '/' + resObj['_pageCount'] + '</span>',
+        '<span><a onclick="getPage(' + Math.min((resObj['_curPage'] + 1), resObj['_pageCount']) + ')">下一页</a></span>',
+        '<span><a onclick="getPage(' + resObj['_pageCount'] + ')">尾页</a></span>'
+      ].join(''));
+    }
+    $table_list.removeClass('hidden');
+  }
+</script>

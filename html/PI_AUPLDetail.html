@@ -2,7 +2,7 @@
 
 <table id="table-list" data-colspans="3">
   <caption>
-    <i class="icon-th-list"></i>待遇发放异常检索 - 明细
+    <i class="icon-th-list"></i>养老待遇发放异常检索 - 明细
   </caption>
   <thead>
   <tr>
@@ -46,7 +46,7 @@
   function getPage(n) {
     $.get('modules/PI_ctl.jsp?action=TADetail', {
       'ID': itemID,
-      'page': n
+      'Page': n
     }, function (resObj) {
       if (!_.isObject(resObj)) resObj = $.parseJSON(resObj);
       showTable(resObj);

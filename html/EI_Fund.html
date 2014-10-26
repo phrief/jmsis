@@ -78,8 +78,8 @@
 <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <script>
-    var testData = '{"CHARTTYPE":"0","NAME":"支出率","DATASET":["10","17","14"],"NAMES":["一类行业","二类行业","三类行业"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市各行业工伤基金支出率对比分析","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年01月——2013年06月","DIVISION":"%"}';
-    //var testData = '{"CHARTTYPE":"1","NUM":3,"TITLE":"全市工伤基金先行支付支出率对比分析图","AREA":"全市","DATA1":[1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250],"DATA3":[1100,1300,1250,1500,1450,1300],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+    //var testData = '{"CHARTTYPE":"0","NAME":"支出率","DATASET":["10","17","14"],"NAMES":["一类行业","二类行业","三类行业"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市各行业工伤基金支出率对比分析","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年01月——2013年06月","DIVISION":"%"}';
+    var testData = '{"CHARTTYPE":"1","NUM":3,"TITLE":"全市工伤基金先行支付支出率对比分析图","AREA":"全市","DATA1":[1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250],"DATA3":[1100,1300,1250,1500,1450,1300],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
 </script>
 <script>
     function makeAdapt(years) {
@@ -91,7 +91,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {

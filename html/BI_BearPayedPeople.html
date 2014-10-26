@@ -103,7 +103,7 @@
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -116,6 +116,7 @@
     //出图函数
     function makeChart(resObj) {
         if (resObj) {
+            console.log(resObj);
             var charttype = resObj['CHARTTYPE'];
             if (charttype == 0) {
                 var months = resObj['MONTHS'];
@@ -238,17 +239,17 @@
         }
     }
 
-    //var testData = '{"CHARTTYPE":"0","NUM":3,"TITLE":"各区域生育参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
+    var testData = '{"CHARTTYPE":"0","NUM":3,"TITLE":"各区域生育参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"蓬江区","NAME2":"江海区","NAME3":"新会区","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
 
-    var testData = '{"CHARTTYPE":"1","NAME1":"参保人数","DATA1":["10","17","14","18","20","15"],"NAME2":"享受待遇人数","DATA2":["10","17","14","18","20","15"],"NAMES":["蓬江区","江海区","新会区","台山市","鹤山市","恩平市"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"各市区女性职工生育参保人数与享受待遇人数对比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年01月——2013年06月","DIVISION":"%"}';
+    //var testData = '{"CHARTTYPE":"1","NAME1":"参保人数","DATA1":["10","17","14","18","20","15"],"NAME2":"享受待遇人数","DATA2":["10","17","14","18","20","15"],"NAMES":["蓬江区","江海区","新会区","台山市","鹤山市","恩平市"],"__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"各市区女性职工生育参保人数与享受待遇人数对比分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2013年01月——2013年06月","DIVISION":"%"}';
 </script>
 
 <script>
     $.ajax({
         url: 'modules/BI_ctl.jsp?action=BearPayedPeople',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

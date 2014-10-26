@@ -34,7 +34,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form id="form-query" class="form-horizontal" method="post" action="modules/PI_ctl.jsp?action=TASearch">
+                <form id="form-query" class="form-horizontal" method="post" action="modules/BI_ctl.jsp?action=TASearch">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">扫描年月</label>
@@ -46,9 +46,10 @@
                             <label class="control-label">扫描方式</label>
                             <div class="controls">
                                 <select name="SearchCondition">
-                                    <option value="0">个人月发放养老金大于</option>
-                                    <option value="1">个人月发放养老金与上月差额大于</option>
-                                    <option value="2">一次性待遇发放大于</option>
+                                    <option value="0">个人月发放生育津贴大于</option>
+                                    <option value="1">个人月发放男职工护理津贴大于</option>
+                                    <option value="2">个人月发放生育医疗费大于</option>
+                                    <option value="3">个人月发放一次性分娩营养补助费大于</option>
                                 </select>
                             </div>
                         </div>
@@ -87,10 +88,10 @@
 <!-- /表顶 -->
 
 <!-- 表格 -->
-<form id="form-list" method="post" action="modules/PI_ctl.jsp?action=TADelete">
+<form id="form-list" method="post" action="modules/BI_ctl.jsp?action=TADelete">
   <table id="table-list" data-colspans="6">
     <caption>
-            <i class="icon-th-list"></i>待遇发放异常检索
+            <i class="icon-th-list"></i>生育保险待遇发放异常检索
         </caption>
     <thead>
       <tr>
@@ -116,7 +117,7 @@
                     <td class="text-right">{{-item['JLS']}}</td>
                     <td>{{-item['SMX']}}</td>
                     <td>
-                        <a href="html/PI_AUPLDetail.html?ID={{-item['ID']}}">详细</a>
+                        <a href="html/BI_AUPLDetail.html?ID={{-item['ID']}}">详细</a>
                     </td>
                 </tr>
             </script>      
@@ -190,7 +191,7 @@
     getPage(1);
 
     function getPage(n) {
-        $.get('modules/PI_ctl.jsp?action=TreatmentAbnormal', {
+        $.get('modules/BI_ctl.jsp?action=TreatmentAbnormal', {
             'Page': n
         }, function(resObj) {
             if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);

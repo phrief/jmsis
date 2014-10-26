@@ -58,8 +58,6 @@
 
                             <div class="controls">
                                 <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
                                     <option value="2">合并账户</option>
                                 </select>
                             </div>
@@ -89,7 +87,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {

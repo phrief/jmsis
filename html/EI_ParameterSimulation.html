@@ -37,7 +37,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form" action="modules/EI_ctl.jsp?action=PolicySimulation" method="post">
+                <form class="form" action="modules/EI_ctl.jsp?action=ParameterSimulation" method="post">
                     <div class="block">
                         <div class="row-fluid">
                             <div class="span6">
@@ -64,15 +64,21 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">个人缴费率(%)</label>
+                                    <label class="control-label">二类企业缴费率(%)</label>
                                     <div class="controls">
-                                        <input type="text" name="GRJFL" value="8">
+                                        <input type="text" name="GC2" value="1.0">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">企业工伤金征缴率(%)</label>
+                                    <label class="control-label">征缴率(%)</label>
                                     <div class="controls">
-                                        <input type="text" name="GSJZJL" value="98.4">
+                                        <input type="text" name="GD" value="98">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">工伤死亡增长率(%)</label>
+                                    <div class="controls">
+                                        <input type="text" name="GG2" value="2">
                                     </div>
                                 </div>
                             </div>
@@ -85,21 +91,21 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">单位缴费率(%)</label>
+                                    <label class="control-label">一类企业缴费率(%)</label>
                                     <div class="controls">
-                                        <input type="text" name="DWJFL" value="15">
+                                        <input type="text" name="GC1" value="0.5">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">其他人员缴费率(%)</label>
+                                    <label class="control-label">三类企业缴费率(%)</label>
                                     <div class="controls">
-                                        <input type="text" name="QTRYJFL" value="20">
+                                        <input type="text" name="GC3" value="1.5">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">其他人员征缴率(%)</label>
+                                    <label class="control-label">参保人数增长率(%)</label>
                                     <div class="controls">
-                                        <input type="text" name="QTRYZJL" value="98">
+                                        <input type="text" name="GG1" value="2">
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +178,7 @@
     function makeChart(resObj) {
 
         if(resObj) {
-            var years = resObj['YEAR'];
+            var years = resObj['YEARS'];
             var division = resObj['DIVISION'];
             var income = resObj['INCOME'];
             var payout = resObj['PAYOUT'];
@@ -181,6 +187,7 @@
             var red = resObj['RED'];
             var period = resObj['PERIOD'];
             var area = resObj['AREA'];
+            var title = resObj['TITLE'];
             var isYellow = false;
             var isRed = false;
 
@@ -234,7 +241,7 @@
 
                 },
                 title: {
-                    text: area + '工伤基金趋势预测图',
+                    text: title,
                     style: {
                         fontFamily: '微软雅黑'
                     }
@@ -255,6 +262,29 @@
                     shared: true
                 },
                 series: [{
+                    name: '年收入',
+                    data: incomeArr,
+                    type: 'line',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '年支出',
+                    data: payoutArr,
+                    type: 'line',
+                    color: '#FFB90F',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }, {
+                    name: '余额累计',
+                    data: balanceArr,
+                    type: 'line',
+                    color: '#228B22',
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                },{
                     name: '黄色警戒区域',
                     data: yellowLine,
                     type: 'areaspline',
@@ -267,27 +297,6 @@
                     data: redLine,
                     type: 'areaspline',
                     color: '#FF4500',
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }, {
-                    name: '年收入',
-                    data: incomeArr,
-                    type: 'line',
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }, {
-                    name: '年支出',
-                    data: payoutArr,
-                    type: 'line',
-                    tooltip: {
-                        valueSuffix: division
-                    }
-                }, {
-                    name: '余额累计',
-                    data: balanceArr,
-                    type: 'line',
                     tooltip: {
                         valueSuffix: division
                     }
@@ -315,7 +324,7 @@
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {

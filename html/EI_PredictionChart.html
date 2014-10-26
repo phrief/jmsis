@@ -26,7 +26,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" method="post" action="modules/UI_ctl.jsp?action=ExpensesPredication">
+                <form class="form-horizontal" method="post" action="modules/EI_ctl.jsp?action=ExpensesPredication">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始年份</label>
@@ -135,7 +135,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -303,7 +303,7 @@
 
 <script>
     $.ajax({
-        url: 'modules/UI_ctl.jsp?action=ExpensesPredication',
+        url: 'modules/EI_ctl.jsp?action=ExpensesPredication',
         type: 'post',
         success: function (data) {
             var resObj = readResObj(data, testData);

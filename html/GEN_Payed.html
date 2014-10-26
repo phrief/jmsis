@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="control-group" id="work_selector">
+                        <!-- <div class="control-group" id="work_selector">
                             <label class="control-label">对比险种</label>
                             <div class="controls">
                                 <label class="checkbox">
@@ -68,7 +68,7 @@
                                     <input type="checkbox" name="PROBOX[]" value="3">生育保险
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="control-group">
                             <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
                             <input type="reset" value="重置" class="btn"/>
@@ -94,7 +94,7 @@
                 if(i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -106,6 +106,90 @@
 <script>
     //出图函数
     function makeChart(resObj) {
+        console.log(resObj);
+        var months = resObj['MONTHS'];
+        var division = resObj['DIVISION'];
+        var period = resObj['PERIOD'];
+        var area = resObj['AREA'];
+        var title = resObj['TITLE'];
+        var name1 = resObj['NAME1'];
+        var name2 = resObj['NAME2'];
+        var name3 = resObj['NAME3'];
+        var name4 = resObj['NAME4'];
+        var data1 = resObj['DATA1'];
+        var data2 = resObj['DATA2'];
+        var data3 = resObj['DATA3'];
+        var data4 = resObj['DATA4'];
+        
+        months = makeAdapt(months);
+        $('#MonthlyIAE').highcharts({
+            exporting: false,
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: title,
+                x: -20,//center
+                style: {
+                    fontFamily: '微软雅黑'
+                }
+            },
+            subtitle: {
+                text: period,
+                x: -20
+            },
+            xAxis: {
+                categories: months,
+                labels: {
+                    rotation: -45
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '单位(' + division + ')'
+                },
+                plotLines: [
+                    {
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }
+                ]
+            },
+            tooltip: {
+                shared: true
+            },
+            series: [
+                {
+                    name: name1,
+                    data: data1,
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                },{
+                    name: name2,
+                    data: data2,
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                },{
+                    name: name3,
+                    data: data3,
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                },{
+                    name: name4,
+                    data: data4,
+                    tooltip: {
+                        valueSuffix: division
+                    }
+                }
+            ]
+        });
+
+
+        /*console.log(resObj);
         var months = resObj['MONTHS'];
         var division = resObj['DIVISION'];
         var period = resObj['PERIOD'];
@@ -166,8 +250,8 @@
             },
             series: chartArr
         });
+    }*/
     }
-
     var testData = '{"NUM":4,"TITLE":"蓬江区各项中参保人数对比分析图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"DATA4":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"养老保险","NAME2":"失业保险","NAME3":"工伤保险","NAME4":"生育保险","__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
 
 </script>
@@ -176,8 +260,8 @@
     $.ajax({
         url: 'modules/GEN_ctl.jsp?action=Payed',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });

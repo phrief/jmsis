@@ -20,7 +20,7 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
-                <form class="form-horizontal" action="modules/UI_ctl.jsp?action=FundautoMonitor">
+                <form class="form-horizontal" action="modules/EI_ctl.jsp?action=FundautoMonitor">
                     <div class="block">
                         <div class="control-group">
                             <label class="control-label">开始月份</label>
@@ -58,8 +58,6 @@
 
                             <div class="controls">
                                 <select name="ZHLX">
-                                    <option value="1">统筹账户</option>
-                                    <option value="0">个人账户</option>
                                     <option value="2">合并账户</option>
                                 </select>
                             </div>
@@ -89,7 +87,7 @@
                 if (i % delta == 0)
                     yearsAfter.push(years[i]);
                 else
-                    yearsAfter.push("");
+                    yearsAfter.push(".");
             }
             return yearsAfter;
         } else {
@@ -194,8 +192,8 @@
     $.ajax({
         url: 'modules/EI_ctl.jsp?action=FundautoMonitor',
         success: function (data) {
-            //var resObj = readResObj(data, testData);
-            var resObj = JSON.parse(testData);
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });
