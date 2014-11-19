@@ -1,0 +1,214 @@
+<meta charset="UTF-8"/>
+
+<style>
+    #table-list th {
+        min-width: 70px;
+    }
+    #table-list th:nth-child(1) {
+        min-width: 0;
+    }
+    #table-list th:nth-child(2) {
+        min-width: 50px;
+    }
+    #table-list th:nth-child(4),
+    #table-list td:nth-child(4) {
+        padding-right: 20px;
+    }
+    #table-list th:nth-child(6) {
+        min-width: 40px;
+        width: 50px;
+    }
+    #table-list th:nth-child(7) {
+        min-width: 40px;
+        width: 90px;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    信息过滤
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" method="post" action="modules/EI_ctl.jsp?action=CureStatistics">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">选择年份</label>
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSNF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 表格 -->
+<form id="form-list" method="post" action="modules/EI_ctl.jsp?action=CureStatistics">
+  <table id="table-list" data-colspans="6">
+    <caption>
+            <i class="icon-th-list"></i><span id="inner_title"></span>就医情况统计分析
+        </caption>
+    <thead>
+      <tr>
+        <th>医院名称</th>
+        <th>就医人次</th>
+        <th class="text-right">人均住院天数</th>
+        <th>康复治疗费</th>
+        <th>医疗费</th>
+        <th>器具费</th>
+        <th>住院日均费用</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+            <script type="text/html" id="tr-tmpl">
+                <tr>
+                    <td>{{-item['YYMC']}}</td>
+                    <td>{{-item['JYRC']}}</td>
+                    <td class="text-right">{{-item['RJZYTS']}}</td>
+                    <td>{{-item['KFZLF']}}</td>
+                    <td>{{-item['YLF']}}</td>
+                    <td>{{-item['QJF']}}</td>
+                    <td>{{-item['ZYRJFY']}}</td>
+                </tr>
+            </script>      
+        </tbody>
+  
+    <!-- 表底 -->
+    <tfoot>
+      <tr>
+        <td colspan="6">
+                    <div class="pagination"></div>
+                </td>
+      </tr>
+    </tfoot>
+    <!-- /表底 -->
+  </table>
+</form>
+<!-- /表格 -->
+
+
+<script>
+    var $frame = $('#main-frame'),
+        $form_query = $('#form-query'),
+        $form_list = $('#form-list'),
+        $table_list = $('#table-list'),
+        $tbody = $table_list.find('tbody'),
+        $pagin = $table_list.find('.pagination'),
+        trTmpl = $tbody.find('#tr-tmpl').html();
+
+    $('[name="KSNF"]').val(new Date().getFullYear());
+    $('.datepicker_c').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy',
+        initialDate: new Date(),
+        //maxView: 3,
+        minView: 4
+    });
+    $('.datepicker_c').on('click', function(){
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+
+    // 检索
+    $form_query.ajaxForm({
+        success: function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            var msg = resObj['__MESSAGE__'];
+            msg && notify(msg);
+            // 表格数据
+            getPage(1);
+            $("#collapseOne").collapse('hide');
+        }
+    });
+
+    getPage(1);
+
+    function getPage(n) {
+        $.get('modules/EI_ctl.jsp?action=CureStatistics', {
+            'Page': n
+        }, function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            showTable(resObj);
+        });
+    }
+    function showTable(resObj) {
+        $table_list.addClass('hidden');
+        var pageList = resObj['_PageList'];
+        if (! pageList || pageList.length < 1) {
+            $tbody.html([
+                '<tr>',
+                    '<td class="td-sole" colspan="6">没有记录</td>',
+                '</tr>'
+            ].join(''));
+            $('#inner_title').html('');
+        } else {
+            var tbodyHtml = _.reduce(pageList, function(memo, item) {
+                var trHtml = _.template(trTmpl, item, {
+                    variable: 'item'
+                });
+                return memo + trHtml;
+            }, '');
+            $tbody.html(tbodyHtml);
+            $('#inner_title').html(resObj['TITLE']);
+        }
+        $table_list.removeClass('hidden');
+    }
+</script>
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSNF"]').val();
+            if (ksyf == "") {
+                notify("选择年份均不能为空");
+                return false;
+            }
+        },
+        success: function (resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            showTable(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
