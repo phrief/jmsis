@@ -43,7 +43,7 @@
                                 <select name="FXNR" id="FXNR">
                                     <option value="0">伤残类别分析</option>
                                     <option value="1">死亡分析</option>
-                                    <option value="2">职业病发病</option>
+                                    <option value="2">职业病分析</option>
                                 </select>
                             </div>
                         </div>
@@ -64,6 +64,44 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="control-group" id="level_input">
+                            <label class="control-label">伤残等级</label>
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="20">一级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="21">二级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="22">三级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="23">四级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="24">五级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="25">六级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="26">七级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="27">八级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="28">九级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="29">十级
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="LEVELBOX[]" value="32">未评定
+                                </label>
+                            </div>
+                        </div>
                         <div class="control-group">
                             <input type="submit" value="提交" class="btn btn-primary"/>
                             <input type="reset" value="重置" class="btn"/>
@@ -79,7 +117,7 @@
 <div id="FirmArrearageList" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <script>
-    var testData = '{"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA7":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA8":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA9":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA10":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"一级伤残","NAME2":"二级伤残","NAME3":"三级伤残","NAME4":"四级伤残","NAME5":"五级伤残","NAME6":"六级伤残","NAME7":"七级伤残","NAME8":"八级伤残","NAME9":"九级伤残","NAME10":"十级伤残","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市化工行业工伤人员伤残级别分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人"}';
+    var testData = '{"NUM":3,"CHARTTYPE":"0","DATA1":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA2":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA3":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA4":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA5":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA6":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA7":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA8":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA9":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"DATA10":["1000","1700","1400","1800","2000","1500","1600","1300","2100","1600","1200","1300"],"YEARS":["2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年"],"NAME1":"一级伤残","NAME2":"二级伤残","NAME3":"三级伤残","NAME4":"四级伤残","NAME5":"五级伤残","NAME6":"六级伤残","NAME7":"七级伤残","NAME8":"八级伤残","NAME9":"九级伤残","NAME10":"十级伤残","__MESSAGE__":"","__NEXTACTION__":"","__ERROR__":false,"TITLE":"全市化工行业工伤人员伤残级别分析图","__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2002年——2013年","DIVISION":"人"}';
     //var testData = '{"CHARTTYPE":"1","TITLE":"全市各行业工伤死亡人数对比对比图","AREA":"全市","DATA1":[1000,1200,1150,1400,1350,1200,1000,1700,1450,1200,950,800],"DATA2":[1050,1250,1200,1450,1400,1250,1050,1750,1500,1250,1000,850],"DATA3":[1100,1300,1250,1500,1450,1300,1100,1800,1550,1300,1050,900],"NAME1":"一类行业","NAME2":"二类行业","NAME3":"三类行业","__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2001年","2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"人"}';
     //var testData = '{"CHARTTYPE":"2","TITLE":"全市各行业工伤职业病发生率对比分析图","AREA":"全市","DATA1":[10,12,11.5,14,13.5,12,10,17,14.5,12,9.5,8],"DATA2":[10.5,12.5,12,14.5,14,12.5,10.5,17.5,15,12.5,10,8.5],"DATA3":[11,13,12.5,15,14.5,13,11,18,15,13,10,9],"NAME1":"一类行业","NAME2":"二类行业","NAME3":"三类行业","__MESSAGE__":"","__NEXTACTION__":"","YEARS":["2001年","2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年"],"__ERROR__":false,"__CURRENTUSER__":"admin","TYPE":"个人账户","__LOGINED__":true,"PERIOD":"2001年——2012年","DIVISION":"人"}';
 </script>
@@ -111,55 +149,19 @@
                 var period = resObj['PERIOD'];
                 var years = resObj['YEARS'];
                 var division = resObj['DIVISION'];
-
-                var data1 = resObj['DATA1'];
-                var data2 = resObj['DATA2'];
-                var data3 = resObj['DATA3'];
-                var data4 = resObj['DATA4'];
-                var data5 = resObj['DATA5'];
-                var data6 = resObj['DATA6'];
-                var data7 = resObj['DATA7'];
-                var data8 = resObj['DATA8'];
-                var data9 = resObj['DATA9'];
-                var data10 = resObj['DATA10'];
-
-                var name1 = resObj['NAME1'];
-                var name2 = resObj['NAME2'];
-                var name3 = resObj['NAME3'];
-                var name4 = resObj['NAME4'];
-                var name5 = resObj['NAME5'];
-                var name6 = resObj['NAME6'];
-                var name7 = resObj['NAME7'];
-                var name8 = resObj['NAME8'];
-                var name9 = resObj['NAME9'];
-                var name10 = resObj['NAME10'];
-
                 var title = resObj['TITLE'];
-
-                var d1 = new Array();
-                var d2 = new Array();
-                var d3 = new Array();
-                var d4 = new Array();
-                var d5 = new Array();
-                var d6 = new Array();
-                var d7 = new Array();
-                var d8 = new Array();
-                var d9 = new Array();
-                var d10 = new Array();
-
-                for (var i = 0; i < years.length; i++) {
-                    d1.push(parseInt(data1[i]));
-                    d2.push(parseInt(data2[i]));
-                    d3.push(parseInt(data3[i]));
-                    d4.push(parseInt(data4[i]));
-                    d5.push(parseInt(data5[i]));
-                    d6.push(parseInt(data6[i]));
-                    d7.push(parseInt(data7[i]));
-                    d8.push(parseInt(data8[i]));
-                    d9.push(parseInt(data9[i]));
-                    d10.push(parseInt(data10[i]));
+                var num = resObj['NUM'];
+                var chartArr = new Array();
+                for (var i = 1; i <= num; i++) {
+                    var data = resObj['DATA' + i];
+                    var name = resObj['NAME' + i];
+                    var chartObj = {
+                        data: data,
+                        name: name
+                    };
+                    chartArr.push(chartObj);
                 }
-
+                console.log(chartArr);
                 years = makeAdapt(years);
 
                 $('#FirmArrearageList').highcharts({
@@ -185,7 +187,6 @@
                         }
                     },
                     tooltip: {
-                        /*pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',*/
                         shared: true
                     },
                     plotOptions: {
@@ -193,48 +194,7 @@
                             stacking: 'normal'
                         }
                     },
-                    series: [
-                        {
-                            name: name1,
-                            data: d1
-                        },
-                        {
-                            name: name2,
-                            data: d2
-                        },
-                        {
-                            name: name3,
-                            data: d3
-                        },
-                        {
-                            name: name4,
-                            data: d4
-                        },
-                        {
-                            name: name5,
-                            data: d5
-                        },
-                        {
-                            name: name6,
-                            data: d6
-                        },
-                        {
-                            name: name7,
-                            data: d7
-                        },
-                        {
-                            name: name8,
-                            data: d8
-                        },
-                        {
-                            name: name9,
-                            data: d9
-                        },
-                        {
-                            name: name10,
-                            data: d10
-                        }
-                    ]
+                    series: chartArr
                 });
             }
 
@@ -274,7 +234,6 @@
                         }
                     },
                     tooltip: {
-                        /*pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',*/
                         shared: true
                     },
                     plotOptions: {
@@ -391,8 +350,8 @@
 
 <script>
     var myDate = new Date();
-    $('[name="KSNF"]').val(myDate.getFullYear() - 3);
-    $('[name="JSNF"]').val(myDate.getFullYear() + 2);
+    $('[name="KSNF"]').val(myDate.getFullYear() - 4);
+    $('[name="JSNF"]').val(myDate.getFullYear() - 1);
 
     $('.datepicker_c').datetimepicker({
         language: 'zh-CN',
@@ -429,6 +388,18 @@
             var resObj = readResObj(data, testData);
             makeChart(resObj);
             $(".collapse").collapse('hide');
+        }
+    });
+</script>
+
+<script>
+    var fxnr = $('#FXNR');
+    var level_input = $('#level_input');
+    fxnr.on('change', function () {
+        if (fxnr.val() != 0) {
+            level_input.css('display', 'none');
+        } else {
+            level_input.css('display', 'block');
         }
     });
 </script>

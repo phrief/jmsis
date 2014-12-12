@@ -41,7 +41,7 @@
                             <div class="controls">
                                 <select name="FXNR" id="FXNR">
                                     <option value="0">生育方式分析</option>
-                                    <option value="1">新增/减少人员分析</option>
+                                    <option value="1">新增人员分析</option>
                                     <option value="2">一胎/二胎人员分析</option>
                                 </select>
                             </div>
@@ -163,7 +163,7 @@ function makeChart(resObj) {
                     }
                 },
                 tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                    /*pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',*/
                     shared: true
                 },
                 plotOptions: {
@@ -195,20 +195,16 @@ function makeChart(resObj) {
             var period = resObj['PERIOD'];
             var months = resObj['MONTHS'];
             var division = resObj['DIVISION'];
+            var title = resObj['TITLE'];
+            var name = resObj['NAME'];
+            var data = resObj['DATA'];    //新增
 
-            var data1 = resObj['DATA1'];    //新增
-            var data2 = resObj['DATA2'];    //减少
-
-            var d1 = new Array();
-            var d2 = new Array();
+            var d = new Array();
 
             for (var i = 0; i < months.length; i++) {
-                d1.push(parseInt(data1[i]));
-                d2.push(parseInt(data2[i]));
+                d.push(parseInt(data[i]));
             }
-            var title = resObj['TITLE'];
-            var name1 = resObj['NAME1'];
-            var name2 = resObj['NAME2'];
+            
 
             months = makeAdapt(months);
 
@@ -242,15 +238,8 @@ function makeChart(resObj) {
                 },
                 series: [
                     {
-                        name: name1,
-                        data: d1,
-                        tooltip: {
-                            valueSuffix: division
-                        }
-                    },
-                    {
-                        name: name2,
-                        data: d2,
+                        name: name,
+                        data: d,
                         tooltip: {
                             valueSuffix: division
                         }

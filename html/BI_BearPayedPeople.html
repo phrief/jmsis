@@ -45,7 +45,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="control-group" id="area_input">
                             <label class="control-label">对比区域</label>
 
                             <div class="controls">
@@ -116,7 +116,6 @@
     //出图函数
     function makeChart(resObj) {
         if (resObj) {
-            console.log(resObj);
             var charttype = resObj['CHARTTYPE'];
             if (charttype == 0) {
                 var months = resObj['MONTHS'];
@@ -182,7 +181,9 @@
             }
             if (charttype == 1) {
                 var period = resObj['PERIOD'];
-                var names = resObj['NAMES'];
+                //var names = resObj['NAMES'];
+                var area = resObj['AREA'];
+                var months = resObj['MONTHS'];
                 var division = resObj['DIVISION'];
                 var title = resObj['TITLE'];
                 var name1 = resObj['NAME1'];
@@ -191,11 +192,11 @@
                 var data2 = resObj['DATA2'];
                 var dataset1 = new Array();
                 var dataset2 = new Array();
-                for (var i = 0; i < data1.length; i++) {
+                for (var i = 0; i < months.length; i++) {
                     dataset1.push(parseInt(data1[i]));
                     dataset2.push(parseInt(data2[i]));
                 }
-
+                months = makeAdapt(months);
                 $('#MonthlyIAE').highcharts({
                     chart: {
                         type: 'column'
@@ -210,7 +211,10 @@
                         text: period
                     },
                     xAxis: {
-                        categories: names
+                        categories: months,
+                        labels: {
+                            rotation: -45
+                        }
                     },
                     yAxis: {
                         min: 0,
@@ -249,7 +253,6 @@
         url: 'modules/BI_ctl.jsp?action=BearPayedPeople',
         success: function (data) {
             var resObj = readResObj(data, testData);
-            //var resObj = JSON.parse(testData);
             makeChart(resObj);
         }
     });
@@ -301,5 +304,61 @@
             makeChart(resObj);
             $(".collapse").collapse('hide');
         }
+    });
+</script>
+
+<script>
+    var condition = $('#FXNR');
+    var area_input = $('#area_input');
+    condition.on('change', function () {
+        var content = '';
+        if (condition.val() == '1') {
+            content = ['<label class="control-label">区域选择</label>',
+                        '<div class="controls">',
+                            '<select name="AREA">',
+                                '<option value="440799">全市</option>',
+                                '<option value="440700">市直</option>',
+                                '<option value="440703">蓬江</option>',
+                                '<option value="440704">江海</option>',
+                                '<option value="440781">台山</option>',
+                                '<option value="440705">新会</option>',
+                                '<option value="440783">开平</option>',
+                                '<option value="440784">鹤山</option>',
+                                '<option value="440785">恩平</option>',
+                            '</select>',
+                        '</div>'].join('\n');
+        } else if (condition.val() == '2'){
+            content = ['<label class="control-label">对比区域</label>',
+                        '<div class="controls">',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440799">全市',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440700">市直',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440703">蓬江',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440704">江海',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440705">新会',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440781">台山',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440783">开平',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440784">鹤山',
+                            '</label>',
+                            '<label class="checkbox">',
+                                '<input type="checkbox" name="AREABOX[]" value="440785">恩平',
+                            '</label>',
+                        '</div>'].join('');
+        }
+        area_input.html(content);
     });
 </script>
