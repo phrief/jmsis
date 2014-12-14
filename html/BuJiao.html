@@ -1,0 +1,306 @@
+<meta charset="UTF-8">
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle external collapsed" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">
+                <legend>
+                    <i class="icon-chevron-down"></i>
+                    <i class="icon-chevron-up"></i>
+                    查看区间
+                </legend>
+            </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <form class="form-horizontal" action="modules/PI_ctl.jsp?action=BuJiao">
+                    <div class="block">
+                        <div class="control-group">
+                            <label class="control-label">开始月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="KSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">结束月份</label>
+
+                            <div class="controls">
+                                <input type="text" class="datepicker_c" name="JSYF"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区域选择</label>
+
+                            <div class="controls">
+                                <select name="AREA">
+                                    <option value="440799">全市</option>
+                                    <option value="440700">市直</option>
+                                    <option value="440703">蓬江</option>
+                                    <option value="440704">江海</option>
+                                    <option value="440781">台山</option>
+                                    <option value="440705">新会</option>
+                                    <option value="440783">开平</option>
+                                    <option value="440784">鹤山</option>
+                                    <option value="440785">恩平</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">分析内容</label>
+
+                            <div class="controls">
+                                <select name="FXNR">
+                                    <option value="0">补缴金额</option>
+                                    <option value="1">补缴人员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+                            <input type="reset" value="重置" class="btn"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div><h3 id="chartname"></h3></div>
+<div id="MonthlyIAE" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+    function makeAdapt(years) {
+        if (years.length > 12) {
+            var len = years.length;
+            var delta = parseInt(len / 12);
+            var yearsAfter = new Array();
+            for (var i = 0; i < len; i++) {
+                if (i % delta == 0)
+                    yearsAfter.push(years[i]);
+                else
+                    yearsAfter.push('.');
+            }
+            return yearsAfter;
+        } else {
+            return years;
+        }
+    }
+</script>
+
+<script>
+    //出图函数
+    function makeChart(resObj) {
+
+        if (resObj) {
+
+        	var type = resObj["TYPE"];
+    		if (type == 0) {
+    			var months = resObj['MONTHS'];
+	            var division = resObj['DIVISION'];
+	            var data1 = resObj['DATA1'];
+	            var data2 = resObj['DATA2'];
+	            var data3 = resObj['DATA3'];
+	            var name1 = resObj['NAME1'];
+	            var name2 = resObj['NAME2'];
+	            var name3 = resObj['NAME3'];
+	            var period = resObj['PERIOD'];
+	            var title = resObj['TITLE'];
+
+	            months = makeAdapt(months);
+
+	            $('#MonthlyIAE').highcharts({
+	                exporting: false,
+	                chart: {
+	                    type: 'line'
+	                },
+	                title: {
+	                    text: title,
+	                    x: -20,//center
+	                    style: {
+	                        fontFamily: '微软雅黑'
+	                    }
+	                },
+	                subtitle: {
+	                    text: period,
+	                    x: -20
+	                },
+	                xAxis: {
+	                    categories: months,
+	                    labels: {
+	                        rotation: -45
+	                    }
+	                },
+	                yAxis: {
+	                    title: {
+	                        text: '单位(' + division + ')'
+	                    },
+	                    plotLines: [
+	                        {
+	                            value: 0,
+	                            width: 1,
+	                            color: '#808080'
+	                        }
+	                    ]
+	                },
+	                tooltip: {
+	                    shared: true
+	                },
+	                series: [
+	                    {
+	                        name: name1,
+	                        data: data1,
+	                        tooltip: {
+	                            valueSuffix: division
+	                        }
+	                    },
+	                    {
+	                        name: name2,
+	                        data: data2,
+	                        tooltip: {
+	                            valueSuffix: division
+	                        }
+	                    },
+	                    {
+	                        name: name3,
+	                        data: data3,
+	                        tooltip: {
+	                            valueSuffix: division
+	                        }
+	                    }
+	                ]
+	            });
+    		}
+            if (type == 1) {
+            	var months = resObj['MONTHS'];
+	            var division = resObj['DIVISION'];
+	            var data = resObj['DATA'];
+	            var name = resObj['NAME'];
+	            var period = resObj['PERIOD'];
+	            var title = resObj['TITLE'];
+
+	            months = makeAdapt(months);
+
+	            $('#MonthlyIAE').highcharts({
+	                exporting: false,
+	                chart: {
+	                    type: 'line'
+	                },
+	                title: {
+	                    text: title,
+	                    x: -20,//center
+	                    style: {
+	                        fontFamily: '微软雅黑'
+	                    }
+	                },
+	                subtitle: {
+	                    text: period,
+	                    x: -20
+	                },
+	                xAxis: {
+	                    categories: months,
+	                    labels: {
+	                        rotation: -45
+	                    }
+	                },
+	                yAxis: {
+	                    title: {
+	                        text: '单位(' + division + ')'
+	                    },
+	                    plotLines: [
+	                        {
+	                            value: 0,
+	                            width: 1,
+	                            color: '#808080'
+	                        }
+	                    ]
+	                },
+	                tooltip: {
+	                    shared: true
+	                },
+	                series: [
+	                    {
+	                        name: name,
+	                        data: data,
+	                        tooltip: {
+	                            valueSuffix: division
+	                        }
+	                    }
+	                ]
+	            });
+            }
+        }
+    }
+
+    var testData = '{"INCOME":["1000","1500","1300","1250","1400","1500","1000","1500","1300","1250","1400","1500"],"PAYOUT":["600","550","450","700","650","550","600","550","450","700","650","550"],"BALANCE":["400","950","850","550","750","950","400","950","850","550","750","950"],"__MESSAGE__":"","__NEXTACTION__":"","MONTHS":["2012年11月","2012年12月","2013年01月","2013年02月","2013年03月","2013年04月","2013年05月","2013年06月","2013年07月","2013年08月","2013年09月","2013年10月"],"__ERROR__":false,"__CURRENTUSER__":"admin","__LOGINED__":true,"PERIOD":"2012年11月——2013年10月","DIVISION":"万元","TITLE":"全市生育保险基金(个人账户)走势图"}';
+</script>
+
+<script>
+    $.ajax({
+        url: 'modules/PI_ctl.jsp?action=BuJiao',
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            //var resObj = JSON.parse(testData);
+            makeChart(resObj);
+        }
+    });
+</script>
+
+<script>
+    $(function () {
+        var now = new Date();
+        var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+        $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+        $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+        $('.datepicker_c').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3,
+            forceParse: 0,
+            showMeridian: 1,
+            format: 'yyyy-mm',
+            //maxView: 3,
+            minView: 3
+        });
+    });
+
+    $('.datepicker_c').on('click', function () {
+        $(this).datepicker('setDate', new Date($(this).val()));
+    });
+</script>
+
+
+<script>
+    var $form = $frame.find('form'),
+            $collapse = $('#collapseOne');
+
+    $form.ajaxForm({
+        beforeSend: function () {
+            var ksyf = $form.find('[name="KSYF"]').val();
+            var jsyf = $form.find('[name="JSYF"]').val();
+            if (ksyf == "" || jsyf == "") {
+                notify("开始月份和结束月份均不能为空");
+                return false;
+            }
+        },
+        success: function (data) {
+            var resObj = readResObj(data, testData);
+            makeChart(resObj);
+            $(".collapse").collapse('hide');
+        }
+    });
+</script>
+

@@ -21,7 +21,7 @@
             <div class="accordion-inner">
                 <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=AdditionAnalyze">
                     <div class="block">
-                        <div class="control-group">
+                        <!-- <div class="control-group">
                             <label class="control-label">时间类型:</label>
                             <div class="controls">
                                 <select name="SJLX" id="SJLX">
@@ -29,7 +29,7 @@
                                     <option value="year">按年份</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="control-group">
                             <label class="control-label">开始时间:</label>
                             <div class="controls">
@@ -95,15 +95,21 @@
         if (resObj) {
             var months = resObj['MONTHS'];
             var division = resObj['DIVISION'];
-            var dataset = resObj['DATASET'];
+            var dataset1 = resObj['DATASET1'];
+            var dataset2 = resObj['DATASET2'];
+            var dataset3 = resObj['DATASET3'];
+            var dataset4 = resObj['DATASET4'];
             var period = resObj['PERIOD'];
-            var name = resObj['NAME'];
+            var name1 = resObj['NAME1'];
+            var name2 = resObj['NAME2'];
+            var name3 = resObj['NAME3'];
+            var name4 = resObj['NAME4'];
             var title = resObj['TITLE'];
             try {months = makeAdapt(months);}catch(e) {}
             $('#Addition').highcharts({
                 exporting: false,
                 chart: {
-                    type: 'line'
+                    type: 'column'
                 },
                 title: {
                     text: title,
@@ -139,8 +145,29 @@
                 },
                 series: [
                     {
-                        name: name,
-                        data: dataset,
+                        name: name1,
+                        data: dataset1,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name2,
+                        data: dataset2,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name3,
+                        data: dataset3,
+                        tooltip: {
+                            valueSuffix: division
+                        }
+                    },
+                    {
+                        name: name4,
+                        data: dataset4,
                         tooltip: {
                             valueSuffix: division
                         }
