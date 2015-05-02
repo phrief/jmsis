@@ -1,6 +1,7 @@
 _.templateSettings = {
 	interpolate: /\{\{=(.+?)\}\}/g,
-	evaluate: /\{\{(.+?)\}\}/g,
+	//evaluate: /\{\{(.+?)\}\}/g, // 冲突
+	evaluate: /<%(.+?)%>/g,
 	escape: /\{\{\-(.+?)\}\}/g
 };
 

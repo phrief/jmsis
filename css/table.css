@@ -5,7 +5,8 @@ table > caption {
 	text-align: center;
 }
 
-table[data-colspans] tbody tr:nth-child(odd) td {
+/*table[data-colspans] tbody tr:nth-child(odd) td {*/
+table tbody tr:nth-child(odd) td {
 	background-color: #f3f3f3;
 }
 

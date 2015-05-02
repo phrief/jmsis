@@ -15,14 +15,14 @@ _.each([
   'index.html', 'main.html'
 ], function(file){
   app.get('/' + file, function(req, res){
-    res.sendfile(path.resolve(
+    res.sendFile(path.resolve(
       __dirname, '..', file
     ))
   })
 })
 
 app.get('/', function(req, res){
-  res.sendfile(path.resolve(
+  res.sendFile(path.resolve(
     __dirname, '..', 'index.html'
   ))
 })
