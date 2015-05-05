@@ -65,8 +65,19 @@
               </div>
             </div>
             <div class="control-group">
+              <label class="control-label">开始月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="KSYF"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="JSYF"/>
+              </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label">对比区域</label>
-
                 <div class="controls">
                     <label class="checkbox">
                         <input type="checkbox" name="AREABOX[]" value="440700" checked>市直
@@ -97,6 +108,7 @@
             <div class="control-group">
               <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
               <input type="reset" value="重置" class="btn"/>
+              
             </div>
           </div>
         </form>
@@ -108,7 +120,7 @@
 
 <!-- 表格 -->
 <h2 class="text-center">
-  <i class="icon-th-list"></i>待遇发放异常检索
+  <i class="icon-th-list"></i><span id="table_title"></span>
 </h2>
 <div id="table-wrap" class="hidden">
 <script type="text/html" id="table-x-tmpl">
@@ -194,14 +206,19 @@
 </script>
 </div>
 <!-- /表格 -->
-
+<form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
+  <input id="json_xls" type="hidden" name="json"/>
+  <button id="download_xls" type="submit" class="btn btn-success"
+   disabled="disabled">下载 Excel</button>
+</form>
 
 <script>
     var $frame = $('#main-frame'),
         $form_query = $('#form-query'),
         $table_wrap = $('#table-wrap'),
         tableXTmpl = $table_wrap.find('#table-x-tmpl').html(),
-        tableYTmpl = $table_wrap.find('#table-y-tmpl').html();
+        tableYTmpl = $table_wrap.find('#table-y-tmpl').html(),
+        json_xls;
 
     // 检索
     $form_query.ajaxForm({
@@ -216,14 +233,24 @@
             } else {
               showTable(resObj, tableXTmpl);
             }
+            storeJSON(resObj);
             $("#collapseOne").collapse('hide');
         }
     });
+
+    function storeJSON(resObj) {
+      json_xls = encodeURIComponent(JSON.stringify(resObj));
+      if (json_xls) {
+        $('#download_xls').removeAttr('disabled');
+        $('#json_xls').val(json_xls);
+      }
+    }
 
     function showTable(resObj, tmpl) {
       $table_wrap.addClass('hidden');
       var timeline = resObj['TIMELINE'];
       var areabox = resObj['AREABOX'];
+      var title = resObj['TITLE'];
       areabox = _.without(areabox, '全市'); // hack
       var tableHtml = _.template(tmpl, {
         'areabox': areabox,
@@ -232,5 +259,41 @@
       });
       $table_wrap.html(tableHtml);
       $table_wrap.removeClass('hidden');
+      $('#table_title').text(title);
     }
+</script>
+<script>
+  $(function () {
+    var now = new Date();
+    var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+    $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+    $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+    $('.datepicker_c').datetimepicker({
+      language: 'zh-CN',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 3,
+      forceParse: 0,
+      showMeridian: 1,
+      format: 'yyyy-mm',
+      //maxView: 3,
+      minView: 3
+    });
+  });
+
+  $('.datepicker_c').on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
+
+  var download_button = $('#download_xls');
+  download_button.on('click', function () {
+    if (download_button.attr('disabled')) return;
+    if (json_xls) {
+      $('#xls_form').submit();
+    }
+  });
+  
 </script>
