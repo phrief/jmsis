@@ -36,6 +36,7 @@
       width: 100%;
       max-height: 500px;
       overflow: auto;
+      margin-bottom: 10px;
     }
 </style>
 
@@ -80,28 +81,28 @@
                 <label class="control-label">对比区域</label>
                 <div class="controls">
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440700" checked>市直
+                        <input type="checkbox" name="AREABOX[]" value="440700">市直
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440703" checked>蓬江
+                        <input type="checkbox" name="AREABOX[]" value="440703">蓬江
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440704" checked>江海
+                        <input type="checkbox" name="AREABOX[]" value="440704">江海
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440705" checked>新会
+                        <input type="checkbox" name="AREABOX[]" value="440705">新会
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440781" checked>台山
+                        <input type="checkbox" name="AREABOX[]" value="440781">台山
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440783" checked>开平
+                        <input type="checkbox" name="AREABOX[]" value="440783">开平
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440784" checked>鹤山
+                        <input type="checkbox" name="AREABOX[]" value="440784">鹤山
                     </label>
                     <label class="checkbox">
-                        <input type="checkbox" name="AREABOX[]" value="440785" checked>恩平
+                        <input type="checkbox" name="AREABOX[]" value="440785">恩平
                     </label>
                 </div>
             </div>
@@ -119,7 +120,7 @@
 <!-- /表顶 -->
 
 <!-- 表格 -->
-<h2 class="text-center">
+<h2 class="text-center hidden">
   <i class="icon-th-list"></i><span id="table_title"></span>
 </h2>
 <div id="table-wrap" class="hidden">
@@ -260,6 +261,8 @@
       $table_wrap.html(tableHtml);
       $table_wrap.removeClass('hidden');
       $('#table_title').text(title);
+      // 避免初始时 显示多余的图标
+      $('.content-box h2').removeClass('hidden');
     }
 </script>
 <script>

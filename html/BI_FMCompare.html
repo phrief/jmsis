@@ -1,1 +1,302 @@
 <meta charset="UTF-8">
+
+<style>
+    h2 {
+      font-size: 21px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    h2 i {
+      margin-top: 7px !important;
+      margin-right: 7px !important;
+    }
+    
+    .table-list {
+      border: 1px solid #ddd;
+      border-left: 0;
+    }
+    .table-list th, .table-list td {
+      text-align: center;
+      vertical-align: middle;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .table-list th {
+      min-width: 70px;
+      text-align: center;
+    }
+    .table-list .first-td-col {
+      background-color: #fff;
+    }
+    #table-x .first-th-col {
+      min-width: 124px;
+    }
+    #table-wrap {
+      width: 100%;
+      max-height: 500px;
+      overflow: auto;
+      margin-bottom: 10px;
+    }
+</style>
+
+<!-- 表顶 -->
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle external" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        <legend>
+          <i class="icon-chevron-down"></i>
+          <i class="icon-chevron-up"></i>
+          查看区间
+        </legend>
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <form id="form-query" class="form-horizontal" method="post" action="modules/BI_ctl.jsp?action=FundautoMonitorCompare">
+          <div class="block">
+            <div class="control-group">
+              <label class="control-label">对比方式</label>
+              <div class="controls">
+                <select name="FXNR">
+                  <option value="0">横向对比</option>
+                  <option value="1">纵向对比</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">开始月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="KSYF"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="JSYF"/>
+              </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">对比区域</label>
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440700">市直
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440703">蓬江
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440704">江海
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440705">新会
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440781">台山
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440783">开平
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440784">鹤山
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="AREABOX[]" value="440785">恩平
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+              <input type="submit" value="提交" class="btn btn-primary" id="submit"/>
+              <input type="reset" value="重置" class="btn"/>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /表顶 -->
+
+<!-- 表格 -->
+<h2 class="text-center hidden">
+  <i class="icon-th-list"></i><span id="table_title"></span>
+</h2>
+<div id="table-wrap" class="hidden">
+<script type="text/html" id="table-x-tmpl">
+  <table id="table-x" class="table-list table-bordered">
+    <thead>
+      <tr>
+        <th rowspan="2" colspan="2" class="first-th-col"></th>
+        <% _.each(areabox, function(area){ %>
+        <th colspan="3">{{-area}}</th>
+        <% }) %>
+      </tr>
+      <tr>
+        <% _.each(areabox, function(){ %>
+        <th>收入</th>
+        <th>支出</th>
+        <th>余额</th>
+        <% }) %>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(timeline, function(time){ %>
+      <tr>
+        <td rowspan="2" class="first-td-col">{{=time}}</td>
+        <td>金额</td>
+        <% _.each(areabox, function(area){ %>
+        <% if (!resObj[time][area]) return %>
+        <td>{{=resObj[time][area]['income']}}万</td>
+        <td>{{=resObj[time][area]['payout']}}万</td>
+        <td>{{=resObj[time][area]['balance']}}万</td>
+        <% }) %>
+      </tr>
+      <tr>
+        <td>占比</td>
+        <% _.each(areabox, function(area){ %>
+        <% if (!resObj[time][area]) return %>
+        <td>{{=resObj[time][area]['income_ratio']}}%</td>
+        <td>{{=resObj[time][area]['payout_ratio']}}%</td>
+        <td>{{=resObj[time][area]['balance_ratio']}}%</td>
+        <% }) %>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</script>
+
+<script type="text/html" id="table-y-tmpl">
+  <table id="table-y" class="table-list table-bordered">
+    <thead>
+      <tr>
+        <th rowspan="2" colspan="2" class="first-th-col"></th>
+        <% _.each(timeline, function(time){ %>
+        <th>{{-time}}</th>
+        <% }) %>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(areabox, function(area){ %>
+      <tr>
+        <td rowspan="3" class="first-td-col">{{=area}}</td>
+        <td>收入</td>
+        <% _.each(timeline, function(time, i){ %>
+        <% if (!resObj[area]) return %>
+        <td>{{=resObj[area]['income'][i]}}万</td>
+        <% }) %>
+      </tr>
+      <tr>
+        <td>支出</td>
+        <% _.each(timeline, function(time, i){ %>
+        <% if (!resObj[area]) return %>
+        <td>{{=resObj[area]['payout'][i]}}%</td>
+        <% }) %>
+      </tr>
+      <tr>
+        <td>占比</td>
+        <% _.each(timeline, function(time, i){ %>
+        <% if (!resObj[area]) return %>
+        <td>{{=resObj[area]['balance'][i]}}%</td>
+        <% }) %>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</script>
+</div>
+<!-- /表格 -->
+<form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
+  <input id="json_xls" type="hidden" name="json"/>
+  <button id="download_xls" type="submit" class="btn btn-success"
+   disabled="disabled">下载 Excel</button>
+</form>
+
+<script>
+    var $frame = $('#main-frame'),
+        $form_query = $('#form-query'),
+        $table_wrap = $('#table-wrap'),
+        tableXTmpl = $table_wrap.find('#table-x-tmpl').html(),
+        tableYTmpl = $table_wrap.find('#table-y-tmpl').html(),
+        json_xls;
+
+    // 检索
+    $form_query.ajaxForm({
+        success: function(resObj) {
+            if (! _.isObject(resObj)) resObj = $.parseJSON(resObj);
+            var msg = resObj['__MESSAGE__'];
+            msg && notify(msg);
+            // 表格数据
+            var formdata = $form_query.serializeJSON();
+            if (formdata['FXNR'] === '1') {
+              showTable(resObj, tableYTmpl);
+            } else {
+              showTable(resObj, tableXTmpl);
+            }
+            storeJSON(resObj);
+            $("#collapseOne").collapse('hide');
+        }
+    });
+
+    function storeJSON(resObj) {
+      json_xls = encodeURIComponent(JSON.stringify(resObj));
+      if (json_xls) {
+        $('#download_xls').removeAttr('disabled');
+        $('#json_xls').val(json_xls);
+      }
+    }
+
+    function showTable(resObj, tmpl) {
+      $table_wrap.addClass('hidden');
+      var timeline = resObj['TIMELINE'];
+      var areabox = resObj['AREABOX'];
+      var title = resObj['TITLE'];
+      areabox = _.without(areabox, '全市'); // hack
+      var tableHtml = _.template(tmpl, {
+        'areabox': areabox,
+        'timeline': timeline,
+        'resObj': resObj
+      });
+      $table_wrap.html(tableHtml);
+      $table_wrap.removeClass('hidden');
+      $('#table_title').text(title);
+      // 避免初始时 显示多余的图标
+      $('.content-box h2').removeClass('hidden');
+    }
+</script>
+<script>
+  $(function () {
+    var now = new Date();
+    var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+    $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+    $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+
+    $('.datepicker_c').datetimepicker({
+      language: 'zh-CN',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 3,
+      forceParse: 0,
+      showMeridian: 1,
+      format: 'yyyy-mm',
+      //maxView: 3,
+      minView: 3
+    });
+  });
+
+  $('.datepicker_c').on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
+
+  var download_button = $('#download_xls');
+  download_button.on('click', function () {
+    if (download_button.attr('disabled')) return;
+    if (json_xls) {
+      $('#xls_form').submit();
+    }
+  });
+  
+</script>
