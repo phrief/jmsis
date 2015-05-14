@@ -250,8 +250,8 @@
         <td>{{=typek}}</td>
         <% _.each(areabox, function(area){ %>
         <% if (!type[area]) return %>
-        <td>{{=type[area]['count']}}</td>
-        <td>{{=type[area]['ratio']}}%</td>
+        <td>{{=type[area]['payed']}}</td>
+        <td>{{=type[area]['payed_ratio']}}%</td>
         <% }) %>
       </tr>
       <% }) %>
@@ -295,7 +295,11 @@
             if (formdata['FXNR'] === '1') {
               showTable(resObj, tableYTmpl);
             } else {
-              showTable(resObj, tableXTmpl);
+              if (formdata['YWLX'] == '1') {
+                showTable(resObj, table1XTmpl);
+              } else {
+                showTable(resObj, tableXTmpl);
+              }
             }
             storeJSON(resObj);
             $("#collapseOne").collapse('hide');
