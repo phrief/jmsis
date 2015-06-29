@@ -49,15 +49,14 @@
     </div>
     <div id="collapseOne" class="accordion-body collapse in">
       <div class="accordion-inner">
-        <form id="form-query" class="form-horizontal" method="post" action="modules/EI_ctl.jsp?action=AnalyzeCompare">
+        <form id="form-query" class="form-horizontal" method="post" action="modules/BI_ctl.jsp?action=AnalyzeCompare">
           <div class="block">
             <div class="control-group">
               <label class="control-label">业务类型</label>
               <div class="controls">
                 <select name="YWLX">
-                  <option value="0">失业待遇支出分析</option>
-                  <option value="1">失业人员按年龄分析</option>
-                  <option value="2">失业人员按性别分析</option>
+                  <option value="0">生育方式分析</option>
+                  <option value="1">生育支出分析</option>
                 </select>
               </div>
             </div>
@@ -70,16 +69,22 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
+            <div class="control-group delta-picker">
               <label class="control-label">开始月份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="KSNF"/>
+                <input type="text" class="datepicker_c" name="KSYF"/>
               </div>
             </div>
-            <div class="control-group">
+            <div class="control-group delta-picker">
               <label class="control-label">结束月份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="JSNF"/>
+                <input type="text" class="datepicker_c" name="JSYF"/>
+              </div>
+            </div>
+             <div class="control-group point-picker">
+              <label class="control-label">分析月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="YF"/>
               </div>
             </div>
             <div class="control-group">
@@ -229,28 +234,24 @@
     }
 </script>
 <script>
-  var myDate = new Date();
-  $('[name="KSNF"]').val(myDate.getFullYear() - 3);
-  $('[name="JSNF"]').val(myDate.getFullYear() + 2);
-
+  var now = new Date();
+  var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+  $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+  $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+  $('[name="YF"]').val(now.toJSON().slice(0, 7));
   $('.datepicker_c').datetimepicker({
-    language: 'zh-CN',
-    weekStart: 1,
-    todayBtn: 1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 4,
-    forceParse: 0,
-    showMeridian: 1,
-    format: 'yyyy',
-    initialDate: new Date(),
-    //maxView: 3,
-    minView: 4
+      language: 'zh-CN',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 3,
+      forceParse: 0,
+      showMeridian: 1,
+      format: 'yyyy-mm',
+      //maxView: 3,
+      minView: 3
   });
-  $('.datepicker_c').on('click', function () {
-    $(this).datepicker('setDate', new Date($(this).val()));
-  });
-
   $('.datepicker_c').on('click', function () {
     $(this).datepicker('setDate', new Date($(this).val()));
   });
@@ -262,5 +263,29 @@
       $('#xls_form').submit();
     }
   });
-  
+  var showDelta = function () {
+    $('.delta-picker').show();
+    $('.point-picker').hide();
+  };
+  var hideDelta = function () {
+    $('.delta-picker').hide();
+    $('.point-picker').show();
+  };
+  $('select[name="FXNR"]').on('change', function () {
+    var val = $(this).val();
+    if (val == 1) {
+      hideDelta();
+    } else {
+      showDelta();
+    }
+  });
+  $('select[name="YWLX"]').on('change', function () {
+    var val = $(this).val();
+    if (val == 0) {
+      $('select[name="FXNR"]').find('option[value="1"]').show();
+    } else {
+      //$('select[name="FXNR"]').find('option[value="1"]').hide();
+    }
+  });
+  showDelta();
 </script>

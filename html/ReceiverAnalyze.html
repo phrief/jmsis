@@ -16,17 +16,23 @@
             <div class="accordion-inner">
                 <form class="form-horizontal" method="get" action="modules/PI_ctl.jsp?action=ReceiverAnalyze">
                     <div class="block">
-                        <div class="control-group">
-                            <label class="control-label">开始年份:</label>
+                        <div class="control-group delta-picker">
+                            <label class="control-label">开始月份:</label>
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="KSNF" id="KSNF"/>
+                                <input type="text" class="datepicker_c" name="KSYF" id="KSYF"/>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">结束年份:</label>
+                        <div class="control-group delta-picker">
+                            <label class="control-label">结束月份:</label>
                             <div class="controls">
-                                <input type="text" class="datepicker_c" name="JSNF" id="JSNF"/>
+                                <input type="text" class="datepicker_c" name="JSYF" id="JSYF"/>
                             </div>
+                        </div>
+                         <div class="control-group point-picker">
+                          <label class="control-label">分析月份</label>
+                          <div class="controls">
+                            <input type="text" class="datepicker_c" name="YF"/>
+                          </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">分析类型:</label>
@@ -92,10 +98,10 @@
         if(resObj) {
             var division = resObj['DIVISION'];
             var title = resObj['TITLE'];
-            var fiftosix = parseFloat(resObj['FIFTOSIX']);
-            var sixtoseven = parseFloat(resObj['SIXTOSEVEN']);
-            var seventoeight = parseFloat(resObj['SEVENTOEIGHT']);
-            var eighttohund = parseFloat(resObj['EIGHTTOHUND']);
+            var fiftosix = parseFloat(resObj['DATA1']);
+            var sixtoseven = parseFloat(resObj['DATA2']);
+            var seventoeight = parseFloat(resObj['DATA3']);
+            var eighttohund = parseFloat(resObj['DATA4']);
             var gtype = resObj['TYPE'];
 
            if (gtype < 0 || gtype > 8) {
@@ -159,10 +165,10 @@
         if (resObj) {
             var months = resObj['MONTHS'];
             var division = resObj['DIVISION'];
-            var dataset1 = resObj['DATASET1'];   //50-60
-            var dataset2 = resObj['DATASET2'];   //60-70
-            var dataset3 = resObj['DATASET3'];   //70-80
-            var dataset4 = resObj['DATASET4'];   //80-100
+            var dataset1 = resObj['DATA1'];   //50-60
+            var dataset2 = resObj['DATA2'];   //60-70
+            var dataset3 = resObj['DATA3'];   //70-80
+            var dataset4 = resObj['DATA4'];   //80-100
             var period = resObj['PERIOD'];
             var title = resObj['TITLE'];
 
@@ -282,29 +288,6 @@
 </script>
 
 <script>
-    $(function() {
-        var myDate = new Date();
-        $('[name="KSNF"]').val((parseInt(myDate.getFullYear())- 3));
-        $('[name="JSNF"]').val(myDate.getFullYear());
-
-        $('.datepicker_c').datetimepicker({
-            language:  'zh-CN',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 4,
-            forceParse: 0,
-            showMeridian: 1,
-            format: 'yyyy',
-            //maxView: 3,
-            minView: 4
-        });
-
-    });
-</script>
-
-<script>
     var $form = $frame.find('form');
 
     $form.ajaxForm({
@@ -372,3 +355,50 @@
     }
 </script>
 
+<script>
+  var now = new Date();
+  var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+  $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+  $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+  $('[name="YF"]').val(now.toJSON().slice(0, 7));
+  $('.datepicker_c').datetimepicker({
+      language: 'zh-CN',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 3,
+      forceParse: 0,
+      showMeridian: 1,
+      format: 'yyyy-mm',
+      //maxView: 3,
+      minView: 3
+  });
+  $('.datepicker_c').on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
+  var download_button = $('#download_xls');
+  download_button.on('click', function () {
+    if (download_button.attr('disabled')) return;
+    if (json_xls) {
+      $('#xls_form').submit();
+    }
+  });
+  var showDelta = function () {
+    $('.delta-picker').show();
+    $('.point-picker').hide();
+  };
+  var hideDelta = function () {
+    $('.delta-picker').hide();
+    $('.point-picker').show();
+  };
+  $('select[name="TYPE"]').on('change', function () {
+    var val = $(this).val();
+    if (val == 0) {
+      hideDelta();
+    } else {
+      showDelta();
+    }
+  });
+  showDelta();
+</script>

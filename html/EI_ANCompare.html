@@ -55,9 +55,10 @@
               <label class="control-label">业务类型</label>
               <div class="controls">
                 <select name="YWLX">
-                  <option value="0">失业待遇支出分析</option>
-                  <option value="1">失业人员按年龄分析</option>
-                  <option value="2">失业人员按性别分析</option>
+                  <option value="0">享受工伤待遇人数分析</option>
+                  <option value="3">工伤参保人员分析</option>
+                  <option value="1">工伤类别分析</option>
+                  <option value="2">工伤死亡人员分析</option>
                 </select>
               </div>
             </div>
@@ -70,16 +71,40 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
+            <div class="control-group YF-picker delta-picker picker">
               <label class="control-label">开始月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="KSYF"/>
+              </div>
+            </div>
+            <div class="control-group YF-picker delta-picker picker">
+              <label class="control-label">结束月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="JSYF"/>
+              </div>
+            </div>
+            <div class="control-group YF-picker point-picker picker">
+              <label class="control-label">分析月份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="YF"/>
+              </div>
+            </div>
+            <div class="control-group NF-picker delta-picker picker">
+              <label class="control-label">开始年份</label>
               <div class="controls">
                 <input type="text" class="datepicker_c" name="KSNF"/>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label">结束月份</label>
+            <div class="control-group NF-picker delta-picker picker">
+              <label class="control-label">结束年份</label>
               <div class="controls">
                 <input type="text" class="datepicker_c" name="JSNF"/>
+              </div>
+            </div>
+            <div class="control-group NF-picker point-picker picker">
+              <label class="control-label">分析年份</label>
+              <div class="controls">
+                <input type="text" class="datepicker_c" name="NF"/>
               </div>
             </div>
             <div class="control-group">
@@ -140,7 +165,11 @@
       </tr>
       <tr>
         <% _.each(areabox, function(){ %>
-        <th>金额</th>
+        <% if (division.indexOf('元') || division === '万') { %>
+        <th>金额({{=division}})</th>
+        <% } else { %>
+        <th>人数({{=division}})</th>
+        <% } %>
         <th>占比</th>
         <% }) %>
       </tr>
@@ -214,12 +243,13 @@
       var timeline = resObj['TIMELINE'];
       var areabox = resObj['AREABOX'];
       var title = resObj['TITLE'];
-      areabox = _.without(areabox, '全市'); // hack
+      var division = resObj['DIVISION'];
       var tableHtml = _.template(tmpl, {
         'innerline': innerline,
         'areabox': areabox,
         'timeline': timeline,
-        'resObj': resObj
+        'resObj': resObj,
+        'division': division
       });
       $table_wrap.html(tableHtml);
       $table_wrap.removeClass('hidden');
@@ -232,7 +262,7 @@
   var myDate = new Date();
   $('[name="KSNF"]').val(myDate.getFullYear() - 3);
   $('[name="JSNF"]').val(myDate.getFullYear() + 2);
-
+  $('[name="NF"]').val(myDate.getFullYear());
   $('.datepicker_c').datetimepicker({
     language: 'zh-CN',
     weekStart: 1,
@@ -251,10 +281,6 @@
     $(this).datepicker('setDate', new Date($(this).val()));
   });
 
-  $('.datepicker_c').on('click', function () {
-    $(this).datepicker('setDate', new Date($(this).val()));
-  });
-
   var download_button = $('#download_xls');
   download_button.on('click', function () {
     if (download_button.attr('disabled')) return;
@@ -263,4 +289,75 @@
     }
   });
   
+</script>
+<script>
+  var now = new Date();
+  var oneYearAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
+  $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
+  $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
+  $('[name="YF"]').val(now.toJSON().slice(0, 7));
+  $('.datepicker_c').datetimepicker({
+      language: 'zh-CN',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 3,
+      forceParse: 0,
+      showMeridian: 1,
+      format: 'yyyy-mm',
+      //maxView: 3,
+      minView: 3
+  });
+  $('.datepicker_c').on('click', function () {
+    $(this).datepicker('setDate', new Date($(this).val()));
+  });
+</script>
+<script>
+  $('select[name="YWLX"]').on('change', function () {
+    var val = $(this).val();
+    var val1 = $('select[name="FXNR"]').val();
+    if (val == 0) {
+      $('select[name="FXNR"]').find('option[value="1"]').show();
+      $('.picker').hide();
+      if (val1 == 0) {
+        $('.YF-picker.delta-picker').show();  
+      } else {
+        $('select[name="FXNR"]').val(0);
+        $('.delta-picker.YF-picker').show();
+      }
+    } else {
+      $('select[name="FXNR"]').find('option[value="1"]').hide();
+      $('.picker').hide();
+      if(val1 == 0) {
+        $('.NF-picker.delta-picker').show();
+      } else {
+        $('select[name="FXNR"]').val(0);
+        $('.delta-picker.NF-picker').show();
+      }
+    }
+  });
+  $('select[name="FXNR"]').on('change', function () {
+    var val = $(this).val();
+    var val1 = $('select[name="YWLX"]').val();
+    if (val == 0) {
+      $('.picker').hide();
+      if (val1 == 0) {
+        $('.delta-picker.YF-picker').show();
+      } else {
+        $('select[name="FXNR"]').val(0);
+        $('.delta-picker.NF-picker').show();
+      }
+    } else {
+      $('.picker').hide();
+      if (val1 == 0) {
+        $('.point-picker.YF-picker').show();
+      } else {
+         $('select[name="FXNR"]').val(0);
+         $('.delta-picker.NF-picker').show();
+      }
+    }
+  });
+  $('.picker').hide();
+  $('.delta-picker.YF-picker').show();  
 </script>
