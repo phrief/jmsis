@@ -74,37 +74,37 @@
             <div class="control-group YF-picker delta-picker picker">
               <label class="control-label">开始月份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="KSYF"/>
+                <input type="text" class="datepicker_c_month" name="KSYF"/>
               </div>
             </div>
             <div class="control-group YF-picker delta-picker picker">
               <label class="control-label">结束月份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="JSYF"/>
+                <input type="text" class="datepicker_c_month" name="JSYF"/>
               </div>
             </div>
             <div class="control-group YF-picker point-picker picker">
               <label class="control-label">分析月份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="YF"/>
+                <input type="text" class="datepicker_c_month" name="YF"/>
               </div>
             </div>
             <div class="control-group NF-picker delta-picker picker">
               <label class="control-label">开始年份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="KSNF"/>
+                <input type="text" class="datepicker_c_year" name="KSNF"/>
               </div>
             </div>
             <div class="control-group NF-picker delta-picker picker">
               <label class="control-label">结束年份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="JSNF"/>
+                <input type="text" class="datepicker_c_year" name="JSNF"/>
               </div>
             </div>
             <div class="control-group NF-picker point-picker picker">
               <label class="control-label">分析年份</label>
               <div class="controls">
-                <input type="text" class="datepicker_c" name="NF"/>
+                <input type="text" class="datepicker_c_year" name="NF"/>
               </div>
             </div>
             <div class="control-group">
@@ -195,12 +195,12 @@
 </script>
 </div>
 <!-- /表格 -->
-<form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
+<!-- <form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
   <input id="json_xls" type="hidden" name="json"/>
   <button id="download_xls" type="submit" class="btn btn-success"
    disabled="disabled">下载 Excel</button>
 </form>
-
+ -->
 <script>
     var $frame = $('#main-frame'),
         $form_query = $('#form-query'),
@@ -263,7 +263,7 @@
   $('[name="KSNF"]').val(myDate.getFullYear() - 3);
   $('[name="JSNF"]').val(myDate.getFullYear() + 2);
   $('[name="NF"]').val(myDate.getFullYear());
-  $('.datepicker_c').datetimepicker({
+  $('.datepicker_c_year').datetimepicker({
     language: 'zh-CN',
     weekStart: 1,
     todayBtn: 1,
@@ -277,7 +277,7 @@
     //maxView: 3,
     minView: 4
   });
-  $('.datepicker_c').on('click', function () {
+  $('.datepicker_c_year').on('click', function () {
     $(this).datepicker('setDate', new Date($(this).val()));
   });
 
@@ -296,7 +296,7 @@
   $('[name="KSYF"]').val(oneYearAgo.toJSON().slice(0, 7));
   $('[name="JSYF"]').val(now.toJSON().slice(0, 7));
   $('[name="YF"]').val(now.toJSON().slice(0, 7));
-  $('.datepicker_c').datetimepicker({
+  $('.datepicker_c_month').datetimepicker({
       language: 'zh-CN',
       weekStart: 1,
       todayBtn: 1,
@@ -309,7 +309,7 @@
       //maxView: 3,
       minView: 3
   });
-  $('.datepicker_c').on('click', function () {
+  $('.datepicker_c_month').on('click', function () {
     $(this).datepicker('setDate', new Date($(this).val()));
   });
 </script>
@@ -317,7 +317,7 @@
   $('select[name="YWLX"]').on('change', function () {
     var val = $(this).val();
     var val1 = $('select[name="FXNR"]').val();
-    if (val == 0) {
+    if (val == 0 || val == 3) {
       $('select[name="FXNR"]').find('option[value="1"]').show();
       $('.picker').hide();
       if (val1 == 0) {

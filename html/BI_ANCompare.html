@@ -145,7 +145,11 @@
       </tr>
       <tr>
         <% _.each(areabox, function(){ %>
-        <th>金额</th>
+        <% if (division.indexOf('元') || division === '万') { %>
+        <th>金额({{=division}})</th>
+        <% } else { %>
+        <th>人数({{=division}})</th>
+        <% } %>
         <th>占比</th>
         <% }) %>
       </tr>
@@ -171,11 +175,11 @@
 </script>
 </div>
 <!-- /表格 -->
-<form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
+<!-- <form id="xls_form" method="POST" action="modules/XLS_ctl.jsp">
   <input id="json_xls" type="hidden" name="json"/>
   <button id="download_xls" type="submit" class="btn btn-success"
    disabled="disabled">下载 Excel</button>
-</form>
+</form> -->
 
 <script>
     var $frame = $('#main-frame'),
@@ -219,11 +223,13 @@
       var timeline = resObj['TIMELINE'];
       var areabox = resObj['AREABOX'];
       var title = resObj['TITLE'];
+      var division = resObj['DIVISION'];
       areabox = _.without(areabox, '全市'); // hack
       var tableHtml = _.template(tmpl, {
         'innerline': innerline,
         'areabox': areabox,
         'timeline': timeline,
+        'division': division,
         'resObj': resObj
       });
       $table_wrap.html(tableHtml);
